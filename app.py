@@ -1,14 +1,13 @@
 import streamlit as st
 import time
+import streamlit.components.v1 as components
 
-# ---------------- PAGE CONFIG ----------------
 st.set_page_config(
     page_title="Farma Buddy 🌱",
     page_icon="🌿",
     layout="wide"
 )
 
-# ---------------- SESSION CONTROL ----------------
 if "splash_done" not in st.session_state:
     st.session_state.splash_done = False
 
@@ -16,14 +15,23 @@ if "splash_done" not in st.session_state:
 if not st.session_state.splash_done:
 
     splash_html = """
+    <!DOCTYPE html>
+    <html>
+    <head>
     <style>
-    .splash-container {
-        height: 100vh;
+    body {
+        margin: 0;
+        overflow: hidden;
+        background: linear-gradient(135deg, #d4f8d4, #a8e6a3);
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
-        background: linear-gradient(135deg, #d4f8d4, #a8e6a3);
+        height: 100vh;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        text-align: center;
     }
 
     .logo {
@@ -50,7 +58,7 @@ if not st.session_state.splash_done:
         width: 300px;
         height: 6px;
         background: #c8e6c9;
-        margin-top: 30px;
+        margin: 30px auto;
         border-radius: 10px;
         overflow: hidden;
     }
@@ -77,23 +85,26 @@ if not st.session_state.splash_done:
         0% {width: 0%;}
         100% {width: 100%;}
     }
-
     </style>
+    </head>
 
-    <div class="splash-container">
-        <div class="logo">🌾</div>
-        <div class="app-name">Farma Buddy</div>
-        <div class="tagline">Smart Farming. Smarter Future.</div>
+    <body>
+        <div class="container">
+            <div class="logo">🌾</div>
+            <div class="app-name">Farma Buddy</div>
+            <div class="tagline">Smart Farming. Smarter Future.</div>
 
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
         </div>
-    </div>
+    </body>
+    </html>
     """
 
-    st.markdown(splash_html, unsafe_allow_html=True)
-
+    components.html(splash_html, height=700)
     time.sleep(5)
+
     st.session_state.splash_done = True
     st.rerun()
 
