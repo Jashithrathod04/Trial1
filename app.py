@@ -19,19 +19,56 @@ if not st.session_state.splash_done:
     <html>
     <head>
     <style>
+
     body {
         margin: 0;
         overflow: hidden;
-        background: linear-gradient(to top, #a8e6a3 40%, #d4f8d4 100%);
         height: 100vh;
-        font-family: Arial, sans-serif;
+        background: linear-gradient(180deg, #e8f5e9 0%, #c8e6c9 40%, #a5d6a7 100%);
+        font-family: 'Segoe UI', sans-serif;
         position: relative;
+    }
+
+    /* Subtle animated gradient overlay */
+    .gradient-overlay {
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), transparent 60%);
+        animation: moveGradient 12s ease-in-out infinite alternate;
+    }
+
+    /* Floating light particles */
+    .particle {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: rgba(255,255,255,0.6);
+        border-radius: 50%;
+        animation: floatParticle 10s linear infinite;
+    }
+
+    .p1 { top: 20%; left: 10%; animation-delay: 0s; }
+    .p2 { top: 40%; left: 80%; animation-delay: 2s; }
+    .p3 { top: 70%; left: 30%; animation-delay: 4s; }
+    .p4 { top: 60%; left: 60%; animation-delay: 6s; }
+
+    /* Elegant Sun Glow */
+    .sun {
+        position: absolute;
+        top: 12%;
+        right: 12%;
+        width: 120px;
+        height: 120px;
+        background: radial-gradient(circle, #fff176 40%, transparent 70%);
+        border-radius: 50%;
+        animation: pulseSun 6s ease-in-out infinite;
     }
 
     /* Center Content */
     .container {
         position: absolute;
-        top: 45%;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         text-align: center;
@@ -39,29 +76,30 @@ if not st.session_state.splash_done:
     }
 
     .logo {
-        font-size: 90px;
-        animation: zoomBounce 2s ease-in-out;
+        font-size: 85px;
+        animation: zoomFade 2s ease-out;
     }
 
     .app-name {
         font-size: 48px;
-        font-weight: bold;
+        font-weight: 600;
         color: #1b5e20;
         margin-top: 10px;
         animation: fadeIn 3s ease-in-out;
     }
 
     .tagline {
-        font-size: 20px;
+        font-size: 18px;
         color: #2e7d32;
         margin-top: 10px;
+        letter-spacing: 1px;
         animation: fadeIn 4s ease-in-out;
     }
 
     .progress-bar {
         width: 300px;
-        height: 6px;
-        background: #c8e6c9;
+        height: 5px;
+        background: rgba(0,0,0,0.1);
         margin: 30px auto;
         border-radius: 10px;
         overflow: hidden;
@@ -70,80 +108,13 @@ if not st.session_state.splash_done:
     .progress-fill {
         height: 100%;
         width: 0%;
-        background: #1b5e20;
+        background: linear-gradient(90deg, #1b5e20, #43a047);
         animation: loadProgress 5s linear forwards;
     }
 
-    /* Sun */
-    .sun {
-        position: absolute;
-        top: 10%;
-        right: 10%;
-        width: 100px;
-        height: 100px;
-        background: #ffeb3b;
-        border-radius: 50%;
-        box-shadow: 0 0 40px #ffeb3b;
-        animation: rotateSun 10s linear infinite;
-    }
-
-    .sun::before {
-        content: "";
-        position: absolute;
-        top: -20px;
-        left: -20px;
-        width: 140px;
-        height: 140px;
-        border-radius: 50%;
-        border: 4px dashed rgba(255, 235, 59, 0.6);
-    }
-
-    /* Clouds */
-    .cloud {
-        position: absolute;
-        font-size: 50px;
-        animation: moveCloud 20s linear infinite;
-    }
-
-    .cloud1 { top: 15%; left: -10%; }
-    .cloud2 { top: 25%; left: -30%; animation-delay: 10s; }
-
-    /* Ground */
-    .ground {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 120px;
-        background: #4caf50;
-    }
-
-    /* Crops */
-    .crop {
-        position: absolute;
-        bottom: 120px;
-        font-size: 40px;
-        animation: growCrop 4s ease-in-out forwards;
-        opacity: 0;
-    }
-
-    .crop1 { left: 30%; animation-delay: 1s; }
-    .crop2 { left: 45%; animation-delay: 2s; }
-    .crop3 { left: 60%; animation-delay: 3s; }
-
-    /* Floating Leaves */
-    .leaf {
-        position: absolute;
-        font-size: 30px;
-        animation: floatLeaf 6s ease-in-out infinite;
-    }
-
-    .leaf1 { left: 20%; top: 30%; }
-    .leaf2 { left: 70%; top: 40%; animation-delay: 2s; }
-
     /* Animations */
-    @keyframes zoomBounce {
-        0% {transform: scale(0.5); opacity: 0;}
-        50% {transform: scale(1.2);}
+    @keyframes zoomFade {
+        0% {transform: scale(0.8); opacity: 0;}
         100% {transform: scale(1); opacity: 1;}
     }
 
@@ -157,25 +128,21 @@ if not st.session_state.splash_done:
         100% {width: 100%;}
     }
 
-    @keyframes moveCloud {
-        0% {transform: translateX(0);}
-        100% {transform: translateX(150vw);}
+    @keyframes floatParticle {
+        0% {transform: translateY(0px);}
+        50% {transform: translateY(-20px);}
+        100% {transform: translateY(0px);}
     }
 
-    @keyframes growCrop {
-        0% {transform: scaleY(0); opacity: 0;}
-        100% {transform: scaleY(1); opacity: 1;}
+    @keyframes pulseSun {
+        0% {transform: scale(1); opacity: 0.8;}
+        50% {transform: scale(1.1); opacity: 1;}
+        100% {transform: scale(1); opacity: 0.8;}
     }
 
-    @keyframes floatLeaf {
-        0% {transform: translateY(0);}
-        50% {transform: translateY(20px);}
-        100% {transform: translateY(0);}
-    }
-
-    @keyframes rotateSun {
-        0% {transform: rotate(0deg);}
-        100% {transform: rotate(360deg);}
+    @keyframes moveGradient {
+        0% {transform: translate(-10%, -10%);}
+        100% {transform: translate(10%, 10%);}
     }
 
     </style>
@@ -183,13 +150,14 @@ if not st.session_state.splash_done:
 
     <body>
 
+        <div class="gradient-overlay"></div>
+
         <div class="sun"></div>
 
-        <div class="cloud cloud1">☁️</div>
-        <div class="cloud cloud2">☁️</div>
-
-        <div class="leaf leaf1">🍃</div>
-        <div class="leaf leaf2">🌿</div>
+        <div class="particle p1"></div>
+        <div class="particle p2"></div>
+        <div class="particle p3"></div>
+        <div class="particle p4"></div>
 
         <div class="container">
             <div class="logo">🌾</div>
@@ -200,12 +168,6 @@ if not st.session_state.splash_done:
                 <div class="progress-fill"></div>
             </div>
         </div>
-
-        <div class="crop crop1">🌱</div>
-        <div class="crop crop2">🌿</div>
-        <div class="crop crop3">🌾</div>
-
-        <div class="ground"></div>
 
     </body>
     </html>
