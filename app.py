@@ -15,10 +15,8 @@ if "splash_done" not in st.session_state:
 # ---------------- SPLASH SCREEN ----------------
 if not st.session_state.splash_done:
 
-    st.markdown("""
+    splash_html = """
     <style>
-
-    /* Center container */
     .splash-container {
         height: 100vh;
         display: flex;
@@ -26,7 +24,6 @@ if not st.session_state.splash_done:
         justify-content: center;
         align-items: center;
         background: linear-gradient(135deg, #d4f8d4, #a8e6a3);
-        border-radius: 10px;
     }
 
     .logo {
@@ -65,16 +62,6 @@ if not st.session_state.splash_done:
         animation: loadProgress 5s linear forwards;
     }
 
-    .leaf {
-        position: absolute;
-        font-size: 30px;
-        animation: floatLeaf 6s linear infinite;
-    }
-
-    .leaf1 { left: 20%; top: 10%; animation-delay: 0s; }
-    .leaf2 { left: 70%; top: 20%; animation-delay: 2s; }
-    .leaf3 { left: 40%; top: 5%; animation-delay: 4s; }
-
     @keyframes zoomBounce {
         0% {transform: scale(0.5); opacity: 0;}
         50% {transform: scale(1.2);}
@@ -91,22 +78,9 @@ if not st.session_state.splash_done:
         100% {width: 100%;}
     }
 
-    @keyframes floatLeaf {
-        0% {transform: translateY(0px);}
-        50% {transform: translateY(20px);}
-        100% {transform: translateY(0px);}
-    }
-
     </style>
-    """, unsafe_allow_html=True)
 
-    st.markdown("""
     <div class="splash-container">
-
-        <div class="leaf leaf1">🌿</div>
-        <div class="leaf leaf2">🍃</div>
-        <div class="leaf leaf3">🌱</div>
-
         <div class="logo">🌾</div>
         <div class="app-name">Farma Buddy</div>
         <div class="tagline">Smart Farming. Smarter Future.</div>
@@ -114,9 +88,10 @@ if not st.session_state.splash_done:
         <div class="progress-bar">
             <div class="progress-fill"></div>
         </div>
-
     </div>
-    """, unsafe_allow_html=True)
+    """
+
+    st.markdown(splash_html, unsafe_allow_html=True)
 
     time.sleep(5)
     st.session_state.splash_done = True
@@ -142,9 +117,3 @@ with col2:
 with col3:
     st.warning("💧 Smart Irrigation Planner")
     st.write("Efficient water usage powered by AI.")
-
-st.divider()
-
-st.markdown("### 📊 Farm Analytics Dashboard")
-st.write("Integrate your AI modules here.")
-
