@@ -1,1 +1,7 @@
+
 streamlit
+pandas
+requests
+streamlit
+pandas
+google-genai
