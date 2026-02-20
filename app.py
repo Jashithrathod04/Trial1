@@ -36,7 +36,7 @@ st.markdown("""
     content: "";
     position: fixed;
     inset: 0;
-    background: rgba(245, 239, 224, 0);
+    background: rgba(245, 239, 224, 0.90);
     z-index: 0;
 }
 
