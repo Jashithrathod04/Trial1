@@ -1,161 +1,182 @@
 import streamlit as st
-import time
-import streamlit.components.v1 as components
+import google.generativeai as genai
+import os
+from dotenv import load_dotenv
+from datetime import datetime
 
-st.set_page_config(page_title="Farma Buddy", layout="wide")
+# -----------------------
+# Load API Key
+# -----------------------
+load_dotenv()
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-# ---------------- SESSION STATE ----------------
-if "page" not in st.session_state:
-    st.session_state.page = "splash"
+# Use Gemini 1.5 Pro
+model = genai.GenerativeModel("gemini-1.5-pro")
 
-# ---------------- SPLASH SCREEN ----------------
-if st.session_state.page == "splash":
+# -----------------------
+# App Configuration
+# -----------------------
+st.set_page_config(
+    page_title="ArtRestorer AI",
+    page_icon="🎨",
+    layout="wide"
+)
 
-    splash_html = """
-    <style>
-    body {
-        margin: 0;
-        overflow: hidden;
-        background: linear-gradient(to bottom, #e8f5e9, #c8e6c9);
-        font-family: 'Segoe UI', sans-serif;
-    }
+st.title("🎨 ArtRestorer AI")
+st.subheader("AI-Powered Cultural Heritage Restoration Assistant")
 
-    .container {
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
+st.markdown("""
+This system uses Generative AI to simulate culturally sensitive and historically informed
+art restoration recommendations.
+""")
 
-    .logo {
-        font-size: 90px;
-        animation: logoPulseBounce 4s ease-in-out infinite;
-    }
+# -----------------------
+# Sidebar Controls
+# -----------------------
+st.sidebar.header("⚙️ Restoration Settings")
 
-    @keyframes logoPulseBounce {
-        0% { transform: scale(0.8); }
-        20% { transform: scale(1.2); }
-        40% { transform: scale(0.9); }
-        60% { transform: scale(1.15); }
-        75% { transform: scale(0.95); }
-        90% { transform: scale(1.05); }
-        100% { transform: scale(1); }
-    }
+temperature = st.sidebar.slider(
+    "Creativity Level (Temperature)",
+    0.0, 1.0, 0.3, 0.1
+)
 
-    .app-name {
-        font-size: 48px;
-        font-weight: 600;
-        color: #1b5e20;
-        margin-top: 20px;
-    }
-    </style>
+output_type = st.sidebar.radio(
+    "Output Type",
+    [
+        "Full Restoration Report",
+        "Restoration Strategy Only",
+        "Cultural Interpretation",
+        "Visitor-Friendly Summary"
+    ]
+)
 
-    <div class="container">
-        <div class="logo">🌱</div>
-        <div class="app-name">Farma Buddy</div>
-    </div>
-    """
+show_prompt = st.sidebar.checkbox("Show Generated Prompt")
 
-    components.html(splash_html, height=700)
+# -----------------------
+# Input Section
+# -----------------------
+st.header("🖌 Artwork Details")
 
-    time.sleep(4)
-    st.session_state.page = "landing"
-    st.rerun()
+col1, col2 = st.columns(2)
 
+with col1:
+    artwork_type = st.selectbox(
+        "Artwork Type",
+        [
+            "Oil Painting",
+            "Mural",
+            "Miniature Painting",
+            "Stone Sculpture",
+            "Manuscript",
+            "Tapestry",
+            "Woodblock Print",
+            "Temple Carving"
+        ]
+    )
 
-# ---------------- LANDING SCREEN ----------------
-elif st.session_state.page == "landing":
+    art_period = st.selectbox(
+        "Art Period",
+        [
+            "Renaissance",
+            "Mughal",
+            "Gothic",
+            "Medieval",
+            "Edo Period",
+            "Ancient Mayan",
+            "South Asian Classical",
+            "Abstract Expressionist"
+        ]
+    )
 
-    st.markdown("""
-    <style>
+with col2:
+    artist_name = st.text_input("Artist (Optional)")
+    damage_description = st.text_area(
+        "Describe the Damage",
+        height=150
+    )
 
-    /* Full page gradient background */
-    .main {
-        background: linear-gradient(135deg, #e8f5e9, #a5d6a7);
-    }
+generate_button = st.button("🔍 Generate Restoration Plan")
 
-    .glass-wrapper {
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+# -----------------------
+# Prompt Template
+# -----------------------
+def create_prompt():
+    base_prompt = f"""
+You are an expert art historian and conservation specialist.
 
-    .glass-card {
-        background: rgba(255, 255, 255, 0.25);
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-        border-radius: 20px;
-        padding: 60px;
-        width: 700px;
-        text-align: center;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
+Artwork Type: {artwork_type}
+Art Period: {art_period}
+Artist: {artist_name if artist_name else "Unknown"}
+Damage Description: {damage_description}
 
-    .headline {
-        font-size: 48px;
-        font-weight: 700;
-        color: #1b5e20;
-    }
+Provide a structured restoration analysis including:
 
-    .subtext {
-        font-size: 20px;
-        color: #2e7d32;
-        margin-top: 20px;
-        line-height: 1.6;
-    }
+1. Restoration Strategy
+2. Historical & Cultural Context
+3. Material and Technique Recommendations
+4. Ethical Considerations
+5. Visitor-Friendly Explanation
 
-    .stButton > button {
-        background: linear-gradient(90deg, #2e7d32, #43a047);
-        color: white;
-        padding: 14px 32px;
-        font-size: 18px;
-        border-radius: 12px;
-        border: none;
-        transition: 0.3s ease;
-        margin-top: 30px;
-    }
+Ensure the response is culturally sensitive, historically accurate,
+and avoids speculative fabrication beyond reasonable art historical inference.
+"""
+    return base_prompt
 
-    .stButton > button:hover {
-        transform: scale(1.07);
-        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-    }
+# -----------------------
+# Generate Response
+# -----------------------
+if generate_button:
 
-    </style>
-    """, unsafe_allow_html=True)
+    if not damage_description.strip():
+        st.warning("Please describe the damage before generating.")
+    else:
+        prompt = create_prompt()
 
-    st.markdown('<div class="glass-wrapper">', unsafe_allow_html=True)
-    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+        try:
+            with st.spinner("Analyzing artwork and generating restoration strategy..."):
+                response = model.generate_content(
+                    prompt,
+                    generation_config={
+                        "temperature": temperature,
+                        "top_p": 0.9,
+                        "max_output_tokens": 2048
+                    }
+                )
 
-    st.markdown('<div class="headline">AI-Powered Smart Farming</div>', unsafe_allow_html=True)
-    st.markdown('<div class="subtext">Empowering farmers with intelligent insights, predictive analytics, and sustainable solutions for a smarter agricultural future.</div>', unsafe_allow_html=True)
+            result = response.text
 
-    if st.button("🌿 Get Started"):
-        st.session_state.page = "dashboard"
-        st.rerun()
+            st.success("Restoration Plan Generated Successfully!")
 
-    st.markdown('</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+            if show_prompt:
+                st.subheader("🧠 Generated Prompt")
+                st.code(prompt)
 
+            st.subheader("📜 AI Restoration Report")
+            st.write(result)
 
-# ---------------- DASHBOARD ----------------
-elif st.session_state.page == "dashboard":
+            # Save History
+            if "history" not in st.session_state:
+                st.session_state.history = []
 
-    st.title("🌾 Farma Buddy Dashboard")
-    st.success("Welcome to your AI Farming Assistant")
+            st.session_state.history.append({
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "artwork_type": artwork_type,
+                "period": art_period,
+                "damage": damage_description,
+                "output": result
+            })
 
-    col1, col2, col3 = st.columns(3)
+        except Exception as e:
+            st.error(f"Error generating content: {e}")
 
-    with col1:
-        st.info("🌦 Weather Intelligence")
-        st.write("Real-time crop-aligned forecasting.")
+# -----------------------
+# History Section
+# -----------------------
+if "history" in st.session_state and st.session_state.history:
+    st.header("🕓 Restoration History")
 
-    with col2:
-        st.success("🌿 AI Crop Advisory")
-        st.write("Personalized yield optimization insights.")
-
-    with col3:
-        st.warning("💧 Smart Irrigation")
-        st.write("Optimize water usage with AI.")
+    for item in reversed(st.session_state.history[-5:]):
+        with st.expander(f"{item['timestamp']} — {item['artwork_type']} ({item['period']})"):
+            st.write("**Damage:**", item["damage"])
+            st.write("**AI Output:**")
+            st.write(item["output"])
