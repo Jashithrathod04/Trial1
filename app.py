@@ -25,7 +25,7 @@ st.markdown("""
 
 /* Historic Background Image */
 .stApp {
-    background-image: url("https://images.unsplash.com/photo-1575223970966-76ae61ee783c?auto=format&fit=crop&w=1920&q=80");
+    background-image: url("https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=1920&q=80");
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
