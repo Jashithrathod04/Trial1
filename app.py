@@ -18,79 +18,56 @@ st.set_page_config(
 )
 
 # -----------------------
-# Museum-Themed UI Styling
-# -----------------------
-
 st.markdown("""
 <style>
 
-/* Main App Background */
+/* Background Image */
 .stApp {
-    background: url("https://images.unsplash.com/photo-1549893079-842cf7d2b8a7?auto=format&fit=crop&w=1950&q=80");
+    background-image: url("https://raw.githubusercontent.com/plotly/datasets/master/paris_mapbox.png");
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
 }
 
-/* Dark overlay for readability */
+/* Soft parchment overlay */
 .stApp::before {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(245, 239, 224, 0.85);
+    inset: 0;
+    background: rgba(245, 239, 224, 0.88);
     z-index: 0;
 }
 
-/* Ensure content stays above overlay */
+/* Keep content above overlay */
 .main > div {
     position: relative;
     z-index: 1;
 }
 
-/* Header styling */
-.dashboard-container {
-    padding: 2rem;
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    margin-bottom: 2rem;
-}
-
-/* Elegant serif font */
+/* Typography */
 html, body, [class*="css"] {
     font-family: 'Georgia', serif;
     color: #2f2a24;
 }
 
-/* Metric Cards */
+/* Cards */
 .metric-box {
     padding: 1.2rem;
     border-radius: 14px;
     background: rgba(255, 255, 255, 0.85);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     text-align: center;
     transition: 0.3s ease;
 }
 
 .metric-box:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
 }
 
-/* Tabs Styling */
+/* Tabs */
 div[data-baseweb="tab-list"] {
     background-color: rgba(92, 72, 52, 0.15);
     border-radius: 12px;
-    padding: 0.3rem;
-}
-
-button[data-baseweb="tab"] {
-    color: #5c4834;
-    font-weight: 600;
 }
 
 button[data-baseweb="tab"][aria-selected="true"] {
@@ -104,9 +81,7 @@ button[data-baseweb="tab"][aria-selected="true"] {
     background-color: #6b4f3b;
     color: white;
     border-radius: 10px;
-    padding: 0.6rem 1.5rem;
     font-weight: 600;
-    border: none;
 }
 
 .stButton > button:hover {
@@ -115,7 +90,7 @@ button[data-baseweb="tab"][aria-selected="true"] {
 
 /* Sidebar */
 section[data-testid="stSidebar"] {
-    background-color: rgba(255, 248, 230, 0.9);
+    background-color: rgba(255, 248, 230, 0.95);
 }
 
 </style>
