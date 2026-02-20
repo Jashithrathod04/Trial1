@@ -112,6 +112,40 @@ button[data-baseweb="tab"][aria-selected="true"] {
 section[data-testid="stSidebar"] {
     background-color: rgba(101, 67, 33, 0.95);
 }
+/* ===== Sidebar Wood Texture ===== */
+section[data-testid="stSidebar"] {
+    background-image: url("https://images.pexels.com/photos/326333/pexels-photo-326333.jpeg?auto=compress&cs=tinysrgb&w=1200");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Dark overlay for readability */
+section[data-testid="stSidebar"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(50, 30, 20, 0.75);
+    z-index: 0;
+}
+
+/* Keep sidebar content above overlay */
+section[data-testid="stSidebar"] > div {
+    position: relative;
+    z-index: 1;
+}
+
+/* Sidebar text styling */
+section[data-testid="stSidebar"] * {
+    color: #f5e6d3 !important;
+    font-family: 'Georgia', serif;
+}
+
+/* Sidebar sliders and inputs styling */
+section[data-testid="stSidebar"] .stSlider label,
+section[data-testid="stSidebar"] .stRadio label {
+    font-weight: 600;
+}
 
 </style>
 """, unsafe_allow_html=True)
