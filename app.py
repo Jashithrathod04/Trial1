@@ -25,7 +25,7 @@ st.markdown("""
 
 /* Historic Background Image */
 .stApp {
-    background-image: url("https://media.istockphoto.com/id/133306941/photo/old-paper.jpg?s=2048x2048&w=is&k=20&c=7dHLYb1k4XL0it-OSFiAZSbzFv_6arfQMZrWQxrLmrU=");
+    background-image: url("https://plus.unsplash.com/premium_photo-1722528426182-aa38c160100d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8VmludGFnZSUyMHBhcmNobWVudHxlbnwwfHwwfHx8MA%3D%3D");
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
