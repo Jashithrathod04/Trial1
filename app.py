@@ -19,71 +19,63 @@ st.set_page_config(
 )
 
 # -----------------------
+# -----------------------
 st.markdown("""
 <style>
 
-/* ===== DASHBOARD CONTAINER ===== */
-.dashboard-wrapper {
-    background: #F8F3E8;
-    padding: 2.5rem;
-    border-radius: 20px;
-    border: 2px solid #C6A75E;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+/* Historic Background Image */
+.stApp {
+    background-image: url("https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=1920");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/* Elegant parchment overlay for readability */
+.stApp::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(245, 239, 224, 0);
+    z-index: 0;
+}
+
+/* Keep content above overlay */
+.main > div {
+    position: relative;
+    z-index: 1;
+}
+
+/* Typography – Museum Style */
+html, body, [class*="css"] {
+    font-family: 'Georgia', serif;
+    color: #2f2a24;
+}
+
+/* Dashboard container */
+.dashboard-container {
+    padding: 2rem;
+    border-radius: 18px;
+    background-color: rgba(60, 40, 30, 0.95);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
     margin-bottom: 2rem;
 }
 
-/* Title */
-.dashboard-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #3E2723;
-    margin-bottom: 0.5rem;
-}
-
-/* Subtitle */
-.dashboard-subtitle {
-    font-size: 1.1rem;
-    color: #5D4037;
-    margin-bottom: 2rem;
-}
-
-/* Metric Cards */
-.dashboard-metric {
-    background: white;
+/* Metric cards */
+.metric-box {
     padding: 1.2rem;
     border-radius: 14px;
-    border-left: 6px solid #C6A75E;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
+    background: rgba(92, 64, 51, 0.95);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: 0.3s ease;
 }
 
-.dashboard-metric:hover {
+.metric-box:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
 }
-
-/* Metric Title */
-.metric-title {
-    font-size: 0.9rem;
-    color: #6D4C41;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Metric Value */
-.metric-value {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #3E2723;
-}
-
-/* Divider line */
-.dashboard-divider {
-    height: 2px;
-    background: linear-gradient(to right, #C6A75E, transparent);
-    margin: 1.5rem 0;
-}
-
 
 /* Tabs */
 div[data-baseweb="tab-list"] {
