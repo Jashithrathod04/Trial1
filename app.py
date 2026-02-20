@@ -110,7 +110,7 @@ button[data-baseweb="tab"][aria-selected="true"] {
 
 /* Sidebar */
 section[data-testid="stSidebar"] {
-    background-color: rgba(255, 248, 230, 0.95);
+    background-color: rgba(101, 67, 33, 0.95);
 }
 
 </style>
