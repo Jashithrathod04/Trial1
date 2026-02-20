@@ -5,3 +5,6 @@ requests
 streamlit
 pandas
 google-genai
+streamlit
+google-generativeai
+python-dotenv
