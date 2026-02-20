@@ -55,7 +55,7 @@ html, body, [class*="css"] {
 .dashboard-container {
     padding: 2rem;
     border-radius: 18px;
-    background: rgba(255, 255, 255, 0.80);
+    background-color: rgba(60, 40, 30, 0.95);
     backdrop-filter: blur(6px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
     margin-bottom: 2rem;
