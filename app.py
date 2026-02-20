@@ -65,7 +65,7 @@ html, body, [class*="css"] {
 .metric-box {
     padding: 1.2rem;
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.90);
+    background: rgba(92, 64, 51, 0.95);
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     text-align: center;
     transition: 0.3s ease;
