@@ -18,6 +18,109 @@ st.set_page_config(
 )
 
 # -----------------------
+# Museum-Themed UI Styling
+# -----------------------
+
+st.markdown("""
+<style>
+
+/* Main App Background */
+.stApp {
+    background: url("https://images.unsplash.com/photo-1549893079-842cf7d2b8a7?auto=format&fit=crop&w=1950&q=80");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/* Dark overlay for readability */
+.stApp::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(245, 239, 224, 0.85);
+    z-index: 0;
+}
+
+/* Ensure content stays above overlay */
+.main > div {
+    position: relative;
+    z-index: 1;
+}
+
+/* Header styling */
+.dashboard-container {
+    padding: 2rem;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+}
+
+/* Elegant serif font */
+html, body, [class*="css"] {
+    font-family: 'Georgia', serif;
+    color: #2f2a24;
+}
+
+/* Metric Cards */
+.metric-box {
+    padding: 1.2rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.metric-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+/* Tabs Styling */
+div[data-baseweb="tab-list"] {
+    background-color: rgba(92, 72, 52, 0.15);
+    border-radius: 12px;
+    padding: 0.3rem;
+}
+
+button[data-baseweb="tab"] {
+    color: #5c4834;
+    font-weight: 600;
+}
+
+button[data-baseweb="tab"][aria-selected="true"] {
+    background-color: #5c4834 !important;
+    color: white !important;
+    border-radius: 10px;
+}
+
+/* Buttons */
+.stButton > button {
+    background-color: #6b4f3b;
+    color: white;
+    border-radius: 10px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+    border: none;
+}
+
+.stButton > button:hover {
+    background-color: #4b3621;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: rgba(255, 248, 230, 0.9);
+}
+
+</style>
+""", unsafe_allow_html=True)
+# -----------------------
 # Elegant Dashboard Header
 # -----------------------
 
