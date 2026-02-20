@@ -25,7 +25,7 @@ st.markdown("""
 
 /* Historic Background Image */
 .stApp {
-    background-image: url("https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=1920");
+    background-image: url("https://images.unsplash.com/photo-1581091870627-3a5a1e9a28f4?auto=format&fit=crop&w=1600&q=80");
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
