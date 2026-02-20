@@ -25,7 +25,7 @@ st.markdown("""
 
 /* Historic Background Image */
 .stApp {
-    background-image: url("https://images.pexels.com/photos/14893627/pexels-photo-14893627.jpeg");
+    background-image: url("https://images.pexels.com/photos/30254081/pexels-photo-30254081.jpeg");
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
