@@ -18,6 +18,80 @@ st.set_page_config(
 )
 
 # -----------------------
+# Elegant Dashboard Header
+# -----------------------
+
+st.markdown("""
+<style>
+.dashboard-container {
+    padding: 2rem 1.5rem;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #f8f9fa, #eef2f7);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+}
+
+.dashboard-title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.dashboard-subtitle {
+    font-size: 1.1rem;
+    color: #5f6c7b;
+    margin-top: 0.5rem;
+}
+
+.metric-box {
+    padding: 1rem;
+    border-radius: 12px;
+    background-color: white;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div class="dashboard-container">
+    <div class="dashboard-title">🎨 ArtRestorer AI</div>
+    <div class="dashboard-subtitle">
+        AI-Powered Cultural Heritage Restoration Assistant<br>
+        This system uses Generative AI to simulate culturally sensitive and historically informed art restoration recommendations.
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# Dashboard Metrics Row
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown("""
+    <div class="metric-box">
+        <h4>🤖 Model</h4>
+        <p><b>Gemini 3 Flash Preview</b></p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown("""
+    <div class="metric-box">
+        <h4>🎯 Mode</h4>
+        <p><b>Cultural Restoration Analysis</b></p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown("""
+    <div class="metric-box">
+        <h4>⚡ Status</h4>
+        <p><b>Operational</b></p>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.divider()
+# -----------------------
 # Tabs
 # -----------------------
 tab1, tab2 = st.tabs(["🎨 Restoration Generator", "🕓 Recent Restoration History"])
