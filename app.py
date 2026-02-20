@@ -150,6 +150,55 @@ section[data-testid="stSidebar"] .stRadio label {
 
 </style>
 """, unsafe_allow_html=True)
+
+# ===== DASHBOARD LAYOUT =====
+
+st.markdown("""
+<div class="dashboard-wrapper">
+    <div class="dashboard-title">🎨 ArtRestorer AI</div>
+    <div class="dashboard-subtitle">
+        AI-Powered Cultural Heritage Restoration Assistant<br>
+        Historically informed. Ethically grounded. Culturally sensitive.
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# Metrics Row
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+    st.markdown("""
+    <div class="dashboard-metric">
+        <div class="metric-title">Model</div>
+        <div class="metric-value">Gemini 3 Flash</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown("""
+    <div class="dashboard-metric">
+        <div class="metric-title">Restorations</div>
+        <div class="metric-value">Active Session</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown("""
+    <div class="dashboard-metric">
+        <div class="metric-title">Analysis Mode</div>
+        <div class="metric-value">Cultural Intelligence</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col4:
+    st.markdown("""
+    <div class="dashboard-metric">
+        <div class="metric-title">System Status</div>
+        <div class="metric-value">Operational</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.markdown('<div class="dashboard-divider"></div>', unsafe_allow_html=True)
 # -----------------------
 # Elegant Dashboard Header
 # -----------------------
