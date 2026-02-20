@@ -1,20 +1,15 @@
 import streamlit as st
 import google.generativeai as genai
-import os
-from dotenv import load_dotenv
 from datetime import datetime
 
 # -----------------------
-# Load API Key
+# Configure Gemini API (Streamlit Secrets)
 # -----------------------
-load_dotenv()
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-
-# Use Gemini 1.5 Pro
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 model = genai.GenerativeModel("gemini-1.5-pro")
 
 # -----------------------
-# App Configuration
+# Page Config
 # -----------------------
 st.set_page_config(
     page_title="ArtRestorer AI",
@@ -31,7 +26,7 @@ art restoration recommendations.
 """)
 
 # -----------------------
-# Sidebar Controls
+# Sidebar Settings
 # -----------------------
 st.sidebar.header("⚙️ Restoration Settings")
 
@@ -98,10 +93,28 @@ with col2:
 generate_button = st.button("🔍 Generate Restoration Plan")
 
 # -----------------------
-# Prompt Template
+# Prompt Builder
 # -----------------------
 def create_prompt():
-    base_prompt = f"""
+    section_instruction = ""
+
+    if output_type == "Restoration Strategy Only":
+        section_instruction = "Provide only the restoration strategy section."
+    elif output_type == "Cultural Interpretation":
+        section_instruction = "Focus only on historical and cultural interpretation."
+    elif output_type == "Visitor-Friendly Summary":
+        section_instruction = "Provide only a simplified explanation suitable for museum visitors."
+    else:
+        section_instruction = """
+Provide a structured report including:
+1. Restoration Strategy
+2. Historical & Cultural Context
+3. Material and Technique Recommendations
+4. Ethical Considerations
+5. Visitor-Friendly Explanation
+"""
+
+    prompt = f"""
 You are an expert art historian and conservation specialist.
 
 Artwork Type: {artwork_type}
@@ -109,21 +122,15 @@ Art Period: {art_period}
 Artist: {artist_name if artist_name else "Unknown"}
 Damage Description: {damage_description}
 
-Provide a structured restoration analysis including:
+{section_instruction}
 
-1. Restoration Strategy
-2. Historical & Cultural Context
-3. Material and Technique Recommendations
-4. Ethical Considerations
-5. Visitor-Friendly Explanation
-
-Ensure the response is culturally sensitive, historically accurate,
+Ensure the response is culturally sensitive, historically grounded,
 and avoids speculative fabrication beyond reasonable art historical inference.
 """
-    return base_prompt
+    return prompt
 
 # -----------------------
-# Generate Response
+# Generate Output
 # -----------------------
 if generate_button:
 
@@ -151,7 +158,7 @@ if generate_button:
                 st.subheader("🧠 Generated Prompt")
                 st.code(prompt)
 
-            st.subheader("📜 AI Restoration Report")
+            st.subheader("📜 AI Restoration Output")
             st.write(result)
 
             # Save History
@@ -173,10 +180,10 @@ if generate_button:
 # History Section
 # -----------------------
 if "history" in st.session_state and st.session_state.history:
-    st.header("🕓 Restoration History")
+    st.header("🕓 Recent Restoration History")
 
     for item in reversed(st.session_state.history[-5:]):
         with st.expander(f"{item['timestamp']} — {item['artwork_type']} ({item['period']})"):
-            st.write("**Damage:**", item["damage"])
+            st.write("**Damage Description:**", item["damage"])
             st.write("**AI Output:**")
             st.write(item["output"])
