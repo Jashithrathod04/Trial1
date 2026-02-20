@@ -25,7 +25,7 @@ st.markdown("""
 
 /* Historic Background Image */
 .stApp {
-    background-image: url("https://plus.unsplash.com/premium_photo-1722528426182-aa38c160100d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8VmludGFnZSUyMHBhcmNobWVudHxlbnwwfHwwfHx8MA%3D%3D");
+    background-image: url("https://unsplash.com/photos/brown-and-white-round-ceiling-eX7Og8NlrhY");
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
