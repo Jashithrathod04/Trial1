@@ -2,6 +2,7 @@ import streamlit as st
 import google.generativeai as genai
 from datetime import datetime
 
+
 # -----------------------
 # Configure Gemini API (Streamlit Secrets)
 # -----------------------
@@ -21,20 +22,20 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-/* Background Image */
+/* Historic Background Image */
 .stApp {
-    background-image: url("https://raw.githubusercontent.com/plotly/datasets/master/paris_mapbox.png");
+    background-image: url("https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=1920");
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
 }
 
-/* Soft parchment overlay */
+/* Elegant parchment overlay for readability */
 .stApp::before {
     content: "";
     position: fixed;
     inset: 0;
-    background: rgba(245, 239, 224, 0.88);
+    background: rgba(245, 239, 224, 0.90);
     z-index: 0;
 }
 
@@ -44,30 +45,47 @@ st.markdown("""
     z-index: 1;
 }
 
-/* Typography */
+/* Typography – Museum Style */
 html, body, [class*="css"] {
     font-family: 'Georgia', serif;
     color: #2f2a24;
 }
 
-/* Cards */
+/* Dashboard container */
+.dashboard-container {
+    padding: 2rem;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.80);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+}
+
+/* Metric cards */
 .metric-box {
     padding: 1.2rem;
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.90);
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     text-align: center;
     transition: 0.3s ease;
 }
 
 .metric-box:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
 }
 
 /* Tabs */
 div[data-baseweb="tab-list"] {
-    background-color: rgba(92, 72, 52, 0.15);
+    background-color: rgba(92, 72, 52, 0.20);
     border-radius: 12px;
+    padding: 4px;
+}
+
+button[data-baseweb="tab"] {
+    font-weight: 600;
+    color: #5c4834;
 }
 
 button[data-baseweb="tab"][aria-selected="true"] {
@@ -81,7 +99,9 @@ button[data-baseweb="tab"][aria-selected="true"] {
     background-color: #6b4f3b;
     color: white;
     border-radius: 10px;
+    padding: 0.6rem 1.5rem;
     font-weight: 600;
+    border: none;
 }
 
 .stButton > button:hover {
