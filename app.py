@@ -6,7 +6,7 @@ from datetime import datetime
 # Configure Gemini API (Streamlit Secrets)
 # -----------------------
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-model = genai.GenerativeModel("gemini-1.5-pro")
+model = genai.GenerativeModel("gemini-3-flash-preview")
 
 # -----------------------
 # Page Config
@@ -145,8 +145,9 @@ if generate_button:
                     prompt,
                     generation_config={
                         "temperature": temperature,
-                        "top_p": 0.9,
-                        "max_output_tokens": 2048
+                        "top_p": 0.95,
+                        "top_k": 40,
+                        "max_output_tokens": 2048,
                     }
                 )
 
