@@ -242,6 +242,8 @@ with col3:
     </div>
     """, unsafe_allow_html=True)
 
+st.markdown('<div class="animated-divider"></div>', unsafe_allow_html=True)
+
 /* ================= ANIMATED DIVIDER ================= */
 
 @keyframes dividerFlow {
