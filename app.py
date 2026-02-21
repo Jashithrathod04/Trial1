@@ -269,7 +269,7 @@ with col3:
     </div>
     """, unsafe_allow_html=True)
 
-/* ===== Animated Gold Divider ===== */
+/* ================= ANIMATED DIVIDER ================= */
 
 @keyframes dividerFlow {
     0% { background-position: -200% center; }
