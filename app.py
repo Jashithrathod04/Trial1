@@ -23,8 +23,6 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-/* ================= BACKGROUND ================= */
-
 /* Historic Background Image */
 .stApp {
     background-image: url("https://images.unsplash.com/photo-1598300053653-9b0c9e0b9d1e?auto=format&fit=crop&w=1920&q=80");
@@ -33,68 +31,44 @@ st.markdown("""
     background-position: center;
 }
 
-/* ================= SIDEBAR ================= */
-
-section[data-testid="stSidebar"] {
-    background-image: url("https://images.pexels.com/photos/326333/pexels-photo-326333.jpeg?auto=compress&cs=tinysrgb&w=1200");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-section[data-testid="stSidebar"]::before {
 /* Elegant parchment overlay for readability */
 .stApp::before {
     content: "";
-    position: absolute;
     position: fixed;
     inset: 0;
-    background: rgba(50, 30, 20, 0.75);
     background: rgba(245, 239, 224, 0);
     z-index: 0;
 }
 
-section[data-testid="stSidebar"] > div {
 /* Keep content above overlay */
 .main > div {
     position: relative;
     z-index: 1;
 }
 
-section[data-testid="stSidebar"] * {
-    color: #f5e6d3 !important;
 /* Typography – Museum Style */
 html, body, [class*="css"] {
     font-family: 'Georgia', serif;
     color: #2f2a24;
 }
 
-/* ================= DASHBOARD CONTAINER ================= */
-
 /* ===== PREMIUM DASHBOARD CONTAINER ===== */
 .dashboard-container {
     padding: 3rem;
     border-radius: 22px;
-@@ -72,30 +64,24 @@
+    background: linear-gradient(145deg, rgba(40,25,20,0.95), rgba(70,45,35,0.95));
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
+    border: 1px solid rgba(198,167,94,0.4);
+    margin-bottom: 2.5rem;
     text-align: center;
-}
-
-/* ================= ANIMATED TITLE ================= */
-
-@keyframes goldGlow {
-    0% { text-shadow: 0 0 10px rgba(198,167,94,0.4); }
-    50% { text-shadow: 0 0 25px rgba(198,167,94,0.9); }
-    100% { text-shadow: 0 0 10px rgba(198,167,94,0.4); }
 }
 
 /* ===== TITLE ===== */
 .dashboard-title {
-    font-size: 2.6rem;
     font-size: 2.4rem;
     font-weight: 700;
     color: #C6A75E;
-    letter-spacing: 1.5px;
-    animation: goldGlow 3s ease-in-out infinite;
     letter-spacing: 1px;
     text-shadow: 0 0 15px rgba(198,167,94,0.5);
 }
@@ -107,13 +81,16 @@ html, body, [class*="css"] {
     opacity: 0.9;
 }
 
-/* ================= METRIC CARDS ================= */
-
 /* ===== METRIC CARDS ===== */
 .metric-box {
     padding: 1.6rem;
     border-radius: 16px;
-@@ -108,6 +94,7 @@
+    background: rgba(50,30,20,0.95);
+    box-shadow: 0 6px 25px rgba(0,0,0,0.5);
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(198,167,94,0.2);
+}
 
 .metric-box h4 {
     color: #C6A75E;
@@ -121,39 +98,28 @@ html, body, [class*="css"] {
 }
 
 .metric-box p {
-@@ -120,81 +107,114 @@
+    color: #f5e6d3;
+}
+
+.metric-box:hover {
+    transform: translateY(-6px);
+    border: 1px solid #C6A75E;
     box-shadow: 0 0 25px rgba(198,167,94,0.5);
 }
 
-/* ================= GLOWING BUTTONS ================= */
-
-@keyframes buttonGlow {
-    0% { box-shadow: 0 0 10px rgba(198,167,94,0.3); }
-    50% { box-shadow: 0 0 25px rgba(198,167,94,0.8); }
-    100% { box-shadow: 0 0 10px rgba(198,167,94,0.3); }
 .metric-box:hover {
     transform: translateY(-4px);
     box-shadow: 0 6px 20px rgba(0,0,0,0.12);
 }
 
-.stButton > button {
-    background: linear-gradient(145deg, #C6A75E, #8C6B2F);
-    color: black;
-    border-radius: 12px;
-    padding: 0.7rem 1.6rem;
-    font-weight: 700;
-    border: none;
-    transition: all 0.3s ease;
-    animation: buttonGlow 3s ease-in-out infinite;
-}
 
-.stButton > button:hover {
-    transform: scale(1.06);
-    box-shadow: 0 0 35px rgba(198,167,94,1);
-}
+st.markdown("""
+<hr style="border: none; height: 1px; 
+background: linear-gradient(to right, transparent, #C6A75E, transparent); 
+margin: 3rem 0;">
+""", unsafe_allow_html=True)
+st.divider()
 
-
-/* ================= GLASS + GOLD TABS ================= */
 
 /* Tabs */
 /* ===== Glass + Gold Tabs ===== */
@@ -188,34 +154,15 @@ button[data-baseweb="tab"][aria-selected="true"] {
     box-shadow: 0 0 15px rgba(198,167,94,0.6);
 }
 
-/* ================= ANIMATED DIVIDER ================= */
 /* Buttons */
 /* ===== Glowing Gold Buttons ===== */
 
-@keyframes dividerFlow {
-    0% { background-position: -200% center; }
-    100% { background-position: 200% center; }
 @keyframes buttonGlow {
     0% { box-shadow: 0 0 10px rgba(198,167,94,0.3); }
     50% { box-shadow: 0 0 25px rgba(198,167,94,0.8); }
     100% { box-shadow: 0 0 10px rgba(198,167,94,0.3); }
 }
 
-.animated-divider {
-    height: 2px;
-    width: 100%;
-    margin: 3rem 0;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        #C6A75E,
-        #E0C27B,
-        #C6A75E,
-        transparent
-    );
-    background-size: 200% auto;
-    animation: dividerFlow 4s linear infinite;
-    border-radius: 2px;
 .stButton > button {
     background: linear-gradient(145deg, #C6A75E, #8C6B2F);
     color: black;
@@ -272,12 +219,7 @@ section[data-testid="stSidebar"] .stRadio label {
 }
 
 </style>
-@@ -242,8 +262,6 @@
-    </div>
-    """, unsafe_allow_html=True)
-
-st.markdown('<div class="animated-divider"></div>', unsafe_allow_html=True)
-
+""", unsafe_allow_html=True
 
 # -----------------------
 # Tabs
