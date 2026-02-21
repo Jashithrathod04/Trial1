@@ -170,6 +170,11 @@ button[data-baseweb="tab"][aria-selected="true"] {
 }
 
 .stButton > button {
+    background-color: #6b4f3b;
+    color: white;
+    border-radius: 10px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
     background: linear-gradient(145deg, #C6A75E, #8C6B2F);
     color: black;
     border-radius: 12px;
@@ -181,6 +186,7 @@ button[data-baseweb="tab"][aria-selected="true"] {
 }
 
 .stButton > button:hover {
+    background-color: #4b3621;
     transform: scale(1.06);
     box-shadow: 0 0 35px rgba(198,167,94,1);
 }
@@ -274,29 +280,6 @@ st.markdown("""
 background: linear-gradient(to right, transparent, #C6A75E, transparent); 
 margin: 3rem 0;">
 """, unsafe_allow_html=True)
-/* ===== Animated Gold Divider ===== */
-
-@keyframes dividerFlow {
-    0% { background-position: -200% center; }
-    100% { background-position: 200% center; }
-}
-
-.animated-divider {
-    height: 2px;
-    width: 100%;
-    margin: 3rem 0;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        #C6A75E,
-        #E0C27B,
-        #C6A75E,
-        transparent
-    );
-    background-size: 200% auto;
-    animation: dividerFlow 4s linear infinite;
-    border-radius: 2px;
-}
 # -----------------------
 # Tabs
 # -----------------------
