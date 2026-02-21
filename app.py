@@ -120,7 +120,6 @@ margin: 3rem 0;">
 """, unsafe_allow_html=True)
 
 
-
 /* Tabs */
 /* ===== Glass + Gold Tabs ===== */
 div[data-baseweb="tab-list"] {
