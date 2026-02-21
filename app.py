@@ -113,21 +113,36 @@ html, body, [class*="css"] {
 }
 
 /* Tabs */
+/* ===== Glass + Gold Tabs ===== */
 div[data-baseweb="tab-list"] {
-    background-color: rgba(92, 72, 52, 0.20);
-    border-radius: 12px;
-    padding: 4px;
+    background: rgba(40,25,20,0.6);
+    backdrop-filter: blur(12px);
+    border-radius: 18px;
+    padding: 6px;
+    border: 1px solid rgba(198,167,94,0.3);
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
+/* Default tab */
 button[data-baseweb="tab"] {
     font-weight: 600;
-    color: #5c4834;
+    color: #f5e6d3;
+    border-radius: 12px;
+    transition: all 0.3s ease;
 }
 
+/* Hover effect */
+button[data-baseweb="tab"]:hover {
+    background: rgba(198,167,94,0.15);
+    color: #C6A75E;
+}
+
+/* Active tab */
 button[data-baseweb="tab"][aria-selected="true"] {
-    background-color: #5c4834 !important;
-    color: white !important;
-    border-radius: 10px;
+    background: linear-gradient(145deg, #C6A75E, #8C6B2F) !important;
+    color: black !important;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(198,167,94,0.6);
 }
 
 /* Buttons */
