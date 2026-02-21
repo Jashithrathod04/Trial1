@@ -269,11 +269,29 @@ with col3:
     </div>
     """, unsafe_allow_html=True)
 
-st.markdown("""
-<hr style="border: none; height: 1px; 
-background: linear-gradient(to right, transparent, #C6A75E, transparent); 
-margin: 3rem 0;">
-""", unsafe_allow_html=True)
+/* ===== Animated Gold Divider ===== */
+
+@keyframes dividerFlow {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+.animated-divider {
+    height: 2px;
+    width: 100%;
+    margin: 3rem 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #C6A75E,
+        #E0C27B,
+        #C6A75E,
+        transparent
+    );
+    background-size: 200% auto;
+    animation: dividerFlow 4s linear infinite;
+    border-radius: 2px;
+}
 # -----------------------
 # Tabs
 # -----------------------
