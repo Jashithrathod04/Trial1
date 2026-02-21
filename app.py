@@ -113,11 +113,7 @@ html, body, [class*="css"] {
 }
 
 
-st.markdown("""
-<hr style="border: none; height: 1px; 
-background: linear-gradient(to right, transparent, #C6A75E, transparent); 
-margin: 3rem 0;">
-""", unsafe_allow_html=True)
+st.divider()
 
 
 /* Tabs */
