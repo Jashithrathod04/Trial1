@@ -161,17 +161,28 @@ button[data-baseweb="tab"][aria-selected="true"] {
 }
 
 /* Buttons */
+/* ===== Glowing Gold Buttons ===== */
+
+@keyframes buttonGlow {
+    0% { box-shadow: 0 0 10px rgba(198,167,94,0.3); }
+    50% { box-shadow: 0 0 25px rgba(198,167,94,0.8); }
+    100% { box-shadow: 0 0 10px rgba(198,167,94,0.3); }
+}
+
 .stButton > button {
-    background-color: #6b4f3b;
-    color: white;
-    border-radius: 10px;
-    padding: 0.6rem 1.5rem;
-    font-weight: 600;
+    background: linear-gradient(145deg, #C6A75E, #8C6B2F);
+    color: black;
+    border-radius: 12px;
+    padding: 0.7rem 1.6rem;
+    font-weight: 700;
     border: none;
+    transition: all 0.3s ease;
+    animation: buttonGlow 3s ease-in-out infinite;
 }
 
 .stButton > button:hover {
-    background-color: #4b3621;
+    transform: scale(1.06);
+    box-shadow: 0 0 35px rgba(198,167,94,1);
 }
 
 /* Sidebar */
