@@ -52,24 +52,59 @@ html, body, [class*="css"] {
     color: #2f2a24;
 }
 
-/* Dashboard container */
+/* ===== PREMIUM DASHBOARD CONTAINER ===== */
 .dashboard-container {
-    padding: 2rem;
-    border-radius: 18px;
-    background-color: rgba(60, 40, 30, 0.95);
-    backdrop-filter: blur(6px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    margin-bottom: 2rem;
+    padding: 3rem;
+    border-radius: 22px;
+    background: linear-gradient(145deg, rgba(40,25,20,0.95), rgba(70,45,35,0.95));
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
+    border: 1px solid rgba(198,167,94,0.4);
+    margin-bottom: 2.5rem;
+    text-align: center;
 }
 
-/* Metric cards */
+/* ===== TITLE ===== */
+.dashboard-title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #C6A75E;
+    letter-spacing: 1px;
+    text-shadow: 0 0 15px rgba(198,167,94,0.5);
+}
+
+/* ===== SUBTITLE ===== */
+.dashboard-subtitle {
+    margin-top: 0.8rem;
+    font-size: 1.05rem;
+    color: #f5e6d3;
+    opacity: 0.9;
+}
+
+/* ===== METRIC CARDS ===== */
 .metric-box {
-    padding: 1.2rem;
-    border-radius: 14px;
-    background: rgba(92, 64, 51, 0.95);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    padding: 1.6rem;
+    border-radius: 16px;
+    background: rgba(50,30,20,0.95);
+    box-shadow: 0 6px 25px rgba(0,0,0,0.5);
     text-align: center;
-    transition: 0.3s ease;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(198,167,94,0.2);
+}
+
+.metric-box h4 {
+    color: #C6A75E;
+    margin-bottom: 0.6rem;
+}
+
+.metric-box p {
+    color: #f5e6d3;
+}
+
+.metric-box:hover {
+    transform: translateY(-6px);
+    border: 1px solid #C6A75E;
+    box-shadow: 0 0 25px rgba(198,167,94,0.5);
 }
 
 .metric-box:hover {
