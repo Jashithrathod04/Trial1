@@ -25,8 +25,7 @@ st.markdown("""
 
 /* Historic Background Image */
 .stApp {
-    background-image: url("https://media.istockphoto.com/id/133306941/photo/old-paper.jpg?s=2048x2048&w=is&k=20&c=7dHLYb1k4XL0it-OSFiAZSbzFv_6arfQMZrWQxrLmrU=");
-    background-image: url("https://plus.unsplash.com/premium_photo-1722528426182-aa38c160100d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8VmludGFnZSUyMHBhcmNobWVudHxlbnwwfHwwfHx8MA%3D%3D");
+    background-image: url("https://images.unsplash.com/photo-1598300053653-9b0c9e0b9d1e?auto=format&fit=crop&w=1920&q=80");
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
@@ -53,24 +52,59 @@ html, body, [class*="css"] {
     color: #2f2a24;
 }
 
-/* Dashboard container */
+/* ===== PREMIUM DASHBOARD CONTAINER ===== */
 .dashboard-container {
-    padding: 2rem;
-    border-radius: 18px;
-    background-color: rgba(60, 40, 30, 0.95);
-    backdrop-filter: blur(6px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    margin-bottom: 2rem;
+    padding: 3rem;
+    border-radius: 22px;
+    background: linear-gradient(145deg, rgba(40,25,20,0.95), rgba(70,45,35,0.95));
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
+    border: 1px solid rgba(198,167,94,0.4);
+    margin-bottom: 2.5rem;
+    text-align: center;
 }
 
-/* Metric cards */
+/* ===== TITLE ===== */
+.dashboard-title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #C6A75E;
+    letter-spacing: 1px;
+    text-shadow: 0 0 15px rgba(198,167,94,0.5);
+}
+
+/* ===== SUBTITLE ===== */
+.dashboard-subtitle {
+    margin-top: 0.8rem;
+    font-size: 1.05rem;
+    color: #f5e6d3;
+    opacity: 0.9;
+}
+
+/* ===== METRIC CARDS ===== */
 .metric-box {
-    padding: 1.2rem;
-    border-radius: 14px;
-    background: rgba(92, 64, 51, 0.95);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    padding: 1.6rem;
+    border-radius: 16px;
+    background: rgba(50,30,20,0.95);
+    box-shadow: 0 6px 25px rgba(0,0,0,0.5);
     text-align: center;
-    transition: 0.3s ease;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(198,167,94,0.2);
+}
+
+.metric-box h4 {
+    color: #C6A75E;
+    margin-bottom: 0.6rem;
+}
+
+.metric-box p {
+    color: #f5e6d3;
+}
+
+.metric-box:hover {
+    transform: translateY(-6px);
+    border: 1px solid #C6A75E;
+    box-shadow: 0 0 25px rgba(198,167,94,0.5);
 }
 
 .metric-box:hover {
@@ -78,36 +112,77 @@ html, body, [class*="css"] {
     box-shadow: 0 6px 20px rgba(0,0,0,0.12);
 }
 
-/* Tabs */
-div[data-baseweb="tab-list"] {
-    background-color: rgba(92, 72, 52, 0.20);
-    border-radius: 12px;
-    padding: 4px;
+
+/* ===== Animated Gold Glow Title ===== */
+@keyframes goldGlow {
+    0% { text-shadow: 0 0 10px rgba(198,167,94,0.4); }
+    50% { text-shadow: 0 0 25px rgba(198,167,94,0.9); }
+    100% { text-shadow: 0 0 10px rgba(198,167,94,0.4); }
 }
 
+.dashboard-title {
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #C6A75E;
+    letter-spacing: 1.5px;
+    animation: goldGlow 3s ease-in-out infinite;
+}
+/* Tabs */
+/* ===== Glass + Gold Tabs ===== */
+div[data-baseweb="tab-list"] {
+    background: rgba(40,25,20,0.6);
+    backdrop-filter: blur(12px);
+    border-radius: 18px;
+    padding: 6px;
+    border: 1px solid rgba(198,167,94,0.3);
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* Default tab */
 button[data-baseweb="tab"] {
     font-weight: 600;
-    color: #5c4834;
+    color: #f5e6d3;
+    border-radius: 12px;
+    transition: all 0.3s ease;
 }
 
+/* Hover effect */
+button[data-baseweb="tab"]:hover {
+    background: rgba(198,167,94,0.15);
+    color: #C6A75E;
+}
+
+/* Active tab */
 button[data-baseweb="tab"][aria-selected="true"] {
-    background-color: #5c4834 !important;
-    color: white !important;
-    border-radius: 10px;
+    background: linear-gradient(145deg, #C6A75E, #8C6B2F) !important;
+    color: black !important;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(198,167,94,0.6);
 }
 
 /* Buttons */
+/* ===== Glowing Gold Buttons ===== */
+
+@keyframes buttonGlow {
+    0% { box-shadow: 0 0 10px rgba(198,167,94,0.3); }
+    50% { box-shadow: 0 0 25px rgba(198,167,94,0.8); }
+    100% { box-shadow: 0 0 10px rgba(198,167,94,0.3); }
+}
+
 .stButton > button {
-    background-color: #6b4f3b;
-    color: white;
-    border-radius: 10px;
-    padding: 0.6rem 1.5rem;
-    font-weight: 600;
+    background: linear-gradient(145deg, #C6A75E, #8C6B2F);
+    color: black;
+    border-radius: 12px;
+    padding: 0.7rem 1.6rem;
+    font-weight: 700;
     border: none;
+    transition: all 0.3s ease;
+    animation: buttonGlow 3s ease-in-out infinite;
 }
 
 .stButton > button:hover {
-    background-color: #4b3621;
+    transform: scale(1.06);
+    box-shadow: 0 0 35px rgba(198,167,94,1);
 }
 
 /* Sidebar */
@@ -173,7 +248,7 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown("""
     <div class="metric-box">
-        <h4>🤖 Model</h4>
+        <h4>🤖 AI Engine</h4>
         <p><b>Gemini 3 Flash Preview</b></p>
     </div>
     """, unsafe_allow_html=True)
@@ -181,7 +256,7 @@ with col1:
 with col2:
     st.markdown("""
     <div class="metric-box">
-        <h4>🎯 Mode</h4>
+        <h4>🎯 System Mode</h4>
         <p><b>Cultural Restoration Analysis</b></p>
     </div>
     """, unsafe_allow_html=True)
@@ -194,7 +269,34 @@ with col3:
     </div>
     """, unsafe_allow_html=True)
 
-st.divider()
+st.markdown("""
+<hr style="border: none; height: 1px; 
+background: linear-gradient(to right, transparent, #C6A75E, transparent); 
+margin: 3rem 0;">
+""", unsafe_allow_html=True)
+/* ===== Animated Gold Divider ===== */
+
+@keyframes dividerFlow {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+.animated-divider {
+    height: 2px;
+    width: 100%;
+    margin: 3rem 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #C6A75E,
+        #E0C27B,
+        #C6A75E,
+        transparent
+    );
+    background-size: 200% auto;
+    animation: dividerFlow 4s linear infinite;
+    border-radius: 2px;
+}
 # -----------------------
 # Tabs
 # -----------------------
