@@ -113,20 +113,14 @@ html, body, [class*="css"] {
 }
 
 
-/* ===== Animated Gold Glow Title ===== */
-@keyframes goldGlow {
-    0% { text-shadow: 0 0 10px rgba(198,167,94,0.4); }
-    50% { text-shadow: 0 0 25px rgba(198,167,94,0.9); }
-    100% { text-shadow: 0 0 10px rgba(198,167,94,0.4); }
-}
+st.markdown("""
+<hr style="border: none; height: 1px; 
+background: linear-gradient(to right, transparent, #C6A75E, transparent); 
+margin: 3rem 0;">
+""", unsafe_allow_html=True)
 
-.dashboard-title {
-    font-size: 2.6rem;
-    font-weight: 700;
-    color: #C6A75E;
-    letter-spacing: 1.5px;
-    animation: goldGlow 3s ease-in-out infinite;
-}
+
+
 /* Tabs */
 /* ===== Glass + Gold Tabs ===== */
 div[data-baseweb="tab-list"] {
