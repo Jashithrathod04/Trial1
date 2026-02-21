@@ -207,7 +207,7 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown("""
     <div class="metric-box">
-        <h4>🤖 Model</h4>
+        <h4>🤖 AI Engine</h4>
         <p><b>Gemini 3 Flash Preview</b></p>
     </div>
     """, unsafe_allow_html=True)
@@ -215,7 +215,7 @@ with col1:
 with col2:
     st.markdown("""
     <div class="metric-box">
-        <h4>🎯 Mode</h4>
+        <h4>🎯 System Mode</h4>
         <p><b>Cultural Restoration Analysis</b></p>
     </div>
     """, unsafe_allow_html=True)
@@ -228,7 +228,11 @@ with col3:
     </div>
     """, unsafe_allow_html=True)
 
-st.divider()
+st.markdown("""
+<hr style="border: none; height: 1px; 
+background: linear-gradient(to right, transparent, #C6A75E, transparent); 
+margin: 3rem 0;">
+""", unsafe_allow_html=True)
 # -----------------------
 # Tabs
 # -----------------------
