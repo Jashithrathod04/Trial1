@@ -112,6 +112,21 @@ html, body, [class*="css"] {
     box-shadow: 0 6px 20px rgba(0,0,0,0.12);
 }
 
+
+/* ===== Animated Gold Glow Title ===== */
+@keyframes goldGlow {
+    0% { text-shadow: 0 0 10px rgba(198,167,94,0.4); }
+    50% { text-shadow: 0 0 25px rgba(198,167,94,0.9); }
+    100% { text-shadow: 0 0 10px rgba(198,167,94,0.4); }
+}
+
+.dashboard-title {
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #C6A75E;
+    letter-spacing: 1.5px;
+    animation: goldGlow 3s ease-in-out infinite;
+}
 /* Tabs */
 /* ===== Glass + Gold Tabs ===== */
 div[data-baseweb="tab-list"] {
