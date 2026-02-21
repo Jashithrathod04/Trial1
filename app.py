@@ -151,11 +151,7 @@ html, body, [class*="css"] {
     transform: scale(1.06);
     box-shadow: 0 0 35px rgba(198,167,94,1);
 }
-st.markdown("""
-<hr style="border: none; height: 1px; 
-background: linear-gradient(to right, transparent, #C6A75E, transparent); 
-margin: 3rem 0;">
-""", unsafe_allow_html=True)
+
 
 /* ================= GLASS + GOLD TABS ================= */
 
