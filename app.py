@@ -31,7 +31,7 @@ st.markdown("""
     background-position: center;
 }
 
-/* Elegant parchment overlay */
+/* Elegant parchment overlay for readability */
 .stApp::before {
     content: "";
     position: fixed;
@@ -40,11 +40,13 @@ st.markdown("""
     z-index: 0;
 }
 
+/* Keep content above overlay */
 .main > div {
     position: relative;
     z-index: 1;
 }
 
+/* Typography – Museum Style */
 html, body, [class*="css"] {
     font-family: 'Georgia', serif;
     color: #2f2a24;
@@ -62,13 +64,16 @@ html, body, [class*="css"] {
     text-align: center;
 }
 
+/* ===== TITLE ===== */
 .dashboard-title {
     font-size: 2.4rem;
     font-weight: 700;
     color: #C6A75E;
+    letter-spacing: 1px;
     text-shadow: 0 0 15px rgba(198,167,94,0.5);
 }
 
+/* ===== SUBTITLE ===== */
 .dashboard-subtitle {
     margin-top: 0.8rem;
     font-size: 1.05rem;
@@ -87,37 +92,134 @@ html, body, [class*="css"] {
     border: 1px solid rgba(198,167,94,0.2);
 }
 
+.metric-box h4 {
+    color: #C6A75E;
+    margin-bottom: 0.6rem;
+}
+
+.metric-box p {
+    color: #f5e6d3;
+}
+
 .metric-box:hover {
     transform: translateY(-6px);
     border: 1px solid #C6A75E;
     box-shadow: 0 0 25px rgba(198,167,94,0.5);
 }
 
-/* ===== ANIMATED DIVIDER ===== */
-@keyframes dividerFlow {
-    0% { background-position: -200% center; }
-    100% { background-position: 200% center; }
+.metric-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
 }
 
-.animated-divider {
-    height: 2px;
-    width: 100%;
-    margin: 3rem 0;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        #C6A75E,
-        #E0C27B,
-        #C6A75E,
-        transparent
-    );
-    background-size: 200% auto;
-    animation: dividerFlow 4s linear infinite;
-    border-radius: 2px;
+
+st.markdown("""
+<hr style="border: none; height: 1px; 
+background: linear-gradient(to right, transparent, #C6A75E, transparent); 
+margin: 3rem 0;">
+""", unsafe_allow_html=True)
+
+
+/* Tabs */
+/* ===== Glass + Gold Tabs ===== */
+div[data-baseweb="tab-list"] {
+    background: rgba(40,25,20,0.6);
+    backdrop-filter: blur(12px);
+    border-radius: 18px;
+    padding: 6px;
+    border: 1px solid rgba(198,167,94,0.3);
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* Default tab */
+button[data-baseweb="tab"] {
+    font-weight: 600;
+    color: #f5e6d3;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+button[data-baseweb="tab"]:hover {
+    background: rgba(198,167,94,0.15);
+    color: #C6A75E;
+}
+
+/* Active tab */
+button[data-baseweb="tab"][aria-selected="true"] {
+    background: linear-gradient(145deg, #C6A75E, #8C6B2F) !important;
+    color: black !important;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(198,167,94,0.6);
+}
+
+/* Buttons */
+/* ===== Glowing Gold Buttons ===== */
+
+@keyframes buttonGlow {
+    0% { box-shadow: 0 0 10px rgba(198,167,94,0.3); }
+    50% { box-shadow: 0 0 25px rgba(198,167,94,0.8); }
+    100% { box-shadow: 0 0 10px rgba(198,167,94,0.3); }
+}
+
+.stButton > button {
+    background: linear-gradient(145deg, #C6A75E, #8C6B2F);
+    color: black;
+    border-radius: 12px;
+    padding: 0.7rem 1.6rem;
+    font-weight: 700;
+    border: none;
+    transition: all 0.3s ease;
+    animation: buttonGlow 3s ease-in-out infinite;
+}
+
+.stButton > button:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 35px rgba(198,167,94,1);
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: rgba(101, 67, 33, 0.95);
+}
+/* ===== Sidebar Wood Texture ===== */
+section[data-testid="stSidebar"] {
+    background-image: url("https://images.pexels.com/photos/326333/pexels-photo-326333.jpeg?auto=compress&cs=tinysrgb&w=1200");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Dark overlay for readability */
+section[data-testid="stSidebar"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(50, 30, 20, 0.75);
+    z-index: 0;
+}
+
+/* Keep sidebar content above overlay */
+section[data-testid="stSidebar"] > div {
+    position: relative;
+    z-index: 1;
+}
+
+/* Sidebar text styling */
+section[data-testid="stSidebar"] * {
+    color: #f5e6d3 !important;
+    font-family: 'Georgia', serif;
+}
+
+/* Sidebar sliders and inputs styling */
+section[data-testid="stSidebar"] .stSlider label,
+section[data-testid="stSidebar"] .stRadio label {
+    font-weight: 600;
 }
 
 </style>
 """, unsafe_allow_html=True)
+
 
 # -----------------------
 # Elegant Dashboard Header
