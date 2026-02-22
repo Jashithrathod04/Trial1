@@ -242,6 +242,48 @@ if st.session_state.page == "landing":
         100% { transform: scale(1.5); opacity: 0.6; }
     }
 
+
+    .hero-title {
+        font-size: 4rem;
+        text-align: center;
+        color: #D4AF37;
+        font-family: 'Georgia', serif;
+        animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+        from { text-shadow: 0 0 10px #8B6914; }
+        to { text-shadow: 0 0 25px #FFD700; }
+    }
+
+    .tagline {
+        text-align: center;
+        font-size: 1.5rem;
+        color: #E6C97F;
+        margin-bottom: 40px;
+    }
+
+    .feature-card {
+        background: rgba(20,20,20,0.85);
+        padding: 25px;
+        border-radius: 15px;
+        border: 1px solid #C6A75E;
+        text-align: center;
+        color: #F5DEB3;
+        transition: 0.3s ease;
+    }
+
+    .feature-card:hover {
+        box-shadow: 0 0 20px #D4AF37;
+        transform: translateY(-5px);
+    }
+
+    .divider {
+        height: 2px;
+        background: linear-gradient(to right, transparent, #D4AF37, transparent);
+        margin: 50px 0;
+    }
+
     </style>
     </head>
 
