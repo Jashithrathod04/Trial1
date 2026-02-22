@@ -856,38 +856,87 @@ if st.session_state.page == "dashboard":
 
 
     with tab4:
-        st.title("📊 Restoration Insights Dashboard")
+        st.title("📊 Real-Time Restoration Insights")
+
+        # Check if history exists
+        if "history" not in st.session_state or not st.session_state.history:
+            st.info("No restoration data available yet. Generate a restoration first.")
+        else:
     
-        # Fake demo metrics (replace later with real data)
-        col1, col2, col3 = st.columns(3)
+            history = st.session_state.history
     
-        with col1:
-            st.metric("Total Restorations", "128", "+12 this week")
+            # -----------------------------
+            # REAL-TIME METRICS
+            # -----------------------------
+            total_restorations = len(history)
     
-        with col2:
-            st.metric("Average Clarity Improvement", "86%", "+4%")
+            # Count artworks by type
+            artwork_counts = {}
+            for item in history:
+                art_type = item["artwork_type"]
+                artwork_counts[art_type] = artwork_counts.get(art_type, 0) + 1
     
-        with col3:
-            st.metric("Crack Removal Success", "72%", "+6%")
+            most_common_type = max(artwork_counts, key=artwork_counts.get)
     
-        st.divider()
+            # Count by period
+            period_counts = {}
+            for item in history:
+                period = item["period"]
+                period_counts[period] = period_counts.get(period, 0) + 1
     
-        st.subheader("📈 Restoration Performance Trend")
+            most_common_period = max(period_counts, key=period_counts.get)
     
-        
+            col1, col2, col3 = st.columns(3)
     
-        data = pd.DataFrame({
-            "Day": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-            "Restorations": [5, 8, 6, 10, 9, 12, 7]
-        })
+            with col1:
+                st.metric("Total Restorations", total_restorations)
     
-        fig, ax = plt.subplots()
-        ax.plot(data["Day"], data["Restorations"])
-        ax.set_xlabel("Day")
-        ax.set_ylabel("Number of Restorations")
-        ax.set_title("Weekly Restoration Activity")
+            with col2:
+                st.metric("Most Restored Type", most_common_type)
     
-        st.pyplot(fig)
+            with col3:
+                st.metric("Most Common Period", most_common_period)
+    
+            st.divider()
+    
+            # -----------------------------
+            # RESTORATION TREND (REAL-TIME)
+            # -----------------------------
+            st.subheader("📈 Restoration Trend")
+    
+            # Convert timestamps to dates
+            dates = []
+            for item in history:
+                date = item["timestamp"].split(" ")[0]
+                dates.append(date)
+    
+            # Count restorations per day
+            date_counts = {}
+            for d in dates:
+                date_counts[d] = date_counts.get(d, 0) + 1
+    
+            trend_df = pd.DataFrame({
+                "Date": list(date_counts.keys()),
+                "Restorations": list(date_counts.values())
+            })
+    
+            trend_df = trend_df.sort_values("Date")
+    
+            st.line_chart(trend_df.set_index("Date"))
+    
+            st.divider()
+    
+            # -----------------------------
+            # ARTWORK TYPE DISTRIBUTION
+            # -----------------------------
+            st.subheader("🎨 Artwork Type Distribution")
+    
+            type_df = pd.DataFrame({
+                "Artwork Type": list(artwork_counts.keys()),
+                "Count": list(artwork_counts.values())
+            })
+    
+            st.bar_chart(type_df.set_index("Artwork Type"))
               
               
     with tab5:
