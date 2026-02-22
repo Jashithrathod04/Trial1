@@ -711,6 +711,17 @@ if st.session_state.page == "dashboard":
 
         # Sidebar Settings
         st.sidebar.header("⚙️ Restoration Settings")
+        st.sidebar.divider()
+
+        if st.sidebar.button("🚪 Sign Out", use_container_width=True):
+            # Clear user session
+            if "user" in st.session_state:
+                del st.session_state["user"]
+            
+            # Redirect to landing
+            st.session_state.page = "landing"
+            
+            st.rerun()
 
 
         # Restoration Settings (Now inside tab)
