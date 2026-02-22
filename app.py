@@ -134,201 +134,199 @@ if st.session_state.page == "landing":
 # -----------------------------
 # CINEMATIC TOP SECTION
 # -----------------------------
-import streamlit.components.v1 as components
 
-import streamlit.components.v1 as components
 
-landing_block = """
-<html>
-<head>
-<style>
-body {
-    margin: 0;
-    overflow: hidden;
-    background: #000000;
-    font-family: Georgia, serif;
-}
-
-/* PARTICLES */
-.particles {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255,215,0,0.12) 1px, transparent 1px);
-    background-size: 70px 70px;
-    animation: moveParticles 60s linear infinite;
-    z-index: 1;
-}
-
-@keyframes moveParticles {
-    from { background-position: 0 0; }
-    to { background-position: 800px 800px; }
-}
-
-/* CURTAINS */
-.curtain-left, .curtain-right {
-    position: absolute;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(to bottom, #3a0000, #120000);
-    z-index: 3;
-}
-
-.curtain-left {
-    left: 0;
-    border-right: 4px solid #D4AF37;
-    animation: openLeft 3s forwards ease-in-out;
-}
-
-.curtain-right {
-    right: 0;
-    border-left: 4px solid #D4AF37;
-    animation: openRight 3s forwards ease-in-out;
-}
-
-@keyframes openLeft {
-    to { transform: translateX(-100%); }
-}
-
-@keyframes openRight {
-    to { transform: translateX(100%); }
-}
-
-/* MAIN CONTENT CONTAINER */
-.content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    z-index: 2;
-    width: 85%;
-    max-width: 1200px;
-    opacity: 0;
-    animation: fadeIn 3s forwards;
-    animation-delay: 2s;
-}
-
-@keyframes fadeIn {
-    to { opacity: 1; }
-}
-
-.title {
-    font-size: 4rem;
-    color: #D4AF37;
-    text-shadow: 0 0 20px #FFD700;
-    animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-    from { text-shadow: 0 0 10px #8B6914; }
-    to { text-shadow: 0 0 35px #FFD700; }
-}
-
-.subtitle {
-    font-size: 1.4rem;
-    color: #E6C97F;
-    margin-bottom: 40px;
-}
-
-/* FEATURE CARDS */
-.cards {
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-    margin-bottom: 40px;
-}
-
-.card {
-    background: rgba(20,20,20,0.85);
-    padding: 20px;
-    border-radius: 15px;
-    border: 1px solid #C6A75E;
-    width: 30%;
-    color: #F5DEB3;
-    transition: 0.3s ease;
-}
-
-.card:hover {
-    box-shadow: 0 0 20px #D4AF37;
-    transform: translateY(-8px);
-}
-
-.card h3 {
-    color: #D4AF37;
-}
-
-/* TAGLINE */
-.tagline {
-    font-size: 1.5rem;
-    color: #D4AF37;
-    margin-bottom: 30px;
-}
-
-/* BUTTON */
-.enter-btn {
-    padding: 12px 30px;
-    font-size: 1rem;
-    background: transparent;
-    color: #D4AF37;
-    border: 2px solid #D4AF37;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
-
-.enter-btn:hover {
-    background: #D4AF37;
-    color: black;
-    box-shadow: 0 0 15px #FFD700;
-}
-</style>
-</head>
-
-<body>
-
-<div class="particles"></div>
-<div class="curtain-left"></div>
-<div class="curtain-right"></div>
-
-<div class="content">
-
-    <div class="title">Restora A.I</div>
-    <div class="subtitle">AI-Powered Cultural Heritage Restoration Assistant</div>
-
-    <div class="cards">
-        <div class="card">
-            <h3>AI Restoration Analysis</h3>
-            <p>Generate culturally sensitive, historically accurate restoration strategies using advanced generative AI models.</p>
+    landing_block = """
+    <html>
+    <head>
+    <style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        background: #000000;
+        font-family: Georgia, serif;
+    }
+    
+    /* PARTICLES */
+    .particles {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(255,215,0,0.12) 1px, transparent 1px);
+        background-size: 70px 70px;
+        animation: moveParticles 60s linear infinite;
+        z-index: 1;
+    }
+    
+    @keyframes moveParticles {
+        from { background-position: 0 0; }
+        to { background-position: 800px 800px; }
+    }
+    
+    /* CURTAINS */
+    .curtain-left, .curtain-right {
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(to bottom, #3a0000, #120000);
+        z-index: 3;
+    }
+    
+    .curtain-left {
+        left: 0;
+        border-right: 4px solid #D4AF37;
+        animation: openLeft 3s forwards ease-in-out;
+    }
+    
+    .curtain-right {
+        right: 0;
+        border-left: 4px solid #D4AF37;
+        animation: openRight 3s forwards ease-in-out;
+    }
+    
+    @keyframes openLeft {
+        to { transform: translateX(-100%); }
+    }
+    
+    @keyframes openRight {
+        to { transform: translateX(100%); }
+    }
+    
+    /* MAIN CONTENT CONTAINER */
+    .content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 2;
+        width: 85%;
+        max-width: 1200px;
+        opacity: 0;
+        animation: fadeIn 3s forwards;
+        animation-delay: 2s;
+    }
+    
+    @keyframes fadeIn {
+        to { opacity: 1; }
+    }
+    
+    .title {
+        font-size: 4rem;
+        color: #D4AF37;
+        text-shadow: 0 0 20px #FFD700;
+        animation: glow 2s ease-in-out infinite alternate;
+    }
+    
+    @keyframes glow {
+        from { text-shadow: 0 0 10px #8B6914; }
+        to { text-shadow: 0 0 35px #FFD700; }
+    }
+    
+    .subtitle {
+        font-size: 1.4rem;
+        color: #E6C97F;
+        margin-bottom: 40px;
+    }
+    
+    /* FEATURE CARDS */
+    .cards {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+    
+    .card {
+        background: rgba(20,20,20,0.85);
+        padding: 20px;
+        border-radius: 15px;
+        border: 1px solid #C6A75E;
+        width: 30%;
+        color: #F5DEB3;
+        transition: 0.3s ease;
+    }
+    
+    .card:hover {
+        box-shadow: 0 0 20px #D4AF37;
+        transform: translateY(-8px);
+    }
+    
+    .card h3 {
+        color: #D4AF37;
+    }
+    
+    /* TAGLINE */
+    .tagline {
+        font-size: 1.5rem;
+        color: #D4AF37;
+        margin-bottom: 30px;
+    }
+    
+    /* BUTTON */
+    .enter-btn {
+        padding: 12px 30px;
+        font-size: 1rem;
+        background: transparent;
+        color: #D4AF37;
+        border: 2px solid #D4AF37;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+    
+    .enter-btn:hover {
+        background: #D4AF37;
+        color: black;
+        box-shadow: 0 0 15px #FFD700;
+    }
+    </style>
+    </head>
+    
+    <body>
+    
+    <div class="particles"></div>
+    <div class="curtain-left"></div>
+    <div class="curtain-right"></div>
+    
+    <div class="content">
+    
+        <div class="title">Restora A.I</div>
+        <div class="subtitle">AI-Powered Cultural Heritage Restoration Assistant</div>
+    
+        <div class="cards">
+            <div class="card">
+                <h3>AI Restoration Analysis</h3>
+                <p>Generate culturally sensitive, historically accurate restoration strategies using advanced generative AI models.</p>
+            </div>
+    
+            <div class="card">
+                <h3>Cultural Integrity Protection</h3>
+                <p>Preserve authenticity while restoring damaged artwork, monuments, and historical artifacts.</p>
+            </div>
+    
+            <div class="card">
+                <h3>Restoration Archive</h3>
+                <p>Maintain and analyze past restoration records with intelligent tracking and documentation.</p>
+            </div>
         </div>
-
-        <div class="card">
-            <h3>Cultural Integrity Protection</h3>
-            <p>Preserve authenticity while restoring damaged artwork, monuments, and historical artifacts.</p>
-        </div>
-
-        <div class="card">
-            <h3>Restoration Archive</h3>
-            <p>Maintain and analyze past restoration records with intelligent tracking and documentation.</p>
-        </div>
+    
+        <div class="tagline">Preserve the Past. Restore the Future.</div>
+    
     </div>
-
-    <div class="tagline">Preserve the Past. Restore the Future.</div>
-
-</div>
-
-</body>
-</html>
-"""
-
-components.html(landing_block, height=750)
-
-if st.button("Enter the Gallery"):
-    st.session_state.page = "dashboard"
-    st.rerun()
-
-st.stop()
+    
+    </body>
+    </html>
+    """
+    
+    components.html(landing_block, height=750)
+    
+    if st.button("Enter the Gallery"):
+        st.session_state.page = "dashboard"
+        st.rerun()
+    
+    st.stop()
 
 
 
