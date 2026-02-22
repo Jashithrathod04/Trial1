@@ -631,14 +631,14 @@ if st.session_state.page == "dashboard":
     # -----------------------
     # Elegant Dashboard Header
     # -----------------------
-    
+    username = st.session_state.get("user", {}).get("name", "Guest")
     st.markdown("""
     <div class="dashboard-container">
         <div class="dashboard-title">
             🎨 ArtRestorer AI
         </div>
         <div style="color:#f5e6d3; margin-top:10px;">
-            Welcome, {st.session_state.user["name"] if "user" in st.session_state else "Guest"}
+            Welcome, {username}
         </div>
         <div class="dashboard-subtitle">
             AI-Powered Cultural Heritage Restoration Assistant<br>
