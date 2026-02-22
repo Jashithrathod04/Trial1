@@ -600,10 +600,12 @@ if st.session_state.page == "dashboard":
     # -----------------------
     # Tabs
     # -----------------------
-    tab1, tab2, tab3 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "🎨 Restoration Generator",
     "🕓 Recent Restoration History",
-    "🤖 Restora Chat"
+    "🤖 Restora Chat",
+    "📊 Restoration Insights",
+    "🧾 Restoration Report"
     ])
     
     # =======================
@@ -846,3 +848,95 @@ if st.session_state.page == "dashboard":
         for role, message in st.session_state.chat_history:
             with st.chat_message(role):
                 st.markdown(message)
+
+                """
+
+
+
+
+    with tab4:
+        st.title("📊 Restoration Insights Dashboard")
+    
+        # Fake demo metrics (replace later with real data)
+        col1, col2, col3 = st.columns(3)
+    
+        with col1:
+            st.metric("Total Restorations", "128", "+12 this week")
+    
+        with col2:
+            st.metric("Average Clarity Improvement", "86%", "+4%")
+    
+        with col3:
+            st.metric("Crack Removal Success", "72%", "+6%")
+    
+        st.divider()
+    
+        st.subheader("📈 Restoration Performance Trend")
+    
+        import pandas as pd
+        import matplotlib.pyplot as plt
+    
+        data = pd.DataFrame({
+            "Day": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            "Restorations": [5, 8, 6, 10, 9, 12, 7]
+        })
+    
+        fig, ax = plt.subplots()
+        ax.plot(data["Day"], data["Restorations"])
+        ax.set_xlabel("Day")
+        ax.set_ylabel("Number of Restorations")
+        ax.set_title("Weekly Restoration Activity")
+    
+        st.pyplot(fig)
+              
+              
+    with tab5:
+        st.title("🧾 AI Restoration Report Generator")
+    
+        artwork_name = st.text_input("Artwork Name")
+        damage_type = st.selectbox(
+            "Primary Damage Detected",
+            ["Cracks", "Color Fading", "Moisture Damage", "Dust & Surface Dirt"]
+        )
+    
+        confidence = st.slider("AI Confidence Score (%)", 50, 100, 85)
+    
+        if st.button("Generate Report"):
+            st.success("Report Generated Successfully!")
+    
+            report = f"""
+            🖼 Artwork: {artwork_name}
+    
+            🔍 Detected Damage: {damage_type}
+    
+            🤖 AI Restoration Confidence: {confidence}%
+    
+            🛠 Restoration Method:
+            - Digital crack reconstruction
+            - Color tone rebalancing
+            - Texture preservation algorithm
+    
+            📅 Date: {pd.Timestamp.today().date()}
+    
+            🏛 Powered by Restora A.I
+            """
+    
+            st.text_area("Restoration Report", report, height=300)
+    
+            st.download_button(
+                "📥 Download Report",
+                report,
+                file_name="restoration_report.txt"
+            )             
+                
+        
+
+
+
+
+
+
+
+
+
+                
