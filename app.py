@@ -136,6 +136,8 @@ if st.session_state.page == "landing":
 # -----------------------------
 import streamlit.components.v1 as components
 
+import streamlit.components.v1 as components
+
 landing_animation = """
 <html>
 <head>
