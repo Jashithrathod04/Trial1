@@ -873,8 +873,7 @@ if st.session_state.page == "dashboard":
     
         st.subheader("📈 Restoration Performance Trend")
     
-        import pandas as pd
-        import matplotlib.pyplot as plt
+        
     
         data = pd.DataFrame({
             "Day": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
