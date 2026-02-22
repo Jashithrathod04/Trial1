@@ -904,22 +904,17 @@ if st.session_state.page == "dashboard":
         if st.button("Generate Report"):
             st.success("Report Generated Successfully!")
     
-            report = f"""
-               Artwork: {artwork_name}
-    
-            🔍 Detected Damage: {damage_type}
-    
-            🤖 AI Restoration Confidence: {confidence}%
-    
-            🛠 Restoration Method:
-            - Digital crack reconstruction
-            - Color tone rebalancing
-            - Texture preservation algorithm
-    
-            📅 Date: {pd.Timestamp.today().date()}
-    
-            🏛 Powered by Restora A.I
-            """
+            report = (
+                f"🖼 Artwork: {artwork_name}\n\n"
+                f"🔍 Detected Damage: {damage_type}\n\n"
+                f"🤖 AI Restoration Confidence: {confidence}%\n\n"
+                "🛠 Restoration Method:\n"
+                "- Digital crack reconstruction\n"
+                "- Color tone rebalancing\n"
+                "- Texture preservation algorithm\n\n"
+                f"📅 Date: {pd.Timestamp.today().date()}\n\n"
+                "🏛 Powered by Restora A.I"
+            )
     
             st.text_area("Restoration Report", report, height=300)
     
@@ -927,7 +922,7 @@ if st.session_state.page == "dashboard":
                 "📥 Download Report",
                 report,
                 file_name="restoration_report.txt"
-            )             
+            )
                 
         
 
