@@ -421,7 +421,42 @@ if st.session_state.page == "signup":
 
             st.success("Account Created Successfully!")
 
-            time.sleep(1.5)
+             # Create cinematic transition overlay
+            transition = st.empty()
+        
+            transition.markdown("""
+            <div style="
+                position:fixed;
+                top:0;
+                left:0;
+                width:100%;
+                height:100%;
+                backdrop-filter: blur(12px);
+                background: radial-gradient(circle at center, rgba(0,0,0,0.7), rgba(0,0,0,0.95));
+                animation: fadeIn 0.8s ease-in-out forwards;
+                z-index:9999;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                color:white;
+                font-size:24px;
+                font-weight:500;
+                letter-spacing:1px;
+            ">
+                Preparing Your Creative Dashboard...
+            </div>
+        
+            <style>
+            @keyframes fadeIn {
+                from {opacity:0;}
+                to {opacity:1;}
+            }
+            </style>
+            """, unsafe_allow_html=True)
+        
+            import time
+            time.sleep(1.3)
+        
             st.session_state.page = "dashboard"
             st.rerun()
 
