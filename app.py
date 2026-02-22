@@ -110,8 +110,7 @@ body {
 </html>
 """
 
-# Show splash
-components.html(splash_html, height=800)
+
 
 if "splash_shown" not in st.session_state:
     components.html(splash_html, height=800)
