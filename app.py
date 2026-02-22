@@ -138,7 +138,7 @@ import streamlit.components.v1 as components
 
 import streamlit.components.v1 as components
 
-landing_animation = """
+landing_block = """
 <html>
 <head>
 <style>
@@ -195,28 +195,7 @@ body {
     to { transform: translateX(100%); }
 }
 
-/* PAINT SPLASH */
-.splash {
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, #8B0000 30%, transparent 70%);
-    border-radius: 50%;
-    top: 30%;
-    left: 40%;
-    opacity: 0;
-    animation: splatter 2s forwards;
-    animation-delay: 1s;
-    z-index: 2;
-}
-
-@keyframes splatter {
-    0% { transform: scale(0.2); opacity: 0; }
-    70% { opacity: 1; }
-    100% { transform: scale(1.6); opacity: 0.6; }
-}
-
-/* CENTER CONTENT */
+/* MAIN CONTENT CONTAINER */
 .content {
     position: absolute;
     top: 50%;
@@ -224,6 +203,8 @@ body {
     transform: translate(-50%, -50%);
     text-align: center;
     z-index: 2;
+    width: 85%;
+    max-width: 1200px;
     opacity: 0;
     animation: fadeIn 3s forwards;
     animation-delay: 2s;
@@ -236,19 +217,71 @@ body {
 .title {
     font-size: 4rem;
     color: #D4AF37;
-    text-shadow: 0 0 15px #FFD700;
+    text-shadow: 0 0 20px #FFD700;
     animation: glow 2s ease-in-out infinite alternate;
 }
 
 @keyframes glow {
     from { text-shadow: 0 0 10px #8B6914; }
-    to { text-shadow: 0 0 30px #FFD700; }
+    to { text-shadow: 0 0 35px #FFD700; }
 }
 
 .subtitle {
     font-size: 1.4rem;
     color: #E6C97F;
-    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+/* FEATURE CARDS */
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.card {
+    background: rgba(20,20,20,0.85);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #C6A75E;
+    width: 30%;
+    color: #F5DEB3;
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 0 20px #D4AF37;
+    transform: translateY(-8px);
+}
+
+.card h3 {
+    color: #D4AF37;
+}
+
+/* TAGLINE */
+.tagline {
+    font-size: 1.5rem;
+    color: #D4AF37;
+    margin-bottom: 30px;
+}
+
+/* BUTTON */
+.enter-btn {
+    padding: 12px 30px;
+    font-size: 1rem;
+    background: transparent;
+    color: #D4AF37;
+    border: 2px solid #D4AF37;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.enter-btn:hover {
+    background: #D4AF37;
+    color: black;
+    box-shadow: 0 0 15px #FFD700;
 }
 </style>
 </head>
@@ -258,103 +291,38 @@ body {
 <div class="particles"></div>
 <div class="curtain-left"></div>
 <div class="curtain-right"></div>
-<div class="splash"></div>
 
 <div class="content">
+
     <div class="title">Restora A.I</div>
     <div class="subtitle">AI-Powered Cultural Heritage Restoration Assistant</div>
+
+    <div class="cards">
+        <div class="card">
+            <h3>AI Restoration Analysis</h3>
+            <p>Generate culturally sensitive, historically accurate restoration strategies using advanced generative AI models.</p>
+        </div>
+
+        <div class="card">
+            <h3>Cultural Integrity Protection</h3>
+            <p>Preserve authenticity while restoring damaged artwork, monuments, and historical artifacts.</p>
+        </div>
+
+        <div class="card">
+            <h3>Restoration Archive</h3>
+            <p>Maintain and analyze past restoration records with intelligent tracking and documentation.</p>
+        </div>
+    </div>
+
+    <div class="tagline">Preserve the Past. Restore the Future.</div>
+
 </div>
 
 </body>
 </html>
 """
 
-components.html(landing_animation, height=600)
-
-# -----------------------------
-# STREAMLIT HERO + CARDS
-# -----------------------------
-
-st.markdown("""
-<style>
-.hero-title {
-    font-size: 4rem;
-    text-align: center;
-    color: #D4AF37;
-    font-family: 'Georgia', serif;
-    animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-    from { text-shadow: 0 0 10px #8B6914; }
-    to { text-shadow: 0 0 25px #FFD700; }
-}
-
-.tagline {
-    text-align: center;
-    font-size: 1.5rem;
-    color: #E6C97F;
-    margin-bottom: 40px;
-}
-
-.feature-card {
-    background: rgba(20,20,20,0.85);
-    padding: 25px;
-    border-radius: 15px;
-    border: 1px solid #C6A75E;
-    text-align: center;
-    color: #F5DEB3;
-    transition: 0.3s ease;
-}
-
-.feature-card:hover {
-    box-shadow: 0 0 20px #D4AF37;
-    transform: translateY(-5px);
-}
-
-.divider {
-    height: 2px;
-    background: linear-gradient(to right, transparent, #D4AF37, transparent);
-    margin: 50px 0;
-}
-</style>
-""", unsafe_allow_html=True)
-
-st.markdown('<div class="hero-title">Restora A.I</div>', unsafe_allow_html=True)
-st.markdown('<div class="tagline">AI-Powered Cultural Heritage Restoration Assistant</div>', unsafe_allow_html=True)
-
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.markdown("""
-    <div class="feature-card">
-    <h3>🖼 AI Restoration Analysis</h3>
-    <p>Generate culturally sensitive, historically accurate restoration strategies using advanced generative AI models.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col2:
-    st.markdown("""
-    <div class="feature-card">
-    <h3>🏛 Cultural Integrity Protection</h3>
-    <p>Preserve authenticity while restoring damaged artwork, monuments, and historical artifacts.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col3:
-    st.markdown("""
-    <div class="feature-card">
-    <h3>🕓 Restoration Archive</h3>
-    <p>Maintain and analyze past restoration records with intelligent tracking and documentation.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
-
-st.markdown(
-    "<h2 style='text-align:center; color:#D4AF37;'>Preserve the Past. Restore the Future.</h2>",
-    unsafe_allow_html=True
-)
+components.html(landing_block, height=750)
 
 if st.button("Enter the Gallery"):
     st.session_state.page = "dashboard"
