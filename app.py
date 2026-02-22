@@ -134,6 +134,9 @@ if st.session_state.page == "landing":
     <head>
     <style>
 
+    
+    st.markdown("""
+    <style>
     .hero-title {
         font-size: 4rem;
         text-align: center;
@@ -174,8 +177,48 @@ if st.session_state.page == "landing":
         background: linear-gradient(to right, transparent, #D4AF37, transparent);
         margin: 50px 0;
     }
+    </style>
+    """, unsafe_allow_html=True)
 
-    
+    st.markdown('<div class="hero-title">Restora A.I</div>', unsafe_allow_html=True)
+    st.markdown('<div class="tagline">AI-Powered Cultural Heritage Restoration Assistant</div>', unsafe_allow_html=True)
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.markdown("""
+        <div class="feature-card">
+        <h3>🖼 AI Restoration Analysis</h3>
+        <p>Generate culturally sensitive, historically accurate restoration strategies using advanced generative AI models.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
+        <div class="feature-card">
+        <h3>🏛 Cultural Integrity Protection</h3>
+        <p>Preserve authenticity while restoring damaged artwork, monuments, and historical artifacts.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col3:
+        st.markdown("""
+        <div class="feature-card">
+        <h3>🕓 Restoration Archive</h3>
+        <p>Maintain and analyze past restoration records with intelligent tracking and documentation.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
+
+    st.markdown(
+        "<h2 style='text-align:center; color:#D4AF37;'>Preserve the Past. Restore the Future.</h2>",
+        unsafe_allow_html=True
+    )
+
+
+
+
     body {
         margin: 0;
         overflow: hidden;
