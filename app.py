@@ -631,6 +631,9 @@ if st.session_state.page == "dashboard":
     
         st.header("🖌 Artwork Details")
 
+        # Sidebar Settings
+        st.sidebar.header("⚙️ Restoration Settings")
+
 
         # Restoration Settings (Now inside tab)
         # ==============================
