@@ -18,6 +18,83 @@ st.set_page_config(
     layout="wide"
 )
 
+
+# ==============================
+# CINEMATIC PAINT SPLASH SCREEN
+# ==============================
+
+splash_html = """
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    background: radial-gradient(circle at center, #2b1d13, #120b07);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Georgia, serif;
+}
+.splash-container {
+    text-align: center;
+    position: relative;
+}
+.brush {
+    position: absolute;
+    top: 45%;
+    left: -20%;
+    font-size: 3rem;
+    animation: brushMove 2.5s ease-out forwards;
+}
+.paint-stroke {
+    position: absolute;
+    top: 50%;
+    left: -40%;
+    width: 80%;
+    height: 80px;
+    background: linear-gradient(90deg, #C6A75E, #E0C27B, #C6A75E);
+    border-radius: 50px;
+    animation: paintSwipe 2.5s ease-out forwards;
+}
+.title {
+    font-size: 3rem;
+    color: #C6A75E;
+    opacity: 0;
+    animation: fadeIn 2s ease forwards;
+    animation-delay: 2s;
+}
+@keyframes brushMove {
+    0% { left: -20%; }
+    100% { left: 100%; }
+}
+@keyframes paintSwipe {
+    0% { left: -40%; }
+    100% { left: 110%; }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="splash-container">
+    <div class="paint-stroke"></div>
+    <div class="brush">🖌️</div>
+    <div class="title">ArtRestorer AI</div>
+</div>
+</body>
+</html>
+"""
+
+if "splash_shown" not in st.session_state:
+    components.html(splash_html, height=800)
+    time.sleep(3)
+    st.session_state.splash_shown = True
+    st.rerun()
 # -----------------------
 # -----------------------
 st.markdown("""
