@@ -134,6 +134,8 @@ if st.session_state.page == "landing":
 # -----------------------------
 # CINEMATIC TOP SECTION
 # -----------------------------
+import streamlit.components.v1 as components
+
 landing_animation = """
 <html>
 <head>
@@ -142,6 +144,7 @@ body {
     margin: 0;
     overflow: hidden;
     background: #000000;
+    font-family: Georgia, serif;
 }
 
 /* PARTICLES */
@@ -149,15 +152,15 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(255,215,0,0.15) 1px, transparent 1px);
-    background-size: 60px 60px;
-    animation: moveParticles 40s linear infinite;
+    background: radial-gradient(circle, rgba(255,215,0,0.12) 1px, transparent 1px);
+    background-size: 70px 70px;
+    animation: moveParticles 60s linear infinite;
     z-index: 1;
 }
 
 @keyframes moveParticles {
     from { background-position: 0 0; }
-    to { background-position: 600px 600px; }
+    to { background-position: 800px 800px; }
 }
 
 /* CURTAINS */
@@ -166,20 +169,20 @@ body {
     top: 0;
     width: 50%;
     height: 100%;
-    background: linear-gradient(to bottom, #300000, #100000);
+    background: linear-gradient(to bottom, #3a0000, #120000);
     z-index: 3;
-    animation: openLeft 3s forwards ease-in-out;
 }
 
 .curtain-left {
     left: 0;
     border-right: 4px solid #D4AF37;
+    animation: openLeft 3s forwards ease-in-out;
 }
 
 .curtain-right {
     right: 0;
     border-left: 4px solid #D4AF37;
-    animation-name: openRight;
+    animation: openRight 3s forwards ease-in-out;
 }
 
 @keyframes openLeft {
@@ -193,15 +196,15 @@ body {
 /* PAINT SPLASH */
 .splash {
     position: absolute;
-    width: 250px;
-    height: 250px;
+    width: 300px;
+    height: 300px;
     background: radial-gradient(circle, #8B0000 30%, transparent 70%);
     border-radius: 50%;
     top: 30%;
-    left: 42%;
+    left: 40%;
     opacity: 0;
     animation: splatter 2s forwards;
-    animation-delay: 1.2s;
+    animation-delay: 1s;
     z-index: 2;
 }
 
@@ -210,8 +213,44 @@ body {
     70% { opacity: 1; }
     100% { transform: scale(1.6); opacity: 0.6; }
 }
+
+/* CENTER CONTENT */
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 2;
+    opacity: 0;
+    animation: fadeIn 3s forwards;
+    animation-delay: 2s;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+.title {
+    font-size: 4rem;
+    color: #D4AF37;
+    text-shadow: 0 0 15px #FFD700;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #8B6914; }
+    to { text-shadow: 0 0 30px #FFD700; }
+}
+
+.subtitle {
+    font-size: 1.4rem;
+    color: #E6C97F;
+    margin-top: 20px;
+}
 </style>
 </head>
+
 <body>
 
 <div class="particles"></div>
@@ -219,11 +258,16 @@ body {
 <div class="curtain-right"></div>
 <div class="splash"></div>
 
+<div class="content">
+    <div class="title">Restora A.I</div>
+    <div class="subtitle">AI-Powered Cultural Heritage Restoration Assistant</div>
+</div>
+
 </body>
 </html>
 """
 
-components.html(landing_animation, height=500)
+components.html(landing_animation, height=600)
 
 # -----------------------------
 # STREAMLIT HERO + CARDS
