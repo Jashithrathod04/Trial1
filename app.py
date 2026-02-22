@@ -600,7 +600,11 @@ if st.session_state.page == "dashboard":
     # -----------------------
     # Tabs
     # -----------------------
-    tab1, tab2 = st.tabs(["🎨 Restoration Generator", "🕓 Recent Restoration History"])
+    tab1, tab2, tab3 = st.tabs([
+    "🎨 Restoration Generator",
+    "🕓 Recent Restoration History",
+    "🤖 Restora Chat"
+    ])
     
     # =======================
     # TAB 1 — GENERATOR
@@ -771,3 +775,74 @@ if st.session_state.page == "dashboard":
                     st.write(item["damage"])
                     st.write("**AI Output:**")
                     st.write(item["output"])
+
+
+
+     with tab3:
+
+    st.markdown("## 🤖 Restora A.I Assistant")
+
+    # -------------------------
+    # Chat Memory
+    # -------------------------
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = []
+
+    # -------------------------
+    # Ready Made Prompts
+    # -------------------------
+    st.markdown("### 🎨 Quick Prompts")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button("Analyze Renaissance Painting"):
+            prompt = "Provide a culturally sensitive restoration strategy for a damaged Renaissance oil painting."
+            st.session_state.chat_history.append(("user", prompt))
+
+        if st.button("Monument Crack Repair Advice"):
+            prompt = "Suggest restoration techniques for structural cracks in historical monuments while preserving authenticity."
+            st.session_state.chat_history.append(("user", prompt))
+
+    with col2:
+        if st.button("Artifact Preservation Plan"):
+            prompt = "Create a conservation plan for a fragile 18th century manuscript."
+            st.session_state.chat_history.append(("user", prompt))
+
+        if st.button("Ethical Restoration Guidelines"):
+            prompt = "Explain ethical principles in AI-assisted cultural heritage restoration."
+            st.session_state.chat_history.append(("user", prompt))
+
+    st.divider()
+
+    # -------------------------
+    # Chat Input
+    # -------------------------
+    user_input = st.chat_input("Ask Restora A.I...")
+
+    if user_input:
+        st.session_state.chat_history.append(("user", user_input))
+
+        # 🔥 Replace this with your real AI model call
+        ai_response = f"""
+        Based on your request:
+
+        "{user_input}"
+
+        I recommend a conservation strategy emphasizing:
+        • Minimal intervention
+        • Historical authenticity
+        • Reversible restoration techniques
+        • Detailed documentation
+
+        Would you like a structured technical restoration report?
+        """
+
+        st.session_state.chat_history.append(("assistant", ai_response))
+
+    # -------------------------
+    # Display Messages
+    # -------------------------
+    for role, message in st.session_state.chat_history:
+        with st.chat_message(role):
+            st.markdown(message)
