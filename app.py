@@ -324,9 +324,85 @@ if st.session_state.page == "landing":
     components.html(landing_block, height=750)
     
     if st.button("Enter the Gallery"):
-        st.session_state.page = "dashboard"
+        st.session_state.page = "signup"
         st.rerun()
     
+    st.stop()
+
+
+
+
+
+# ==============================
+# SIGN UP PAGE
+# ==============================
+
+if st.session_state.page == "signup":
+
+    st.markdown("""
+    <div style="
+        background: linear-gradient(145deg, rgba(30,20,15,0.95), rgba(50,35,25,0.95));
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 0 40px rgba(0,0,0,0.7);
+        text-align: center;
+    ">
+        <h1 style="color:#C6A75E;">Create Your Restora A.I Account</h1>
+        <p style="color:#f5e6d3;">
+            Join the cultural restoration intelligence network.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.divider()
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        full_name = st.text_input("Full Name")
+        email = st.text_input("Email Address")
+        password = st.text_input("Password", type="password")
+
+    with col2:
+        institution = st.text_input("Institution / Organization")
+        role = st.selectbox(
+            "Role",
+            ["Museum Curator", "Art Historian", "Conservation Specialist", "Student", "Researcher"]
+        )
+        country = st.text_input("Country")
+
+    agree = st.checkbox("I agree to ethical AI restoration guidelines")
+
+    st.divider()
+
+    if st.button("Create Account"):
+
+        if not full_name or not email or not password:
+            st.warning("Please complete all required fields.")
+        elif not agree:
+            st.warning("You must agree to the ethical guidelines.")
+        else:
+            # Store basic user info
+            st.session_state.user = {
+                "name": full_name,
+                "email": email,
+                "role": role,
+                "institution": institution,
+                "country": country
+            }
+
+            st.success("Account Created Successfully!")
+
+            time.sleep(1.5)
+            st.session_state.page = "dashboard"
+            st.rerun()
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    if st.button("← Back to Landing"):
+        st.session_state.page = "landing"
+        st.rerun()
+
     st.stop()
 
 
