@@ -905,7 +905,7 @@ if st.session_state.page == "dashboard":
             st.success("Report Generated Successfully!")
     
             report = f"""
-              Artwork: {artwork_name}
+               Artwork: {artwork_name}
     
             🔍 Detected Damage: {damage_type}
     
