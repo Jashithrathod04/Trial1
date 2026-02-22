@@ -696,7 +696,7 @@ if st.session_state.page == "dashboard":
     # =======================
     with tab1:
     
-        st.subheader("AI-Powered Cultural Heritage Restoration Assistant")
+        
 
         # ==============================
         
