@@ -634,7 +634,12 @@ if st.session_state.page == "dashboard":
     
     st.markdown("""
     <div class="dashboard-container">
-        <div class="dashboard-title">🎨 ArtRestorer AI</div>
+        <div class="dashboard-title">
+            🎨 ArtRestorer AI
+        </div>
+        <div style="color:#f5e6d3; margin-top:10px;">
+            Welcome, {st.session_state.user["name"] if "user" in st.session_state else "Guest"}
+        </div>
         <div class="dashboard-subtitle">
             AI-Powered Cultural Heritage Restoration Assistant<br>
             This system uses Generative AI to simulate culturally sensitive and historically informed art restoration recommendations.
