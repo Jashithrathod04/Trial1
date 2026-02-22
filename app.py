@@ -325,28 +325,32 @@ if st.session_state.page == "landing":
     
     if st.button("🎨 Enter the Gallery", use_container_width=True):
 
-        # Fade-out effect
-        fade = st.empty()
-        fade.markdown("""
-            <div style="
-                height:100vh;
-                background: linear-gradient(135deg,#1c1c1c,#2a2a2a);
-                animation: fadeOut 0.8s ease-in-out forwards;
-            ">
-            </div>
+        transition = st.empty()
     
-            <style>
-            @keyframes fadeOut {
-                from {opacity: 0;}
-                to {opacity: 1;}
-            }
-            </style>
+        transition.markdown("""
+        <div style="
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.6);
+            animation: smoothFade 0.8s ease-in-out forwards;
+            z-index:9999;
+        ">
+        </div>
+    
+        <style>
+        @keyframes smoothFade {
+            from {opacity:0;}
+            to {opacity:1;}
+        }
+        </style>
         """, unsafe_allow_html=True)
     
-        # Elegant loading animation
-        with st.spinner("Entering the Gallery..."):
-            import time
-            time.sleep(1.2)
+        import time
+        time.sleep(1)
     
         st.session_state.page = "signup"
         st.rerun()
