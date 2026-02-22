@@ -323,7 +323,31 @@ if st.session_state.page == "landing":
     
     components.html(landing_block, height=750)
     
-    if st.button("Enter the Gallery"):
+    if st.button("🎨 Enter the Gallery", use_container_width=True):
+
+        # Fade-out effect
+        fade = st.empty()
+        fade.markdown("""
+            <div style="
+                height:100vh;
+                background: linear-gradient(135deg,#1c1c1c,#2a2a2a);
+                animation: fadeOut 0.8s ease-in-out forwards;
+            ">
+            </div>
+    
+            <style>
+            @keyframes fadeOut {
+                from {opacity: 0;}
+                to {opacity: 1;}
+            }
+            </style>
+        """, unsafe_allow_html=True)
+    
+        # Elegant loading animation
+        with st.spinner("Entering the Gallery..."):
+            import time
+            time.sleep(1.2)
+    
         st.session_state.page = "signup"
         st.rerun()
     
