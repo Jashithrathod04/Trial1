@@ -643,7 +643,21 @@ if st.session_state.page == "dashboard":
         show_prompt = st.sidebar.checkbox("Show Generated Prompt")
     
         st.header("🖌 Artwork Details")
-    
+
+
+        # -----------------------------
+        # Image Upload Section
+        # -----------------------------
+        st.subheader("🖼 Upload Damaged Artwork Image (Optional)")
+        
+        uploaded_image = st.file_uploader(
+            "Upload an image of the damaged artwork",
+            type=["jpg", "jpeg", "png"]
+        )
+        
+        if uploaded_image:
+            st.image(uploaded_image, caption="Uploaded Artwork Preview", use_container_width=True)
+            
         col1, col2 = st.columns(2)
     
         with col1:
@@ -727,15 +741,30 @@ if st.session_state.page == "dashboard":
     
                 try:
                     with st.spinner("Analyzing artwork and generating restoration strategy..."):
-                        response = model.generate_content(
-                            prompt,
-                            generation_config={
-                                "temperature": temperature,
-                                "top_p": 0.95,
-                                "top_k": 40,
-                                "max_output_tokens": 2048,
-                            }
-                        )
+                        from PIL import Image
+
+                        if uploaded_image:
+                            image = Image.open(uploaded_image)
+                        
+                            response = model.generate_content(
+                                [prompt, image],
+                                generation_config={
+                                    "temperature": temperature,
+                                    "top_p": 0.95,
+                                    "top_k": 40,
+                                    "max_output_tokens": 2048,
+                                }
+                            )
+                        else:
+                            response = model.generate_content(
+                                prompt,
+                                generation_config={
+                                    "temperature": temperature,
+                                    "top_p": 0.95,
+                                    "top_k": 40,
+                                    "max_output_tokens": 2048,
+                                }
+                            )
     
                     result = response.text
     
