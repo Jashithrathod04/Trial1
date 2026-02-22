@@ -616,6 +616,39 @@ if st.session_state.page == "dashboard":
     with tab1:
     
         st.subheader("AI-Powered Cultural Heritage Restoration Assistant")
+
+        # ==============================
+        # Restoration Settings (Now inside tab)
+        # ==============================
+        
+        st.markdown("### ⚙️ Restoration Settings")
+        
+        colA, colB = st.columns(2)
+        
+        with colA:
+            temperature = st.slider(
+                "Creativity Level (AI Temperature)",
+                0.0, 1.0, 0.3, 0.1
+            )
+        
+        with colB:
+            show_prompt = st.checkbox("Show Generated Prompt")
+        
+        output_type = st.radio(
+            "Select Output Type",
+            [
+                "Full Restoration Report",
+                "Restoration Strategy Only",
+                "Cultural Interpretation",
+                "Visitor-Friendly Summary"
+            ],
+            horizontal=True
+        )
+        
+        st.divider()
+
+
+        
     
         st.markdown("""
         This system uses Generative AI to simulate culturally sensitive and historically informed
