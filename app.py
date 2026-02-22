@@ -601,13 +601,14 @@ if st.session_state.page == "dashboard":
     # -----------------------
     # Tabs
     # -----------------------
-    tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
     "🎨 Restoration Generator",
     "🕓 Recent Restoration History",
     "🤖 Restora Chat",
     "📊 Restoration Insights",
-    "🧾 Restoration Report"
-    ])
+    "🧾 Restoration Report",
+    "💬 User Feedback"
+     ])
     
     # =======================
     # TAB 1 — GENERATOR
@@ -972,11 +973,91 @@ if st.session_state.page == "dashboard":
                 report,
                 file_name="restoration_report.txt"
             )
-                
+
+
+
+
+
+            
+    with tab6:
+
+        st.title("💬 User Feedback & System Evaluation")
+    
+        if "feedback_list" not in st.session_state:
+            st.session_state.feedback_list = []
+    
+        st.subheader("⭐ Rate Your Experience")
+    
+        rating = st.slider("Overall Experience Rating", 1, 5, 4)
+    
+        usability = st.slider("Ease of Use", 1, 5, 4)
+        accuracy = st.slider("AI Accuracy", 1, 5, 4)
+    
+        comments = st.text_area("Additional Feedback (Optional)")
+    
+        if st.button("Submit Feedback"):
+            feedback_entry = {
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "rating": rating,
+                "usability": usability,
+                "accuracy": accuracy,
+                "comments": comments
+            }
+    
+            st.session_state.feedback_list.append(feedback_entry)
+            st.success("Thank you! Your feedback has been recorded.")
+    
+        st.divider()
+    
+        # -----------------------------
+        # REAL-TIME FEEDBACK ANALYTICS
+        # -----------------------------
+        if st.session_state.feedback_list:
+    
+            st.subheader("📊 Feedback Insights")
+    
+            feedback_data = st.session_state.feedback_list
+    
+            avg_rating = sum(f["rating"] for f in feedback_data) / len(feedback_data)
+            avg_usability = sum(f["usability"] for f in feedback_data) / len(feedback_data)
+            avg_accuracy = sum(f["accuracy"] for f in feedback_data) / len(feedback_data)
+    
+            col1, col2, col3 = st.columns(3)
+    
+            with col1:
+                st.metric("⭐ Avg Rating", f"{avg_rating:.2f}")
+    
+            with col2:
+                st.metric("🖱 Avg Usability", f"{avg_usability:.2f}")
+    
+            with col3:
+                st.metric("🎯 Avg Accuracy", f"{avg_accuracy:.2f}")
+    
+            st.divider()
+    
+            # Rating Distribution
+            rating_counts = {}
+            for f in feedback_data:
+                rating_counts[f["rating"]] = rating_counts.get(f["rating"], 0) + 1
+    
+            rating_df = pd.DataFrame({
+                "Rating": list(rating_counts.keys()),
+                "Count": list(rating_counts.values())
+            })
+    
+            st.subheader("⭐ Rating Distribution")
+            st.bar_chart(rating_df.set_index("Rating"))
+    
+            # Show recent feedback
+            st.subheader("📝 Recent Comments")
+            for f in reversed(feedback_data[-5:]):
+                if f["comments"]:
+                    with st.expander(f"{f['timestamp']} — {f['rating']}⭐"):
+                        st.write(f["comments"])            
         
-
-
-
+            
+               
+               
 
 
 
