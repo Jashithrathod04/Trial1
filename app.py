@@ -1,6 +1,8 @@
 import streamlit as st
 import google.generativeai as genai
 from datetime import datetime
+import time
+import streamlit.components.v1 as components
 
 
 # -----------------------
@@ -20,7 +22,7 @@ st.set_page_config(
 
 
 # ==============================
-# CINEMATIC PAINT SPLASH SCREEN
+# FULL SCREEN SPLASH SCREEN
 # ==============================
 
 splash_html = """
@@ -28,73 +30,96 @@ splash_html = """
 <html>
 <head>
 <style>
+
 body {
     margin: 0;
     overflow: hidden;
-    background: radial-gradient(circle at center, #2b1d13, #120b07);
+    background: linear-gradient(145deg, #1a120b, #3b2a1a);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     font-family: Georgia, serif;
 }
+
+/* Container */
 .splash-container {
     text-align: center;
-    position: relative;
+    color: #C6A75E;
+    animation: fadeIn 2s ease forwards;
 }
-.brush {
-    position: absolute;
-    top: 45%;
-    left: -20%;
-    font-size: 3rem;
-    animation: brushMove 2.5s ease-out forwards;
+
+/* Animated Brush Stroke Line */
+.brush-line {
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #C6A75E, #E0C27B, #C6A75E, transparent);
+    margin: 20px auto;
+    animation: drawLine 2.5s ease forwards;
 }
-.paint-stroke {
-    position: absolute;
-    top: 50%;
-    left: -40%;
-    width: 80%;
-    height: 80px;
-    background: linear-gradient(90deg, #C6A75E, #E0C27B, #C6A75E);
-    border-radius: 50px;
-    animation: paintSwipe 2.5s ease-out forwards;
-}
+
+/* Title */
 .title {
     font-size: 3rem;
-    color: #C6A75E;
+    letter-spacing: 2px;
     opacity: 0;
-    animation: fadeIn 2s ease forwards;
+    animation: titleReveal 3s ease forwards;
+    animation-delay: 1s;
+}
+
+/* Subtitle */
+.subtitle {
+    font-size: 1rem;
+    margin-top: 1rem;
+    color: #f5e6d3;
+    opacity: 0;
+    animation: fadeIn 3s ease forwards;
     animation-delay: 2s;
 }
-@keyframes brushMove {
-    0% { left: -20%; }
-    100% { left: 100%; }
+
+/* Animations */
+
+@keyframes drawLine {
+    0% { width: 0; }
+    100% { width: 60%; }
 }
-@keyframes paintSwipe {
-    0% { left: -40%; }
-    100% { left: 110%; }
-}
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+@keyframes titleReveal {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
 </style>
 </head>
 <body>
+
 <div class="splash-container">
-    <div class="paint-stroke"></div>
-    <div class="brush">🖌️</div>
-    <div class="title">ArtRestorer AI</div>
+    <div class="title">🎨 ArtRestorer AI</div>
+    <div class="brush-line"></div>
+    <div class="subtitle">
+        Preserving Cultural Heritage Through Artificial Intelligence
+    </div>
 </div>
+
 </body>
 </html>
 """
+
+# Show splash
+components.html(splash_html, height=800)
 
 if "splash_shown" not in st.session_state:
     components.html(splash_html, height=800)
     time.sleep(3)
     st.session_state.splash_shown = True
     st.rerun()
+
+st.empty()
 # -----------------------
 # -----------------------
 st.markdown("""
