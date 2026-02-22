@@ -8,4 +8,4 @@ google-genai
 streamlit
 google-generativeai
 python-dotenv
-matplotlib.pyplot
+
