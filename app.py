@@ -177,8 +177,7 @@ if st.session_state.page == "landing":
         background: linear-gradient(to right, transparent, #D4AF37, transparent);
         margin: 50px 0;
     }
-    </style>
-    """, unsafe_allow_html=True)
+   
 
     st.markdown('<div class="hero-title">Restora A.I</div>', unsafe_allow_html=True)
     st.markdown('<div class="tagline">AI-Powered Cultural Heritage Restoration Assistant</div>', unsafe_allow_html=True)
