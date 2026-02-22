@@ -704,10 +704,7 @@ if st.session_state.page == "dashboard":
 
         
     
-        st.markdown("""
-        This system uses Generative AI to simulate culturally sensitive and historically informed
-        art restoration recommendations.
-        """)
+        
     
     
         st.header("🖌 Artwork Details")
