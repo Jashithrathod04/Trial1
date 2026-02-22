@@ -3,7 +3,8 @@ import google.generativeai as genai
 from datetime import datetime
 import time
 import streamlit.components.v1 as components
-
+import pandas as pd
+import matplotlib.pyplot as plt
 
 # -----------------------
 # Configure Gemini API (Streamlit Secrets)
