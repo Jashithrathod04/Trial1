@@ -135,8 +135,8 @@ if st.session_state.page == "landing":
     <style>
 
     
-    st.markdown("""
-    <style>
+    
+    
     .hero-title {
         font-size: 4rem;
         text-align: center;
