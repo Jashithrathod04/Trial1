@@ -638,7 +638,7 @@ if st.session_state.page == "dashboard":
             🎨 ArtRestorer AI
         </div>
         <div style="color:#f5e6d3; margin-top:10px;">
-            Welcome, {username}
+            Welcome
         </div>
         <div class="dashboard-subtitle">
             AI-Powered Cultural Heritage Restoration Assistant<br>
