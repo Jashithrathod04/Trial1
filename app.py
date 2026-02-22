@@ -710,7 +710,7 @@ if st.session_state.page == "dashboard":
         st.header("🖌 Artwork Details")
 
         # Sidebar Settings
-        st.sidebar.header("⚙️ Restoration Settings")
+        st.sidebar.header("⚙️  Settings")
         st.sidebar.divider()
 
         if st.sidebar.button("🚪 Sign Out", use_container_width=True):
