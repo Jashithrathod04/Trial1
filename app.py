@@ -189,8 +189,8 @@ with tab1:
     st.subheader("High vs Low Price Comparison")
 
     fig2 = go.Figure()
-    fig2.add_trace(go.Scatter(x=df["Timestamp"], y=df["High"], name="High"))
-    fig2.add_trace(go.Scatter(x=df["Timestamp"], y=df["Low"], name="Low"))
+    fig2.add_trace(go.Scatter(x=df["Date"], y=df["High"], name="High"))
+    fig2.add_trace(go.Scatter(x=df["Date"], y=df["Low"], name="Low"))
     fig2.update_layout(title="High vs Low Price")
     st.plotly_chart(fig2, use_container_width=True)
 
