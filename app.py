@@ -7,6 +7,19 @@ from datetime import datetime
 import time
 import streamlit.components.v1 as components
 
+
+import streamlit as st
+import yfinance as yf
+import pandas as pd
+
+st.set_page_config(page_title="Crypto Volatility Analyzer", layout="wide")
+
+# Download Bitcoin data directly
+df = yf.download("BTC-USD", period="5y", interval="1d")
+
+st.title("Bitcoin Data (Auto-Fetched)")
+st.dataframe(df.head())
+
 # ==================================================
 # PAGE CONFIG
 # ==================================================
