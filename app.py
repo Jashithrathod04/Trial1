@@ -12,13 +12,7 @@ import streamlit as st
 import yfinance as yf
 import pandas as pd
 
-st.set_page_config(page_title="Crypto Volatility Analyzer", layout="wide")
 
-# Download Bitcoin data directly
-df = yf.download("BTC-USD", period="5y", interval="1d")
-
-st.title("Bitcoin Data (Auto-Fetched)")
-st.dataframe(df.head())
 
 # ==================================================
 # PAGE CONFIG
@@ -144,9 +138,13 @@ st.divider()
 # ==================================================
 
 @st.cache_data
-def load_data():
-    df = pd.read_csv("bitcoin.csv")
-    return df
+st.set_page_config(page_title="Crypto Volatility Analyzer", layout="wide")
+
+# Download Bitcoin data directly
+df = yf.download("BTC-USD", period="5y", interval="1d")
+
+st.title("Bitcoin Data (Auto-Fetched)")
+st.dataframe(df.head())
 
 try:
     df = load_data()
