@@ -9,4 +9,8 @@ streamlit
 google-generativeai
 python-dotenv
 matplotlib
-
+streamlit
+pandas
+numpy
+plotly
+matplotlib
