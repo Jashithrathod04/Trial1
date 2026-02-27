@@ -143,15 +143,17 @@ st.divider()
 @st.cache_data
 def load_data():
     df = yf.download("BTC-USD", period="5y", interval="1d")
-    df = df.reset_index()  # convert index to column
 
-    # Make sure Date column exists
-    if "Date" not in df.columns:
-        df.rename(columns={df.columns[0]: "Date"}, inplace=True)
+    # Flatten MultiIndex columns if they exist
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = df.columns.get_level_values(0)
+
+    df = df.reset_index()
 
     return df
 
 df = load_data()
+st.write("Columns:", df.columns)
 
 # Clean data
 df = df.dropna()
