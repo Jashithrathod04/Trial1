@@ -136,27 +136,22 @@ st.divider()
 # ==================================================
 # LOAD DATASET
 # ==================================================
+# ==================================================
+# LOAD DATASET (CORRECT VERSION)
+# ==================================================
 
 @st.cache_data
-st.set_page_config(page_title="Crypto Volatility Analyzer", layout="wide")
+def load_data():
+    df = yf.download("BTC-USD", period="5y", interval="1d")
+    df.reset_index(inplace=True)  # Convert index to column
+    return df
 
-# Download Bitcoin data directly
-df = yf.download("BTC-USD", period="5y", interval="1d")
+df = load_data()
 
-st.title("Bitcoin Data (Auto-Fetched)")
-st.dataframe(df.head())
+# Clean data
+df = df.dropna()
+df = df.tail(500)
 
-try:
-    df = load_data()
-
-    # Data Preparation
-    df["Timestamp"] = pd.to_datetime(df["Timestamp"])
-    df = df.dropna()
-    df = df.tail(500)
-
-except:
-    st.error("⚠ Please upload bitcoin.csv in repository.")
-    st.stop()
 
 # ==================================================
 # SIDEBAR CONTROLS (Stage 6)
@@ -187,7 +182,7 @@ with tab1:
 
     st.subheader("Bitcoin Close Price Over Time")
 
-    fig = px.line(df, x="Timestamp", y="Close",
+    fig = px.line(df, x="Date", y="Close",
                   title="Bitcoin Close Price")
     st.plotly_chart(fig, use_container_width=True)
 
@@ -201,7 +196,7 @@ with tab1:
 
     st.subheader("Volume Analysis")
 
-    fig3 = px.bar(df, x="Timestamp", y="Volume",
+    fig3 = px.bar(df, x="Date", y="Volume",
                   title="Trading Volume")
     st.plotly_chart(fig3, use_container_width=True)
 
@@ -210,7 +205,7 @@ with tab1:
 
     st.subheader("Rolling Volatility (10 Period)")
 
-    fig4 = px.line(df, x="Timestamp", y="Volatility",
+    fig4 = px.line(df, x="Date", y="Volatility",
                    title="Volatility Index")
     st.plotly_chart(fig4, use_container_width=True)
 
