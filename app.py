@@ -152,7 +152,6 @@ def load_data():
 
     return df
 
-uploaded_file = st.sidebar.file_uploader("Upload Bitcoin CSV", type=["csv"])
 
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
@@ -263,6 +262,11 @@ with st.sidebar:
     st.markdown('<div class="sidebar-glass">', unsafe_allow_html=True)
     st.markdown('<div class="sidebar-title">⚙ Simulation Controls</div>', unsafe_allow_html=True)
 
+
+    st.markdown('<div class="sidebar-label">Upload Bitcoin CSV</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-desc">Upload Kaggle Bitcoin dataset.</div>', unsafe_allow_html=True)
+    uploaded_file = st.file_uploader("", type=["csv"])
+
     # Pattern
     st.markdown('<div class="sidebar-label">Select Price Pattern</div>', unsafe_allow_html=True)
     st.markdown('<div class="sidebar-desc">Choose how price movement is simulated.</div>', unsafe_allow_html=True)
@@ -297,6 +301,24 @@ with st.sidebar:
     simulate_btn = st.button("Simulate", use_container_width=True)
 
     st.markdown('</div>', unsafe_allow_html=True)
+
+
+
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+
+    if "Date" in df.columns:
+        df["Date"] = pd.to_datetime(df["Date"])
+
+    df = df.dropna()
+    df = df.tail(500)
+
+    st.success("CSV Uploaded Successfully!")
+
+else:
+    df = load_data()
+    df = df.dropna()
+    df = df.tail(500)
 
 # ==================================================
 # TAB STRUCTURE
