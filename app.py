@@ -166,6 +166,10 @@ df = df.tail(500)
 
 st.sidebar.header("⚙ Simulation Controls")
 
+# File uploader
+uploaded_file = st.sidebar.file_uploader("Upload CSV", type=["csv"])
+
+
 pattern = st.sidebar.selectbox(
     "Pattern Type",
     ["Sine Wave", "Random Noise"]
