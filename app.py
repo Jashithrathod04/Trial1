@@ -290,20 +290,16 @@ with st.sidebar:
 
 
 if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
-
     st.write("Using Uploaded CSV")
 
-    # Auto-detect Date column
-    if "Date" in df.columns:
-        df["Date"] = pd.to_datetime(df["Date"])
-    elif "Timestamp" in df.columns:
+    df = pd.read_csv(uploaded_file)
+
+    # Convert Timestamp → Date
+    if "Timestamp" in df.columns:
         df["Date"] = pd.to_datetime(df["Timestamp"], unit="s")
 
-    # Standardize column names
-    df.columns = [col.strip().title() for col in df.columns]
-
     df = df.dropna()
+    df = df.sort_values("Date")
     df = df.tail(500)
 
 else:
