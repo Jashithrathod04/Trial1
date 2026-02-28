@@ -155,6 +155,29 @@ h1, h2, h3 {
 </style>
 """, unsafe_allow_html=True)
 
+
+
+
+st.markdown("""
+<style>
+div.stButton > button {
+    background: linear-gradient(45deg, #00f2ff, #ff00ff);
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00f2ff;
+    transition: 0.3s;
+}
+div.stButton > button:hover {
+    box-shadow: 0 0 25px #ff00ff;
+    transform: scale(1.05);
+}
+</style>
+""", unsafe_allow_html=True)
+
+
+
+
+
 # ==================================================
 # HEADER
 # ==================================================
