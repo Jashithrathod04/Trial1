@@ -403,20 +403,22 @@ with tab2:
     # 5️⃣ Run simulation AFTER mu is defined
     simulated_price = gbm_simulation(S0, mu, sigma, steps=steps)
 
-    fig_sim = go.Figure()
-    fig_sim.add_trace(go.Scatter(
-        y=simulated_price,
-        mode="lines",
-        name="Simulated Price"
-    ))
+    import time
 
-    fig_sim.update_layout(
-        template="plotly_dark",
-        title="GBM Simulation",
-        xaxis_title="Time Steps",
-        yaxis_title="Price"
-    )
-
-    st.plotly_chart(fig_sim, use_container_width=True)
-
+    placeholder = st.empty()
+    
+    for i in range(20, len(simulated_price)):
+        fig = px.line(
+            y=simulated_price[:i],
+            title="Live GBM Simulation"
+        )
+    
+        fig.update_layout(
+            template="plotly_dark",
+            xaxis_title="Time Steps",
+            yaxis_title="Price"
+        )
+    
+        placeholder.plotly_chart(fig, use_container_width=True)
+        time.sleep(0.02)
     
