@@ -195,8 +195,55 @@ st.markdown("""
     color: #c9d2df;
     margin-bottom: 5px;
 }
+
+
 </style>
 """, unsafe_allow_html=True)
+
+
+st.markdown("""
+<style>
+
+/* Toggle container */
+[data-testid="stToggle"] {
+    margin-top: 10px;
+}
+
+/* Toggle track (background) */
+[data-testid="stToggle"] div[role="switch"] {
+    background-color: #bfc4cc !important;
+    border-radius: 20px !important;
+    width: 42px !important;
+    height: 22px !important;
+    transition: 0.3s ease-in-out !important;
+}
+
+/* Toggle ON state */
+[data-testid="stToggle"] div[aria-checked="true"] {
+    background-color: #00ff88 !important;
+}
+
+/* Toggle circle */
+[data-testid="stToggle"] div[role="switch"]::before {
+    background-color: white !important;
+    width: 18px !important;
+    height: 18px !important;
+    border-radius: 50% !important;
+    top: 2px !important;
+    left: 2px !important;
+    transition: 0.3s ease-in-out !important;
+}
+
+/* Move circle when ON */
+[data-testid="stToggle"] div[aria-checked="true"]::before {
+    transform: translateX(20px) !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
+
 
 with st.sidebar:
     st.markdown('<div class="sidebar-glass">', unsafe_allow_html=True)
