@@ -164,20 +164,78 @@ df = df.tail(500)
 # SIDEBAR CONTROLS (Stage 6)
 # ==================================================
 
-st.sidebar.header("⚙ Simulation Controls")
+# ==================================================
+# ELEGANT SIDEBAR — GLASS STYLE LIKE YOUR IMAGE
+# ==================================================
 
-# File uploader
-uploaded_file = st.sidebar.file_uploader("Upload CSV", type=["csv"])
+st.markdown("""
+<style>
+.sidebar-glass {
+    background: rgba(255,255,255,0.10);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.sidebar-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #00f5ff;
+    margin-bottom: 10px;
+}
+.sidebar-label {
+    font-size: 14px;
+    color: #d8e6f3;
+    margin-top: 15px;
+    font-weight: 600;
+}
+.sidebar-desc {
+    font-size: 12px;
+    opacity: 0.7;
+    color: #c9d2df;
+    margin-bottom: 5px;
+}
+</style>
+""", unsafe_allow_html=True)
 
+with st.sidebar:
+    st.markdown('<div class="sidebar-glass">', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-title">⚙ Simulation Controls</div>', unsafe_allow_html=True)
 
-pattern = st.sidebar.selectbox(
-    "Pattern Type",
-    ["Sine Wave", "Random Noise"]
-)
+    # Pattern
+    st.markdown('<div class="sidebar-label">Select Price Pattern</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-desc">Choose how price movement is simulated.</div>', unsafe_allow_html=True)
+    pattern = st.selectbox("", ["Sine Wave (Cyclical)", "Random Noise (Chaotic)"])
 
-amplitude = st.sidebar.slider("Amplitude", 1, 50, 10)
-frequency = st.sidebar.slider("Frequency", 1, 10, 3)
-drift = st.sidebar.slider("Drift (Trend)", -2.0, 2.0, 0.1)
+    # Amplitude
+    st.markdown('<div class="sidebar-label">Amplitude (Volatility Size)</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-desc">Higher value = higher swings in price.</div>', unsafe_allow_html=True)
+    amplitude = st.slider("", 1, 50, 15)
+
+    # Frequency
+    st.markdown('<div class="sidebar-label">Frequency (Swing Speed)</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-desc">Low = slow waves • High = rapid movement.</div>', unsafe_allow_html=True)
+    frequency = st.slider("", 1, 10, 3)
+
+    # Drift
+    st.markdown('<div class="sidebar-label">Drift (Long-term Trend)</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-desc">Positive = bullish • Negative = bearish.</div>', unsafe_allow_html=True)
+    drift = st.slider("", -2.0, 2.0, 0.1)
+
+    # Noise
+    st.markdown('<div class="sidebar-label">Noise Intensity</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-desc">Adds unpredictability like real crypto markets.</div>', unsafe_allow_html=True)
+    noise = st.slider("", 0, 30, 5)
+
+    # Comparison Mode Toggle
+    st.markdown('<div class="sidebar-label">Enable Comparison Mode</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-desc">Compare stable vs volatile simulation.</div>', unsafe_allow_html=True)
+    compare_mode = st.toggle("")
+
+    # Main Button
+    simulate_btn = st.button("Simulate", use_container_width=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ==================================================
 # TAB STRUCTURE
