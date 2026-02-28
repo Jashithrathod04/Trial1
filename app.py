@@ -152,12 +152,27 @@ def load_data():
 
     return df
 
-df = load_data()
-st.write("Columns:", df.columns)
+uploaded_file = st.sidebar.file_uploader("Upload Bitcoin CSV", type=["csv"])
 
-# Clean data
-df = df.dropna()
-df = df.tail(500)
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+
+    # Convert Date column if needed
+    if "Date" in df.columns:
+        df["Date"] = pd.to_datetime(df["Date"])
+
+    df = df.dropna()
+    df = df.tail(500)
+
+    st.success("CSV Uploaded Successfully!")
+
+else:
+    df = load_data()
+    df = df.dropna()
+    df = df.tail(500)
+
+
+
 
 
 # ==================================================
