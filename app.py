@@ -407,7 +407,7 @@ with tab2:
 
     placeholder = st.empty()
     
-    for i in range(20, len(simulated_price)):
+    for i in range(2, len(simulated_price)):
         fig = px.line(
             y=simulated_price[:i],
             title="Live GBM Simulation"
