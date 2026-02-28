@@ -43,6 +43,9 @@ def gbm_simulation(S0, mu, sigma, T=1, steps=252):
 
 
 
+
+
+
 # ==================================================
 # CINEMATIC SPLASH SCREEN (Neon Financial Theme)
 # ==================================================
@@ -116,6 +119,18 @@ if "splash_shown" not in st.session_state:
     time.sleep(3)
     st.session_state.splash_shown = True
     st.rerun()
+
+
+st.markdown("""
+<style>
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #0f0f0f, #1a1a2e);
+    box-shadow: 0 0 20px #00f2ff;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
 
 # ==================================================
 # GLASSMORPHISM THEME
