@@ -153,22 +153,7 @@ def load_data():
     return df
 
 
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
 
-    # Convert Date column if needed
-    if "Date" in df.columns:
-        df["Date"] = pd.to_datetime(df["Date"])
-
-    df = df.dropna()
-    df = df.tail(500)
-
-    st.success("CSV Uploaded Successfully!")
-
-else:
-    df = load_data()
-    df = df.dropna()
-    df = df.tail(500)
 
 
 
