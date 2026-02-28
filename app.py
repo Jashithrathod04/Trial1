@@ -334,10 +334,23 @@ with tab2:
 
     t = np.linspace(0, 50, 500)
 
-    if pattern == "Sine Wave":
+    # Pattern Logic
+    if pattern == "Sine Wave (Cyclical)":
         wave = amplitude * np.sin(frequency * t)
-    else:
+
+    elif pattern == "Cosine Wave (Shifted Cycle)":
+        wave = amplitude * np.cos(frequency * t)
+
+    elif pattern == "Random Noise (Chaotic)":
         wave = np.random.normal(0, amplitude, len(t))
+
+    elif pattern == "Hybrid Model (Sine + Drift + Noise)":
+        sine_component = amplitude * np.sin(frequency * t)
+        noise_component = np.random.normal(0, noise, len(t))
+        wave = sine_component + noise_component
+
+    else:
+        wave = np.zeros(len(t))
 
     trend = drift * t
     simulated_price = 100 + wave + trend
@@ -348,11 +361,16 @@ with tab2:
     fig_sim.update_layout(title="Simulated Price Movement")
     st.plotly_chart(fig_sim, use_container_width=True)
 
-    # Metrics
     volatility_index = np.std(simulated_price)
     avg_drift = np.mean(np.diff(simulated_price))
 
     col1, col2 = st.columns(2)
+
+    with col1:
+        st.metric("📊 Volatility Index", f"{volatility_index:.2f}")
+
+    with col2:
+        st.metric("📈 Average Drift", f"{avg_drift:.4f}")
 
     with col1:
         st.metric("📊 Volatility Index", f"{volatility_index:.2f}")
