@@ -23,6 +23,26 @@ st.set_page_config(
     layout="wide"
 )
 
+
+
+
+import numpy as np
+
+def gbm_simulation(S0, mu, sigma, T=1, steps=252):
+    dt = T / steps
+    prices = [S0]
+
+    for _ in range(steps):
+        shock = np.random.normal(0, 1)
+        St = prices[-1] * np.exp((mu - 0.5 * sigma**2)*dt + sigma*np.sqrt(dt)*shock)
+        prices.append(St)
+
+    return prices
+
+
+
+
+
 # ==================================================
 # CINEMATIC SPLASH SCREEN (Neon Financial Theme)
 # ==================================================
@@ -359,37 +379,38 @@ with tab1:
 
 with tab2:
 
-    st.subheader("Simulated Market Swing")
+    st.subheader("📉 Geometric Brownian Motion Simulation")
 
-    t = np.linspace(0, 50, 500)
+    # Get latest real BTC price
+    S0 = df["Close"].iloc[-1]
 
-    # Pattern Logic
-    if pattern == "Sine Wave (Cyclical)":
-        wave = amplitude * np.sin(frequency * t)
+    # Interactive controls
+    mu = st.slider("Drift (Expected Return)", -0.5, 0.5, 0.15)
+    sigma = st.slider("Volatility", 0.1, 1.0, 0.4)
+    steps = st.slider("Time Steps", 100, 1000, 252)
 
-    elif pattern == "Cosine Wave (Shifted Cycle)":
-        wave = amplitude * np.cos(frequency * t)
-
-    elif pattern == "Random Noise (Chaotic)":
-        wave = np.random.normal(0, amplitude, len(t))
-
-    elif pattern == "Hybrid Model (Sine + Drift + Noise)":
-        sine_component = amplitude * np.sin(frequency * t)
-        noise_component = np.random.normal(0, noise, len(t))
-        wave = sine_component + noise_component
-
-    else:
-        wave = np.zeros(len(t))
-
-    trend = drift * t
-    simulated_price = 100 + wave + trend
+    # Run GBM simulation
+    simulated_price = gbm_simulation(S0, mu, sigma, steps=steps)
 
     fig_sim = go.Figure()
-    fig_sim.add_trace(go.Scatter(x=t, y=simulated_price,
-                                 name="Simulated Price"))
-    fig_sim.update_layout(title="Simulated Price Movement")
+
+    fig_sim.add_trace(go.Scatter(
+        y=simulated_price,
+        mode="lines",
+        name="Simulated Price",
+        line=dict(width=2)
+    ))
+
+    fig_sim.update_layout(
+        title="GBM Simulated Price Path",
+        template="plotly_dark",
+        xaxis_title="Time Steps",
+        yaxis_title="Price"
+    )
+
     st.plotly_chart(fig_sim, use_container_width=True)
 
+    # Metrics
     volatility_index = np.std(simulated_price)
     avg_drift = np.mean(np.diff(simulated_price))
 
@@ -401,8 +422,4 @@ with tab2:
     with col2:
         st.metric("📈 Average Drift", f"{avg_drift:.4f}")
 
-    with col1:
-        st.metric("📊 Volatility Index", f"{volatility_index:.2f}")
-
-    with col2:
-        st.metric("📈 Average Drift", f"{avg_drift:.4f}")
+    
