@@ -302,6 +302,9 @@ with st.sidebar:
     st.markdown('<div class="sidebar-desc">Compare stable vs volatile simulation.</div>', unsafe_allow_html=True)
     compare_mode = st.toggle("")
 
+
+    market_mode = st.sidebar.radio("Market Mode", ["Bull", "Bear"])
+
     # Main Button
     simulate_btn = st.button("Simulate", use_container_width=True)
 
@@ -381,45 +384,39 @@ with tab2:
 
     st.subheader("📉 Geometric Brownian Motion Simulation")
 
-    # Get latest real BTC price
-    S0 = df["Close"].iloc[-1]
+    # 1️⃣ Add Market Mode toggle FIRST
+    market_mode = st.radio("Market Mode", ["Bull", "Bear"], horizontal=True)
 
-    # Interactive controls
-    mu = st.slider("Drift (Expected Return)", -0.5, 0.5, 0.15)
+    # 2️⃣ Set drift based on mode
+    if market_mode == "Bull":
+        mu = 0.25
+    else:
+        mu = -0.15
+
+    # 3️⃣ Volatility slider
     sigma = st.slider("Volatility", 0.1, 1.0, 0.4)
     steps = st.slider("Time Steps", 100, 1000, 252)
 
-    # Run GBM simulation
+    # 4️⃣ Get latest price
+    S0 = df["Close"].iloc[-1]
+
+    # 5️⃣ Run simulation AFTER mu is defined
     simulated_price = gbm_simulation(S0, mu, sigma, steps=steps)
 
     fig_sim = go.Figure()
-
     fig_sim.add_trace(go.Scatter(
         y=simulated_price,
         mode="lines",
-        name="Simulated Price",
-        line=dict(width=2)
+        name="Simulated Price"
     ))
 
     fig_sim.update_layout(
-        title="GBM Simulated Price Path",
         template="plotly_dark",
+        title="GBM Simulation",
         xaxis_title="Time Steps",
         yaxis_title="Price"
     )
 
     st.plotly_chart(fig_sim, use_container_width=True)
-
-    # Metrics
-    volatility_index = np.std(simulated_price)
-    avg_drift = np.mean(np.diff(simulated_price))
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.metric("📊 Volatility Index", f"{volatility_index:.2f}")
-
-    with col2:
-        st.metric("📈 Average Drift", f"{avg_drift:.4f}")
 
     
