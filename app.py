@@ -251,7 +251,7 @@ with st.sidebar:
     # Pattern
     st.markdown('<div class="sidebar-label">Select Price Pattern</div>', unsafe_allow_html=True)
     st.markdown('<div class="sidebar-desc">Choose how price movement is simulated.</div>', unsafe_allow_html=True)
-    pattern = st.selectbox("", ["Sine Wave (Cyclical)", "Random Noise (Chaotic)"])
+    pattern = st.selectbox("", ["Sine Wave (Cyclical)", "Cosine Wave (Shifted Cycle)", "Random Noise (Chaotic)", "Hybrid Model (Sine + Drift + Noise)"])
 
     # Amplitude
     st.markdown('<div class="sidebar-label">Amplitude (Volatility Size)</div>', unsafe_allow_html=True)
