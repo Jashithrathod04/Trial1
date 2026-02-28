@@ -197,12 +197,6 @@ st.markdown("""
 }
 
 
-</style>
-""", unsafe_allow_html=True)
-
-
-st.markdown("""
-<style>
 
 /* Toggle container */
 [data-testid="stToggle"] {
@@ -239,8 +233,13 @@ st.markdown("""
     transform: translateX(20px) !important;
 }
 
+
+
 </style>
 """, unsafe_allow_html=True)
+
+
+
 
 
 
