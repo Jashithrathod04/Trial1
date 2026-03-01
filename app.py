@@ -475,55 +475,27 @@ with tab2:
     
     import plotly.graph_objects as go
 
-    # Generate simulation
-    simulated_price = gbm_simulation(S0, mu, sigma, steps=steps)
-    
-    # Create frames
-    frames = []
-    for i in range(10, len(simulated_price), 5):
-        frames.append(
-            go.Frame(
-                data=[
-                    go.Scatter(
-                        y=simulated_price[:i],
-                        mode="lines"
-                    )
-                ]
+    fig = go.Figure()
+
+    for _ in range(20):
+        sim = gbm_simulation(S0, mu, sigma, steps=steps)
+        fig.add_trace(
+            go.Scatter(
+                y=sim,
+                mode="lines",
+                opacity=0.3,
+                showlegend=False
             )
         )
     
-    # Base figure
-    fig = go.Figure(
-        data=[
-            go.Scatter(
-                y=simulated_price[:10],
-                mode="lines"
-            )
-        ],
-        frames=frames
-    )
-    
     fig.update_layout(
         template="plotly_dark",
-        title="Live GBM Simulation",
+        title="Monte Carlo GBM Simulation (20 Paths)",
         xaxis_title="Time Steps",
-        yaxis_title="Price",
-        updatemenus=[
-            {
-                "type": "buttons",
-                "buttons": [
-                    {
-                        "label": "▶ Play",
-                        "method": "animate",
-                        "args": [None, {"frame": {"duration": 30, "redraw": True}}]
-                    }
-                ]
-            }
-        ]
+        yaxis_title="Price"
     )
     
     st.plotly_chart(fig, use_container_width=True)
-
 
 
         
