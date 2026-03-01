@@ -456,6 +456,18 @@ with tab2:
             xaxis_title="Time Steps",
             yaxis_title="Price"
         )
+
+        fig.update_traces(
+            hovertemplate="<b>Step:</b> %{x}<br><b>Price:</b> %{y:.2f}<extra></extra>"
+        )
+        fig.update_layout(hovermode="x unified")
+    
+        placeholder.plotly_chart(fig, use_container_width=True)
+        time.sleep(0.02)
+
+
+
+        
     
         placeholder.plotly_chart(fig, use_container_width=True)
         time.sleep(0.02)
