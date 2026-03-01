@@ -473,28 +473,56 @@ with tab2:
 
     placeholder = st.empty()
     
-    for i in range(10, len(simulated_price), 10):
-        fig = px.line(
-            y=simulated_price[:i],
-            title="Live GBM Simulation"
-        )
+    import plotly.graph_objects as go
 
-
-        fig.update_layout(
-            template="plotly_dark",
-            xaxis_title="Time Steps",
-            yaxis_title="Price"
+    # Generate simulation
+    simulated_price = gbm_simulation(S0, mu, sigma, steps=steps)
+    
+    # Create frames
+    frames = []
+    for i in range(10, len(simulated_price), 5):
+        frames.append(
+            go.Frame(
+                data=[
+                    go.Scatter(
+                        y=simulated_price[:i],
+                        mode="lines"
+                    )
+                ]
+            )
         )
     
-        
-
-        fig.update_traces(
-            hovertemplate="<b>Step:</b> %{x}<br><b>Price:</b> %{y:.2f}<extra></extra>"
-        )
-        fig.update_layout(hovermode="x unified")
+    # Base figure
+    fig = go.Figure(
+        data=[
+            go.Scatter(
+                y=simulated_price[:10],
+                mode="lines"
+            )
+        ],
+        frames=frames
+    )
     
-        placeholder.plotly_chart(fig, use_container_width=True)
-        time.sleep(0.02)
+    fig.update_layout(
+        template="plotly_dark",
+        title="Live GBM Simulation",
+        xaxis_title="Time Steps",
+        yaxis_title="Price",
+        updatemenus=[
+            {
+                "type": "buttons",
+                "buttons": [
+                    {
+                        "label": "▶ Play",
+                        "method": "animate",
+                        "args": [None, {"frame": {"duration": 30, "redraw": True}}]
+                    }
+                ]
+            }
+        ]
+    )
+    
+    st.plotly_chart(fig, use_container_width=True)
 
 
 
