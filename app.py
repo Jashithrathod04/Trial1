@@ -370,6 +370,13 @@ if uploaded_file is not None:
         df["Date"] = pd.to_datetime(df["Timestamp"], unit="s")
 
     df = df.dropna()
+
+    df["MA50"] = df["Close"].rolling(50).mean()
+    df["MA200"] = df["Close"].rolling(200).mean()
+
+
+
+    
     df = df.sort_values("Date")
     df = df.tail(500)
 
