@@ -471,26 +471,27 @@ with tab2:
 
     
 
-    placeholder = st.empty()
+    
     
     
 
+    # Generate simulation
+    simulated_price = gbm_simulation(S0, mu, sigma, steps=steps)
+    
+    # Create figure
     fig = go.Figure()
-
-    for _ in range(20):
-        sim = gbm_simulation(S0, mu, sigma, steps=steps)
-        fig.add_trace(
-            go.Scatter(
-                y=sim,
-                mode="lines",
-                opacity=0.3,
-                showlegend=False
-            )
+    
+    fig.add_trace(
+        go.Scatter(
+            y=simulated_price,
+            mode="lines",
+            name="Simulated Path"
         )
+    )
     
     fig.update_layout(
         template="plotly_dark",
-        title="Monte Carlo GBM Simulation (20 Paths)",
+        title="Geometric Brownian Motion Simulation",
         xaxis_title="Time Steps",
         yaxis_title="Price"
     )
