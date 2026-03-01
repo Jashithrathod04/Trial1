@@ -500,6 +500,5 @@ with tab2:
 
         
     
-        placeholder.plotly_chart(fig, use_container_width=True)
-        time.sleep(0.02)
+        
     
