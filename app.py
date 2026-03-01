@@ -467,6 +467,13 @@ with tab2:
             y=simulated_price[:i],
             title="Live GBM Simulation"
         )
+
+
+        fig.update_layout(
+            template="plotly_dark",
+            xaxis_title="Time Steps",
+            yaxis_title="Price"
+        )
     
         
 
