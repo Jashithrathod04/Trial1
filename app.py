@@ -13,6 +13,96 @@ import yfinance as yf
 import pandas as pd
 
 
+st.markdown("""
+<style>
+body {
+    margin: 0;
+    overflow-x: hidden;
+}
+
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    z-index: -1;
+    top: 0;
+    left: 0;
+}
+
+/* Make main content transparent */
+.main {
+    background: transparent;
+}
+
+/* Glass effect for containers */
+.block-container {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 2rem;
+}
+
+/* Neon glow effect */
+.neon-text {
+    color: #00f5ff;
+    text-shadow: 0 0 10px #00f5ff,
+                 0 0 20px #00f5ff,
+                 0 0 40px #00f5ff;
+}
+
+/* Animated button */
+.stButton>button {
+    background: linear-gradient(90deg, #00f5ff, #ff00ff);
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-weight: bold;
+    padding: 0.6rem 1.2rem;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 0 15px #00f5ff;
+}
+
+.stButton>button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px #ff00ff;
+}
+</style>
+
+<div id="particles-js"></div>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+particlesJS("particles-js", {
+  "particles": {
+    "number": {"value": 80},
+    "color": {"value": "#00f5ff"},
+    "shape": {"type": "circle"},
+    "opacity": {"value": 0.5},
+    "size": {"value": 3},
+    "line_linked": {
+      "enable": true,
+      "distance": 150,
+      "color": "#00f5ff",
+      "opacity": 0.4,
+      "width": 1
+    },
+    "move": {"enable": true, "speed": 3}
+  }
+});
+</script>
+""", unsafe_allow_html=True)
+
+
+
+
+
+
+
+
+
+
+
 
 # ==================================================
 # PAGE CONFIG
