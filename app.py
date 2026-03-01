@@ -461,7 +461,7 @@ with tab2:
 
     # 3️⃣ Volatility slider
     sigma = st.slider("Volatility", 0.2, 2.0, 0.8)
-    steps = st.slider("Time Steps", 100, 1000, 252)
+    steps = st.slider("Time Steps", 100, 500, 252)
 
     # 4️⃣ Get latest price
     S0 = df["Close"].iloc[-1]
