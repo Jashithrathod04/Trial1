@@ -468,11 +468,7 @@ with tab2:
             title="Live GBM Simulation"
         )
     
-        fig.update_layout(
-            template="plotly_dark",
-            xaxis_title="Time Steps",
-            yaxis_title="Price"
-        )
+        
 
         fig.update_traces(
             hovertemplate="<b>Step:</b> %{x}<br><b>Price:</b> %{y:.2f}<extra></extra>"
