@@ -469,11 +469,11 @@ with tab2:
     # 5️⃣ Run simulation AFTER mu is defined
     simulated_price = gbm_simulation(S0, mu, sigma, steps=steps)
 
-    import time
+    
 
     placeholder = st.empty()
     
-    import plotly.graph_objects as go
+    
 
     fig = go.Figure()
 
