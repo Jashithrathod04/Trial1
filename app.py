@@ -460,7 +460,7 @@ with tab2:
         mu = -0.15
 
     # 3️⃣ Volatility slider
-    sigma = st.slider("Volatility", 0.1, 1.0, 0.4)
+    sigma = st.slider("Volatility", 0.2, 2.0, 0.8)
     steps = st.slider("Time Steps", 100, 1000, 252)
 
     # 4️⃣ Get latest price
