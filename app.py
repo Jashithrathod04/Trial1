@@ -288,16 +288,16 @@ st.divider()
 # ==================================================
 
 @st.cache_data
-def load_data():
-    df = yf.download("BTC-USD", period="5y", interval="1d")
+def load_parquet():
+    df = pd.read_parquet("/mnt/data/btc_optimized.parquet")
 
-    # Flatten MultiIndex columns if they exist
-    if isinstance(df.columns, pd.MultiIndex):
-        df.columns = df.columns.get_level_values(0)
+    if "Date" in df.columns:
+        df["Date"] = pd.to_datetime(df["Date"])
 
-    df = df.reset_index()
+    df = df.sort_values("Date")
+    df = df.dropna()
 
-    return df
+    return df 
 
 
 
@@ -439,43 +439,31 @@ with st.sidebar:
 
 
 
+# ==================================================
+# DATA SOURCE LOGIC
+# ==================================================
+
 if uploaded_file is not None:
-    st.write("Using Uploaded CSV")
+    st.success("Using Uploaded CSV")
 
     df = pd.read_csv(uploaded_file)
 
-    # Convert Timestamp → Date
+    # Convert timestamp if needed
     if "Timestamp" in df.columns:
         df["Date"] = pd.to_datetime(df["Timestamp"], unit="s")
 
-    df = df.dropna()
+    if "Date" in df.columns:
+        df["Date"] = pd.to_datetime(df["Date"])
 
-    df["MA50"] = df["Close"].rolling(50).mean()
-    df["MA200"] = df["Close"].rolling(200).mean()
-
-
-    delta = df["Close"].diff()
-    gain = delta.clip(lower=0)
-    loss = -delta.clip(upper=0)
-    
-    avg_gain = gain.rolling(14).mean()
-    avg_loss = loss.rolling(14).mean()
-    
-    rs = avg_gain / avg_loss
-    df["RSI"] = 100 - (100 / (1 + rs))
-
-
-
-    
     df = df.sort_values("Date")
-    df = df.tail(500)
+    df = df.dropna()
 
 else:
-    st.write("Using Yahoo Finance Data")
-    df = load_data()
-    df = df.dropna()
-    df = df.tail(500)
+    st.info("Using Optimized Parquet Data")
+    df = load_parquet()
 
+# Performance optimization
+df = df.tail(500).copy()
 
 
 
