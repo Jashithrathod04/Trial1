@@ -287,9 +287,10 @@ st.divider()
 # LOAD DATASET (CORRECT VERSION)
 # ==================================================
 
-@st.cache_data
-def load_parquet():
-    df = pd.read_parquet("/mnt/data/btc_optimized.parquet")
+if uploaded_file is not None:
+    st.success("Using Uploaded CSV")
+
+    df = pd.read_csv(uploaded_file)
 
     if "Date" in df.columns:
         df["Date"] = pd.to_datetime(df["Date"])
@@ -297,7 +298,11 @@ def load_parquet():
     df = df.sort_values("Date")
     df = df.dropna()
 
-    return df 
+else:
+    st.info("Using Optimized Default Dataset")
+    df = load_parquet()
+
+df = df.tail(500).copy()
 
 
 
