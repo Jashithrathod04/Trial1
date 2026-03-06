@@ -91,10 +91,11 @@ if "page" not in st.session_state:
 
 
 # =========================================================
+# =========================================================
 # SPLASH SCREEN
 # =========================================================
 
-if st.session_state.page=="splash":
+if st.session_state.page == "splash":
 
     splash_html = """
     <html>
@@ -155,11 +156,13 @@ if st.session_state.page=="splash":
     </html>
     """
 
-    components.html(splash_html,height=800)
+    components.html(splash_html, height=800)
 
-    time.sleep(3)
-
-    st.session_state.page="landing"
+    if "splash_shown" not in st.session_state:
+        time.sleep(3)
+        st.session_state.splash_shown = True
+        st.session_state.page = "landing"
+        st.rerun()
 
 
 # =========================================================
