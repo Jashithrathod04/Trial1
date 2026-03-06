@@ -222,58 +222,57 @@ elif st.session_state.page=="signup":
 
 # =========================================================
 # DASHBOARD
-# =========================================================
-
 elif st.session_state.page=="dashboard":
 
-    st.sidebar.title("🚀 RocketViz AI")
+    st.markdown("<div class='glow'>Mission Control Dashboard</div>",unsafe_allow_html=True)
 
-    page=st.sidebar.radio("Navigation",[
-        "Dashboard",
-        "Rocket Simulation",
-        "Mission Analytics"
+    # ===============================
+    # TOP DASHBOARD CARDS
+    # ===============================
+
+    col1,col2,col3=st.columns(3)
+
+    with col1:
+        st.markdown("""
+        <div class="glass">
+        <h3>🚀 Missions</h3>
+        <h2>120</h2>
+        </div>
+        """,unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
+        <div class="glass">
+        <h3>🛰 Payload Avg</h3>
+        <h2>3200 kg</h2>
+        </div>
+        """,unsafe_allow_html=True)
+
+    with col3:
+        st.markdown("""
+        <div class="glass">
+        <h3>⛽ Fuel Avg</h3>
+        <h2>4500 L</h2>
+        </div>
+        """,unsafe_allow_html=True)
+
+    st.write("")
+    st.write("")
+
+    # ===============================
+    # FEATURE TABS
+    # ===============================
+
+    tab1, tab2 = st.tabs([
+        "🚀 Rocket Simulation",
+        "📊 Mission Analytics"
     ])
 
-    # ============================================
-    # DASHBOARD HOME
-    # ============================================
+    # ==========================================
+    # TAB 1 : ROCKET SIMULATION
+    # ==========================================
 
-    if page=="Dashboard":
-
-        st.markdown("<div class='glow'>Mission Control Dashboard</div>",unsafe_allow_html=True)
-
-        col1,col2,col3=st.columns(3)
-
-        with col1:
-            st.markdown("""
-<div class="glass">
-<h3>🚀 Missions</h3>
-<h2>120</h2>
-</div>
-""",unsafe_allow_html=True)
-
-        with col2:
-            st.markdown("""
-<div class="glass">
-<h3>🛰 Payload Avg</h3>
-<h2>3200 kg</h2>
-</div>
-""",unsafe_allow_html=True)
-
-        with col3:
-            st.markdown("""
-<div class="glass">
-<h3>⛽ Fuel Avg</h3>
-<h2>4500 L</h2>
-</div>
-""",unsafe_allow_html=True)
-
-
-    # ============================================
-    # ROCKET SIMULATION
-    # ============================================
-
-    if page=="Rocket Simulation":
+    with tab1:
 
         st.markdown("<div class='glow'>Rocket Launch Simulator</div>",unsafe_allow_html=True)
 
@@ -309,12 +308,11 @@ elif st.session_state.page=="dashboard":
 
         st.plotly_chart(fig,use_container_width=True)
 
+    # ==========================================
+    # TAB 2 : ANALYTICS
+    # ==========================================
 
-    # ============================================
-    # ANALYTICS
-    # ============================================
-
-    if page=="Mission Analytics":
+    with tab2:
 
         st.markdown("<div class='glow'>Mission Analytics</div>",unsafe_allow_html=True)
 
