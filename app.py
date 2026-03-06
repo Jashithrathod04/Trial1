@@ -405,8 +405,11 @@ elif st.session_state.page=="dashboard":
         "Mission Duration":np.random.randint(1,400,n),
         "Mission Success":np.random.choice(["Success","Failure"],n)
         })
+
+
+        cost_filter=st.slider("Mission Cost",50,500,(100,400),key="cost_filter")
         
-        cost_filter=st.slider("Mission Cost",50,500,(100,400))
+
         
         filtered=df[(df["Mission Cost"]>=cost_filter[0]) & (df["Mission Cost"]<=cost_filter[1])]
         
@@ -421,10 +424,13 @@ elif st.session_state.page=="dashboard":
 
         st.markdown("<div class='glow'>Rocket Physics Simulation</div>",unsafe_allow_html=True)
 
-        payload=st.slider("Payload Weight",100,10000,2000)
-        fuel=st.slider("Fuel Amount",500,20000,5000)
-        thrust=st.slider("Thrust",10000,200000,60000)
-        drag_coeff=st.slider("Drag Coefficient",0.01,0.2,0.05)
+       payload=st.slider("Payload Weight",100,10000,2000,key="payload_slider")
+
+        fuel=st.slider("Fuel Amount",500,20000,5000,key="fuel_slider")
+        
+        thrust=st.slider("Thrust",10000,200000,60000,key="thrust_slider")
+        
+        drag_coeff=st.slider("Drag Coefficient",0.01,0.2,0.05,key="drag_slider")
         
         g=9.81
         mass=payload+fuel+5000
