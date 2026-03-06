@@ -78,6 +78,22 @@ border-right:1px solid rgba(255,255,255,0.1);
 box-shadow:0 0 20px rgba(0,255,255,0.4);
 }
 
+
+
+.stTabs [data-baseweb="tab"]{
+font-size:18px;
+color:white;
+padding:12px;
+border-radius:15px;
+transition:0.3s;
+}
+
+.stTabs [aria-selected="true"]{
+background:linear-gradient(90deg,#00e5ff,#00ff9c);
+color:black;
+box-shadow:0 0 20px #00e5ff;
+}
+
 </style>
 """,unsafe_allow_html=True)
 
