@@ -424,7 +424,7 @@ elif st.session_state.page=="dashboard":
 
         st.markdown("<div class='glow'>Rocket Physics Simulation</div>",unsafe_allow_html=True)
 
-       payload=st.slider("Payload Weight",100,10000,2000,key="payload_slider")
+        payload=st.slider("Payload Weight",100,10000,2000,key="payload_slider")
 
         fuel=st.slider("Fuel Amount",500,20000,5000,key="fuel_slider")
         
