@@ -7,6 +7,57 @@ import streamlit.components.v1 as components
 
 st.set_page_config(page_title="RocketViz AI",layout="wide")
 
+
+
+
+
+# =========================================================
+# DATA SOURCE (DEFAULT CSV + USER UPLOAD)
+# =========================================================
+
+st.sidebar.title("📂 Data Source")
+
+uploaded_file = st.sidebar.file_uploader(
+    "Upload Mission Dataset (CSV)",
+    type=["csv"]
+)
+
+# Default dataset path
+default_data = pd.read_csv("space_missions_dataset.csv")
+
+if uploaded_file is not None:
+    df_data = pd.read_csv(uploaded_file)
+    st.sidebar.success("Using Uploaded Dataset")
+else:
+    df_data = default_data
+    st.sidebar.info("Using Default Space Missions Dataset")
+
+
+
+
+df = df_data.rename(columns={
+"Fuel Consumption (tons)": "Fuel",
+"Payload Weight (tons)": "Payload",
+"Mission Cost (billion USD)": "Cost",
+"Distance from Earth (light-years)": "Distance",
+"Mission Duration (years)": "Duration",
+"Scientific Yield (points)": "Science",
+"Mission Success (%)": "Success"
+})
+
+
+
+
+
+# =========================================================
+# DATA CLEANING
+# =========================================================
+
+df_data["Launch Date"] = pd.to_datetime(df_data["Launch Date"])
+
+df_data = df_data.drop_duplicates()
+
+df_data = df_data.fillna(method="ffill")
 # =========================================================
 # GLOBAL CSS (GLASSMORPHISM + GLOW)
 # =========================================================
@@ -387,34 +438,29 @@ elif st.session_state.page=="dashboard":
         st.info("Use the tabs above to explore mission data, simulate rocket launches, and discover insights.")
 
 
-    with tab4:
-
-
+   with tab4:
 
         st.markdown("<div class='glow'>Mission Data Explorer</div>",unsafe_allow_html=True)
-
-        # Example dataset (replace with CSV later)
-        
-        n=300
-        
-        df=pd.DataFrame({
-        "Mission Cost":np.random.randint(50,500,n),
-        "Payload Weight":np.random.randint(500,8000,n),
-        "Fuel Consumption":np.random.randint(2000,10000,n),
-        "Distance":np.random.randint(100,500000,n),
-        "Mission Duration":np.random.randint(1,400,n),
-        "Mission Success":np.random.choice(["Success","Failure"],n)
-        })
-
-
-        cost_filter=st.slider("Mission Cost",50,500,(100,400),key="cost_filter")
-        
-
-        
-        filtered=df[(df["Mission Cost"]>=cost_filter[0]) & (df["Mission Cost"]<=cost_filter[1])]
-        
+    
+        vehicle = st.selectbox(
+            "Launch Vehicle",
+            df["Launch Vehicle"].unique()
+        )
+    
+        cost_range = st.slider(
+            "Mission Cost Range",
+            float(df["Cost"].min()),
+            float(df["Cost"].max()),
+            (float(df["Cost"].min()), float(df["Cost"].max()))
+        )
+    
+        filtered = df[
+            (df["Launch Vehicle"] == vehicle) &
+            (df["Cost"] >= cost_range[0]) &
+            (df["Cost"] <= cost_range[1])
+        ]
+    
         st.dataframe(filtered)
-
 
 
 
@@ -473,67 +519,74 @@ elif st.session_state.page=="dashboard":
 
     with tab6:
 
-
         st.markdown("<div class='glow'>Mission Analytics</div>",unsafe_allow_html=True)
-
+    
         # Scatter plot
-        fig1=px.scatter(df,
-        x="Payload Weight",
-        y="Fuel Consumption",
-        color="Mission Success")
-        
-        st.plotly_chart(fig1,use_container_width=True)
-        
+        fig1 = px.scatter(
+            df,
+            x="Payload",
+            y="Fuel",
+            color="Launch Vehicle",
+            title="Payload vs Fuel Consumption"
+        )
+    
+        st.plotly_chart(fig1, use_container_width=True)
+    
         # Bar chart
-        fig2=px.bar(df,
-        x="Mission Success",
-        y="Mission Cost",
-        title="Cost vs Success")
-        
-        st.plotly_chart(fig2,use_container_width=True)
-        
+        fig2 = px.bar(
+            df,
+            x="Launch Vehicle",
+            y="Cost",
+            title="Mission Cost by Launch Vehicle"
+        )
+    
+        st.plotly_chart(fig2, use_container_width=True)
+    
         # Line plot
-        fig3=px.line(df,
-        x="Distance",
-        y="Mission Duration")
-        
-        st.plotly_chart(fig3,use_container_width=True)
-        
+        fig3 = px.line(
+            df.sort_values("Distance"),
+            x="Distance",
+            y="Duration",
+            title="Distance vs Mission Duration"
+        )
+    
+        st.plotly_chart(fig3, use_container_width=True)
+    
         # Box plot
-        fig4=px.box(df,
-        y="Payload Weight")
-        
-        st.plotly_chart(fig4,use_container_width=True)
-        
-        # Correlation heatmap
-        
-        corr=df.corr(numeric_only=True)
-        
-        fig5=px.imshow(corr,text_auto=True)
-        
-        st.plotly_chart(fig5,use_container_width=True)
-
-
-
-
+        fig4 = px.box(
+            df,
+            y="Crew Size",
+            title="Crew Size Distribution"
+        )
+    
+        st.plotly_chart(fig4, use_container_width=True)
+    
+        # Heatmap
+        corr = df[["Payload","Fuel","Cost","Distance","Duration","Science","Crew Size"]].corr()
+    
+        fig5 = px.imshow(corr, text_auto=True, title="Correlation Heatmap")
+    
+        st.plotly_chart(fig5, use_container_width=True)
 
           
     with tab7:
 
-
         st.markdown("<div class='glow'>Comparative Insights</div>",unsafe_allow_html=True)
-
-        avg_payload=df["Payload Weight"].mean()
-        
-        sim_payload=payload
-        
-        comparison=pd.DataFrame({
-        "Type":["Real Missions","Simulation"],
-        "Payload":[avg_payload,sim_payload]
+    
+        avg_payload = df["Payload"].mean()
+    
+        comparison = pd.DataFrame({
+            "Type":["Real Missions","Simulation"],
+            "Payload":[avg_payload,payload]
         })
-        
-        fig=px.bar(comparison,x="Type",y="Payload")
-        
+    
+        fig = px.bar(
+            comparison,
+            x="Type",
+            y="Payload",
+            title="Simulation vs Real Mission Payload"
+        )
+    
         st.plotly_chart(fig,use_container_width=True)
 
 
