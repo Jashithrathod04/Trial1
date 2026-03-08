@@ -55,7 +55,7 @@ df = df_data.rename(columns={
     "fuel_consumption_tons": "fuel",
     "payload_weight_tons": "payload",
     "mission_cost_billion_usd": "cost",
-    "distance_from_earth_light-years": "distance",
+    "distance_from_earth_light_years": "distance",
     "mission_duration_years": "duration",
     "scientific_yield_points": "science",
     "mission_success_%": "success",
@@ -69,7 +69,7 @@ df = df_data.rename(columns={
 # DATA CLEANING
 # =========================================================
 
-df_data["Launch Date"] = pd.to_datetime(df_data["Launch Date"])
+df_data["launch_date"] = pd.to_datetime(df_data["launch_date"])
 
 df_data = df_data.drop_duplicates()
 
@@ -465,15 +465,15 @@ elif st.session_state.page=="dashboard":
     
         cost_range = st.slider(
             "Mission Cost Range",
-            float(df["Cost"].min()),
-            float(df["Cost"].max()),
-            (float(df["Cost"].min()), float(df["Cost"].max()))
+            float(df["cost"].min()),
+            float(df["cost"].max()),
+            (float(df["cost"].min()), float(df["cost"].max()))
         )
     
         filtered = df[
             (df["vehicle"] == vehicle) &
-            (df["Cost"] >= cost_range[0]) &
-            (df["Cost"] <= cost_range[1])
+            (df["cost"] >= cost_range[0]) &
+            (df["cost"] <= cost_range[1])
         ]
     
         st.dataframe(filtered)
@@ -483,6 +483,8 @@ elif st.session_state.page=="dashboard":
 
     with tab5:
 
+
+        
 
         st.markdown("<div class='glow'>Rocket Physics Simulation</div>",unsafe_allow_html=True)
 
@@ -540,9 +542,9 @@ elif st.session_state.page=="dashboard":
         # Scatter plot
         fig1 = px.scatter(
             df,
-            x="Payload",
-            y="Fuel",
-            color="Launch Vehicle",
+            x="payload" ,
+            y="fuel" ,
+            color="vehicle" ,
             title="Payload vs Fuel Consumption"
         )
     
@@ -578,7 +580,7 @@ elif st.session_state.page=="dashboard":
         st.plotly_chart(fig4, use_container_width=True)
     
         # Heatmap
-        corr = df[["Payload","Fuel","Cost","Distance","Duration","Science","Crew Size"]].corr()
+        corr = df[["payload","fuel","cost","distance","duration","science","crew"]].corr()
     
         fig5 = px.imshow(corr, text_auto=True, title="Correlation Heatmap")
     
