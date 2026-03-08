@@ -99,6 +99,17 @@ df_data["launch_date"] = pd.to_datetime(df_data["launch_date"])
 df_data = df_data.drop_duplicates()
 
 df_data = df_data.fillna(method="ffill")
+
+
+
+
+
+# Ensure numeric columns are actually numbers
+missions_df["distance"] = pd.to_numeric(missions_df["distance"], errors="coerce")
+missions_df["duration"] = pd.to_numeric(missions_df["duration"], errors="coerce")
+missions_df["payload"] = pd.to_numeric(missions_df["payload"], errors="coerce")
+missions_df["fuel"] = pd.to_numeric(missions_df["fuel"], errors="coerce")
+missions_df["cost"] = pd.to_numeric(missions_df["cost"], errors="coerce")
 # =========================================================
 # GLOBAL CSS (GLASSMORPHISM + GLOW)
 # =========================================================
@@ -604,12 +615,17 @@ elif st.session_state.page=="dashboard":
         )
         st.plotly_chart(fig2, use_container_width=True)
     
-        fig3 = px.line(
-            missions_df.sort_values(by="distance"),
+        dist_df = missions_df.dropna(subset=["distance","duration"])
+
+        fig3 = px.scatter(
+            dist_df,
             x="distance",
             y="duration",
+            color="vehicle",
             title="Distance vs Mission Duration"
         )
+        
+        st.plotly_chart(fig3, use_container_width=True)
         st.plotly_chart(fig3, use_container_width=True)
     
         fig4 = px.box(
