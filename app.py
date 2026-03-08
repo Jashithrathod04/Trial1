@@ -642,22 +642,7 @@ elif st.session_state.page=="dashboard":
 
 
         
-        st.subheader("Missions Over Time")
-
-        missions_by_year = missions_df.copy()
-        missions_by_year["year"] = missions_by_year["launch_date"].dt.year
-        
-        missions_per_year = missions_by_year.groupby("year").size().reset_index(name="missions")
-        
-        fig = px.line(
-            missions_per_year,
-            x="year",
-            y="missions",
-            markers=True,
-            title="Number of Missions Per Year"
-        )
-        
-        st.plotly_chart(fig, use_container_width=True)
+       
         
 
 
