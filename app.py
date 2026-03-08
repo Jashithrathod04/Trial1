@@ -406,7 +406,6 @@ elif st.session_state.page=="signup":
             st.error("Passwords do not match")
         else:
             st.success("Mission Profile Created Successfully")
-            st.session_state.user=name
             st.session_state.page="dashboard"
     
     st.markdown('</div>', unsafe_allow_html=True)
