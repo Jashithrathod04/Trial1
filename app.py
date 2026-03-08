@@ -52,15 +52,15 @@ df_data.columns = (
 
 
 missions_df = df_data.rename(columns={
-    "fuel_consumption_tons": "fuel",
-    "payload_weight_tons": "payload",
-    "mission_cost_billion_usd": "cost",
-    "distance_from_earth_light_years": "distance",
+    "distance_from_earth_lightyears": "distance",
     "mission_duration_years": "duration",
-    "scientific_yield_points": "science",
-    "mission_success_%": "success",
+    "mission_cost_billion_usd": "cost",
+    "payload_weight_tons": "payload",
+    "fuel_consumption_tons": "fuel",
     "crew_size": "crew",
-    "launch_vehicle": "vehicle"
+    "launch_vehicle": "vehicle",
+    "scientific_yield_points": "science",
+    "mission_success_%": "success"
 })
 
 
