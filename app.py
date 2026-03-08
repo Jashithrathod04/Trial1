@@ -374,11 +374,13 @@ elif st.session_state.page=="signup":
     
     </style>
     """, unsafe_allow_html=True)
-    st.image("https://api.dicebear.com/7.x/bottts/svg?seed=rocket",width=120)
+   
     
     st.markdown('<div class="signup-box">', unsafe_allow_html=True)
 
     st.markdown('<div class="signup-title">🚀 Create Mission Profile</div>', unsafe_allow_html=True)
+
+    st.image("https://api.dicebear.com/7.x/bottts/svg?seed=rocket",width=120)
     
     col1, col2 = st.columns(2)
     
@@ -404,6 +406,8 @@ elif st.session_state.page=="signup":
             st.error("Passwords do not match")
         else:
             st.success("Mission Profile Created Successfully")
+            st.session_state.user=name
+            st.session_state.page="dashboard"
     
     st.markdown('</div>', unsafe_allow_html=True)
 
