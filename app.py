@@ -66,9 +66,11 @@ missions_df = df_data.rename(columns={
 
 
 # Convert important columns to numeric
-for col in ["distance","duration","payload","fuel","cost"]:
-    missions_df[col] = pd.to_numeric(missions_df[col], errors="coerce")
+numeric_cols = ["distance","duration","payload","fuel","cost"]
 
+for col in numeric_cols:
+    if col in missions_df.columns:
+        missions_df[col] = pd.to_numeric(missions_df[col], errors="coerce")
 # Remove rows where distance or duration is missing
 missions_df = missions_df.dropna(subset=["distance","duration"])
 
