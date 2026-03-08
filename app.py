@@ -518,6 +518,48 @@ elif st.session_state.page=="dashboard":
         st.image("https://images.unsplash.com/photo-1446776811953-b23d57bd21aa",use_column_width=True)
         
         st.info("Use the tabs above to explore mission data, simulate rocket launches, and discover insights.")
+        st.markdown("### 🚀 Rocket Physics Concepts")
+
+        col1,col2,col3,col4 = st.columns(4)
+        
+        with col1:
+            st.markdown("""
+            <div class="glass">
+            <h3>⚖ Newton's 2nd Law</h3>
+            <p>Force = Mass × Acceleration.  
+            Rocket acceleration depends on thrust minus gravity and drag divided by total mass.</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown("""
+            <div class="glass">
+            <h3>🔥 Thrust</h3>
+            <p>Thrust is the force produced by rocket engines pushing gases downward,
+            propelling the rocket upward against gravity.</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col3:
+            st.markdown("""
+            <div class="glass">
+            <h3>🌬 Drag</h3>
+            <p>Drag is air resistance acting opposite to motion.
+            Higher drag slows rockets and reduces acceleration.</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col4:
+            st.markdown("""
+            <div class="glass">
+            <h3>🛰 Payload</h3>
+            <p>Payload is the cargo carried by the rocket such as satellites,
+            instruments, or astronauts.</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+
+    
 
 
     with tab4:
