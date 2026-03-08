@@ -409,6 +409,82 @@ elif st.session_state.page=="dashboard":
     st.write("")
 
     # ===============================
+
+
+    st.markdown("""
+    <style>
+    
+    .dashboard-box{
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    border-radius:20px;
+    padding:40px;
+    text-align:center;
+    margin-bottom:30px;
+    
+    border:1px solid rgba(255,255,255,0.2);
+    
+    box-shadow:0 0 30px rgba(0,255,255,0.5);
+    
+    transition:0.4s;
+    }
+    
+    .dashboard-box:hover{
+    transform:translateY(-10px) scale(1.02);
+    box-shadow:0 0 80px rgba(0,255,255,1);
+    }
+    
+    .app-title{
+    font-size:50px;
+    font-weight:800;
+    
+    background: linear-gradient(90deg,#00f7ff,#ff00ff,#00ff9d,#00f7ff);
+    background-size:400%;
+    
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    
+    animation: glowText 6s linear infinite;
+    }
+    
+    .subtitle{
+    font-size:22px;
+    margin-top:10px;
+    color:white;
+    letter-spacing:2px;
+    }
+    
+    @keyframes glowText{
+    0%{background-position:0%}
+    50%{background-position:200%}
+    100%{background-position:0%}
+    }
+    
+    </style>
+    
+    <div class="dashboard-box">
+    
+    <div class="app-title">
+    🚀 Space Mission Control
+    </div>
+    
+    <div class="subtitle">
+    Mission Control Dashboard
+    </div>
+    
+    </div>
+    
+    """, unsafe_allow_html=True)
+
+
+
+
+
+
+
+
+
+    
     # FEATURE TABS
     # ===============================
 
