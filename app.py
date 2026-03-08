@@ -65,6 +65,31 @@ missions_df = df_data.rename(columns={
 
 
 
+
+
+
+# Ensure required columns exist
+required_cols = ["distance","duration","cost","payload","fuel","vehicle","crew","science"]
+
+for col in required_cols:
+    if col not in missions_df.columns:
+        missions_df[col] = np.nan
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # =========================================================
 # DATA CLEANING
 # =========================================================
@@ -556,7 +581,7 @@ elif st.session_state.page=="dashboard":
         st.plotly_chart(fig2, use_container_width=True)
     
         fig3 = px.line(
-            missions_df.sort_values("distance"),
+            missions_df.sort_values(by="distance"),
             x="distance",
             y="duration",
             title="Distance vs Mission Duration"
