@@ -36,18 +36,32 @@ df_data.columns = df_data.columns.str.strip()
 
 
 
+# Clean column names
+df_data.columns = (
+    df_data.columns
+    .str.strip()        # remove spaces
+    .str.lower()        # make lowercase
+    .str.replace(" ", "_")
+    .str.replace("(", "")
+    .str.replace(")", "")
+)
+
+
+
+
+
 
 df = df_data.rename(columns={
-"Fuel Consumption (tons)": "Fuel",
-"Payload Weight (tons)": "Payload",
-"Mission Cost (billion USD)": "Cost",
-"Distance from Earth (light-years)": "Distance",
-"Mission Duration (years)": "Duration",
-"Scientific Yield (points)": "Science",
-"Mission Success (%)": "Success"
+    "fuel_consumption_tons": "fuel",
+    "payload_weight_tons": "payload",
+    "mission_cost_billion_usd": "cost",
+    "distance_from_earth_light-years": "distance",
+    "mission_duration_years": "duration",
+    "scientific_yield_points": "science",
+    "mission_success_%": "success",
+    "crew_size": "crew",
+    "launch_vehicle": "vehicle"
 })
-
-
 
 
 
@@ -446,7 +460,7 @@ elif st.session_state.page=="dashboard":
     
         vehicle = st.selectbox(
             "Launch Vehicle",
-            df["Launch Vehicle"].unique()
+            df["vehicle"].unique()
         )
     
         cost_range = st.slider(
@@ -457,7 +471,7 @@ elif st.session_state.page=="dashboard":
         )
     
         filtered = df[
-            (df["Launch Vehicle"] == vehicle) &
+            (df["vehicle"] == vehicle) &
             (df["Cost"] >= cost_range[0]) &
             (df["Cost"] <= cost_range[1])
         ]
