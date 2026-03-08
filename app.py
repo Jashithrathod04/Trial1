@@ -338,31 +338,35 @@ elif st.session_state.page=="dashboard":
     # TOP DASHBOARD CARDS
     # ===============================
 
-    col1,col2,col3=st.columns(3)
+    col1,col2,col3 = st.columns(3)
 
+    total_missions = len(missions_df)
+    avg_payload = int(missions_df["payload"].mean())
+    avg_fuel = int(missions_df["fuel"].mean())
+    
     with col1:
-        st.markdown("""
+        st.markdown(f"""
         <div class="glass">
         <h3>🚀 Missions</h3>
-        <h2>120</h2>
+        <h2>{total_missions}</h2>
         </div>
-        """,unsafe_allow_html=True)
-
+        """, unsafe_allow_html=True)
+    
     with col2:
-        st.markdown("""
+        st.markdown(f"""
         <div class="glass">
         <h3>🛰 Payload Avg</h3>
-        <h2>3200 kg</h2>
+        <h2>{avg_payload} tons</h2>
         </div>
-        """,unsafe_allow_html=True)
-
+        """, unsafe_allow_html=True)
+    
     with col3:
-        st.markdown("""
+        st.markdown(f"""
         <div class="glass">
         <h3>⛽ Fuel Avg</h3>
-        <h2>4500 L</h2>
+        <h2>{avg_fuel} tons</h2>
         </div>
-        """,unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
 
     st.write("")
     st.write("")
