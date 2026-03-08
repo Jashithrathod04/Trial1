@@ -379,7 +379,7 @@ elif st.session_state.page=="signup":
 
    st.markdown('<div class="signup-box">', unsafe_allow_html=True)
 
-    st.markdown('<div class="signup-title">🚀 Create Mission Profile</div>', unsafe_allow_html=True)
+   st.markdown('<div class="signup-title">🚀 Create Mission Profile</div>', unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     
@@ -407,6 +407,8 @@ elif st.session_state.page=="signup":
             st.success("Mission Profile Created Successfully")
     
     st.markdown('</div>', unsafe_allow_html=True)
+
+
 
 
 # =========================================================
