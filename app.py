@@ -456,28 +456,27 @@ elif st.session_state.page=="dashboard":
 
     with tab4:
 
-        st.markdown("<div class='glow'>Mission Data Explorer</div>",unsafe_allow_html=True)
+        st.markdown("<div class='glow'>Mission Data Explorer</div>", unsafe_allow_html=True)
     
         vehicle = st.selectbox(
             "Launch Vehicle",
-            df["vehicle"].unique()
+            missions_df["vehicle"].unique()
         )
     
         cost_range = st.slider(
             "Mission Cost Range",
-            float(df["cost"].min()),
-            float(df["cost"].max()),
-            (float(df["cost"].min()), float(df["cost"].max()))
+            float(missions_df["cost"].min()),
+            float(missions_df["cost"].max()),
+            (float(missions_df["cost"].min()), float(missions_df["cost"].max()))
         )
     
-        filtered = df[
-            (df["vehicle"] == vehicle) &
-            (df["cost"] >= cost_range[0]) &
-            (df["cost"] <= cost_range[1])
+        filtered = missions_df[
+            (missions_df["vehicle"] == vehicle) &
+            (missions_df["cost"] >= cost_range[0]) &
+            (missions_df["cost"] <= cost_range[1])
         ]
     
         st.dataframe(filtered)
-
 
 
 
@@ -537,50 +536,41 @@ elif st.session_state.page=="dashboard":
 
     with tab6:
 
-        st.markdown("<div class='glow'>Mission Analytics</div>",unsafe_allow_html=True)
+        st.markdown("<div class='glow'>Mission Analytics</div>", unsafe_allow_html=True)
     
-        # Scatter plot
         fig1 = px.scatter(
-            df,
-            x="payload" ,
-            y="fuel" ,
-            color="vehicle" ,
+            missions_df,
+            x="payload",
+            y="fuel",
+            color="vehicle",
             title="Payload vs Fuel Consumption"
         )
-    
         st.plotly_chart(fig1, use_container_width=True)
     
-        # Bar chart
         fig2 = px.bar(
-            df,
-            x="Launch Vehicle",
-            y="Cost",
+            missions_df,
+            x="vehicle",
+            y="cost",
             title="Mission Cost by Launch Vehicle"
         )
-    
         st.plotly_chart(fig2, use_container_width=True)
     
-        # Line plot
         fig3 = px.line(
-            df.sort_values("Distance"),
-            x="Distance",
-            y="Duration",
+            missions_df.sort_values("distance"),
+            x="distance",
+            y="duration",
             title="Distance vs Mission Duration"
         )
-    
         st.plotly_chart(fig3, use_container_width=True)
     
-        # Box plot
         fig4 = px.box(
-            df,
-            y="Crew Size",
+            missions_df,
+            y="crew",
             title="Crew Size Distribution"
         )
-    
         st.plotly_chart(fig4, use_container_width=True)
     
-        # Heatmap
-        corr = df[["payload","fuel","cost","distance","duration","science","crew"]].corr()
+        corr = missions_df[["payload","fuel","cost","distance","duration","science","crew"]].corr()
     
         fig5 = px.imshow(corr, text_auto=True, title="Correlation Heatmap")
     
@@ -589,13 +579,13 @@ elif st.session_state.page=="dashboard":
           
     with tab7:
 
-        st.markdown("<div class='glow'>Comparative Insights</div>",unsafe_allow_html=True)
+        st.markdown("<div class='glow'>Comparative Insights</div>", unsafe_allow_html=True)
     
-        avg_payload = df["Payload"].mean()
+        avg_payload = missions_df["payload"].mean()
     
         comparison = pd.DataFrame({
-            "Type":["Real Missions","Simulation"],
-            "Payload":[avg_payload,payload]
+            "Type": ["Real Missions", "Simulation"],
+            "Payload": [avg_payload, payload]
         })
     
         fig = px.bar(
@@ -605,7 +595,7 @@ elif st.session_state.page=="dashboard":
             title="Simulation vs Real Mission Payload"
         )
     
-        st.plotly_chart(fig,use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True)
 
 
     with tab8:
