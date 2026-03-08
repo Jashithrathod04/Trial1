@@ -349,68 +349,6 @@ elif st.session_state.page=="signup":
 # DASHBOARD
 elif st.session_state.page=="dashboard":
 
-    st.markdown("<div class='glow'>Mission Control Dashboard</div>",unsafe_allow_html=True)
-
-    # ===============================
-    # TOP DASHBOARD CARDS
-    # ===============================
-
-    col1,col2,col3,col4,col5 = st.columns(5)
-
-    total_missions = len(missions_df)
-    avg_payload = int(missions_df["payload"].mean())
-    avg_fuel = int(missions_df["fuel"].mean())
-    success_rate = round(missions_df["success"].mean(),2)
-    avg_cost = round(missions_df["cost"].mean(),2)
-    
-    with col1:
-        st.markdown(f"""
-        <div class="glass">
-        <h3>🚀 Missions</h3>
-        <h2>{total_missions}</h2>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown(f"""
-        <div class="glass">
-        <h3>🛰 Payload Avg</h3>
-        <h2>{avg_payload} tons</h2>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown(f"""
-        <div class="glass">
-        <h3>⛽ Fuel Avg</h3>
-        <h2>{avg_fuel} tons</h2>
-        </div>
-        """, unsafe_allow_html=True)
-
-
-
-    with col4:
-        st.markdown(f"""
-        <div class="glass">
-        <h3>🎯 Success Rate</h3>
-        <h2>{success_rate}%</h2>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col5:
-        st.markdown(f"""
-        <div class="glass">
-        <h3>💰 Avg Cost</h3>
-        <h2>{avg_cost} B USD</h2>
-        </div>
-        """, unsafe_allow_html=True)
-
-    st.write("")
-    st.write("")
-
-    # ===============================
-
-
     st.markdown("""
     <style>
     
@@ -475,6 +413,68 @@ elif st.session_state.page=="dashboard":
     </div>
     
     """, unsafe_allow_html=True)
+
+    # ===============================
+    # TOP DASHBOARD CARDS
+    # ===============================
+
+    col1,col2,col3,col4,col5 = st.columns(5)
+
+    total_missions = len(missions_df)
+    avg_payload = int(missions_df["payload"].mean())
+    avg_fuel = int(missions_df["fuel"].mean())
+    success_rate = round(missions_df["success"].mean(),2)
+    avg_cost = round(missions_df["cost"].mean(),2)
+    
+    with col1:
+        st.markdown(f"""
+        <div class="glass">
+        <h3>🚀 Missions</h3>
+        <h2>{total_missions}</h2>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown(f"""
+        <div class="glass">
+        <h3>🛰 Payload Avg</h3>
+        <h2>{avg_payload} tons</h2>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown(f"""
+        <div class="glass">
+        <h3>⛽ Fuel Avg</h3>
+        <h2>{avg_fuel} tons</h2>
+        </div>
+        """, unsafe_allow_html=True)
+
+
+
+    with col4:
+        st.markdown(f"""
+        <div class="glass">
+        <h3>🎯 Success Rate</h3>
+        <h2>{success_rate}%</h2>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col5:
+        st.markdown(f"""
+        <div class="glass">
+        <h3>💰 Avg Cost</h3>
+        <h2>{avg_cost} B USD</h2>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.write("")
+    st.write("")
+
+    # ===============================
+
+
+    
 
 
 
