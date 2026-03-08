@@ -65,7 +65,12 @@ missions_df = df_data.rename(columns={
 
 
 
+# Convert important columns to numeric
+for col in ["distance","duration","payload","fuel","cost"]:
+    missions_df[col] = pd.to_numeric(missions_df[col], errors="coerce")
 
+# Remove rows where distance or duration is missing
+missions_df = missions_df.dropna(subset=["distance","duration"])
 
 
 # Ensure required columns exist
@@ -615,14 +620,19 @@ elif st.session_state.page=="dashboard":
         )
         st.plotly_chart(fig2, use_container_width=True)
     
-        dist_df = missions_df.dropna(subset=["distance","duration"])
+        dist_df = missions_df.copy()
 
         fig3 = px.scatter(
             dist_df,
             x="distance",
             y="duration",
             color="vehicle",
-            title="Distance vs Mission Duration"
+            size="payload",
+            title="Mission Duration vs Distance from Earth",
+            labels={
+                "distance":"Distance from Earth (light years)",
+                "duration":"Mission Duration (years)"
+            }
         )
         
         st.plotly_chart(fig3, use_container_width=True)
