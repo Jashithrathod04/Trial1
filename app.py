@@ -32,6 +32,8 @@ else:
     df_data = default_data
     st.sidebar.info("Using Default Space Missions Dataset")
 
+df_data.columns = df_data.columns.str.strip()
+
 
 
 
