@@ -626,7 +626,7 @@ elif st.session_state.page=="dashboard":
         )
         
         st.plotly_chart(fig3, use_container_width=True)
-        st.plotly_chart(fig3, use_container_width=True)
+        
     
         fig4 = px.box(
             missions_df,
