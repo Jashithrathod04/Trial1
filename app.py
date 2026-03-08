@@ -51,7 +51,7 @@ df_data.columns = (
 
 
 
-df = df_data.rename(columns={
+missions_df = df_data.rename(columns={
     "fuel_consumption_tons": "fuel",
     "payload_weight_tons": "payload",
     "mission_cost_billion_usd": "cost",
