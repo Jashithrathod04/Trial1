@@ -52,7 +52,7 @@ df_data.columns = (
 
 
 missions_df = df_data.rename(columns={
-    "distance_from_earth_lightyears": "distance",
+    "distance_from_earth_light-years": "distance",
     "mission_duration_years": "duration",
     "mission_cost_billion_usd": "cost",
     "payload_weight_tons": "payload",
@@ -72,7 +72,7 @@ for col in numeric_cols:
     if col in missions_df.columns:
         missions_df[col] = pd.to_numeric(missions_df[col], errors="coerce")
 # Remove rows where distance or duration is missing
-
+missions_df = missions_df.dropna(subset=["distance","duration"])
 
 # Ensure required columns exist
 required_cols = ["distance","duration","cost","payload","fuel","vehicle","crew","science"]
