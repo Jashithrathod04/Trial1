@@ -438,7 +438,7 @@ elif st.session_state.page=="dashboard":
         st.info("Use the tabs above to explore mission data, simulate rocket launches, and discover insights.")
 
 
-   with tab4:
+    with tab4:
 
         st.markdown("<div class='glow'>Mission Data Explorer</div>",unsafe_allow_html=True)
     
