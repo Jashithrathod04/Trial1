@@ -709,6 +709,26 @@ elif st.session_state.page=="dashboard":
         st.plotly_chart(fig, use_container_width=True)
 
 
+        
+        st.subheader("Mission Cost vs Mission Success")
+
+        cost_success = missions_df.dropna(subset=["cost","success"])
+        
+        fig_cost_success = px.box(
+            cost_success,
+            x="success",
+            y="cost",
+            color="success",
+            title="Mission Cost for Successful vs Unsuccessful Missions",
+            labels={
+                "success":"Mission Outcome",
+                "cost":"Mission Cost (Billion USD)"
+            }
+        )
+        
+        st.plotly_chart(fig_cost_success, use_container_width=True)
+
+
 
         
        
