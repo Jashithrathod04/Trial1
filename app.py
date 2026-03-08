@@ -331,23 +331,82 @@ Features:
 
 elif st.session_state.page=="signup":
 
-    st.markdown("<div class='glow'>Create Mission Profile</div>",unsafe_allow_html=True)
-
+    st.markdown("""
+    <style>
+    
+    .signup-box{
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(18px);
+    border-radius:20px;
+    padding:40px;
+    border:1px solid rgba(255,255,255,0.2);
+    box-shadow:0 0 30px rgba(0,255,255,0.6);
+    transition:0.4s;
+    margin-top:20px;
+    }
+    
+    .signup-box:hover{
+    transform: translateY(-10px) scale(1.02);
+    box-shadow:0 0 70px rgba(0,255,255,1);
+    }
+    
+    .signup-title{
+    font-size:36px;
+    font-weight:800;
+    text-align:center;
+    
+    background: linear-gradient(90deg,#00f7ff,#ff00ff,#00ff9d,#00f7ff);
+    background-size:400%;
+    
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    
+    animation: glowText 6s linear infinite;
+    
+    margin-bottom:25px;
+    }
+    
+    @keyframes glowText{
+    0%{background-position:0%}
+    50%{background-position:200%}
+    100%{background-position:0%}
+    }
+    
+    </style>
+    """, unsafe_allow_html=True)
     st.image("https://api.dicebear.com/7.x/bottts/svg?seed=rocket",width=120)
 
 
-    name=st.text_input("Astronaut Name")
+   st.markdown('<div class="signup-box">', unsafe_allow_html=True)
 
-    email=st.text_input("Email")
-
+    st.markdown('<div class="signup-title">🚀 Create Mission Profile</div>', unsafe_allow_html=True)
     
-
+    col1, col2 = st.columns(2)
     
-
-    if st.button("Enter Dashboard"):
-        st.session_state.user=name
-        st.session_state.page="dashboard"
-
+    with col1:
+        username = st.text_input("👨‍🚀 Commander Name")
+        email = st.text_input("📧 Email Address")
+        password = st.text_input("🔑 Password", type="password")
+    
+    with col2:
+        confirm_password = st.text_input("🔒 Confirm Password", type="password")
+        mission_name = st.text_input("🛰 Mission Name")
+        launch_vehicle = st.selectbox(
+            "🚀 Launch Vehicle",
+            ["Falcon 9", "Atlas V", "Soyuz", "SLS", "Starship"]
+        )
+    
+    experience = st.slider("🧑‍🚀 Crew Experience Level",1,10)
+    
+    create = st.button("🚀 Create Mission")
+    
+    if create:
+        if password != confirm_password:
+            st.error("Passwords do not match")
+        else:
+            st.success("Mission Profile Created Successfully")
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 # =========================================================
