@@ -338,11 +338,13 @@ elif st.session_state.page=="dashboard":
     # TOP DASHBOARD CARDS
     # ===============================
 
-    col1,col2,col3 = st.columns(3)
+    col1,col2,col3,col4,col5 = st.columns(5)
 
     total_missions = len(missions_df)
     avg_payload = int(missions_df["payload"].mean())
     avg_fuel = int(missions_df["fuel"].mean())
+    success_rate = round(missions_df["success"].mean(),2)
+    avg_cost = round(missions_df["cost"].mean(),2)
     
     with col1:
         st.markdown(f"""
@@ -365,6 +367,24 @@ elif st.session_state.page=="dashboard":
         <div class="glass">
         <h3>⛽ Fuel Avg</h3>
         <h2>{avg_fuel} tons</h2>
+        </div>
+        """, unsafe_allow_html=True)
+
+
+
+    with col4:
+        st.markdown(f"""
+        <div class="glass">
+        <h3>🎯 Success Rate</h3>
+        <h2>{success_rate}%</h2>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col5:
+        st.markdown(f"""
+        <div class="glass">
+        <h3>💰 Avg Cost</h3>
+        <h2>{avg_cost} B USD</h2>
         </div>
         """, unsafe_allow_html=True)
 
@@ -604,6 +624,50 @@ elif st.session_state.page=="dashboard":
         fig5 = px.imshow(corr, text_auto=True, title="Correlation Heatmap")
     
         st.plotly_chart(fig5, use_container_width=True)
+
+        
+        st.subheader("Mission Success vs Payload")
+
+        fig = px.scatter(
+            missions_df,
+            x="payload",
+            y="fuel",
+            color="success",
+            size="cost",
+            title="Mission Success vs Payload and Fuel"
+        )
+        
+        st.plotly_chart(fig, use_container_width=True)
+
+
+
+        
+        st.subheader("Missions Over Time")
+
+        missions_by_year = missions_df.copy()
+        missions_by_year["year"] = missions_by_year["launch_date"].dt.year
+        
+        missions_per_year = missions_by_year.groupby("year").size().reset_index(name="missions")
+        
+        fig = px.line(
+            missions_per_year,
+            x="year",
+            y="missions",
+            markers=True,
+            title="Number of Missions Per Year"
+        )
+        
+        st.plotly_chart(fig, use_container_width=True)
+        
+
+
+    
+
+    
+
+
+
+    
 
           
     with tab7:
