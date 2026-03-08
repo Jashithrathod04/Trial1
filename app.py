@@ -333,11 +333,16 @@ elif st.session_state.page=="signup":
 
     st.markdown("<div class='glow'>Create Mission Profile</div>",unsafe_allow_html=True)
 
+    st.image("https://api.dicebear.com/7.x/bottts/svg?seed=rocket",width=120)
+
+
     name=st.text_input("Astronaut Name")
 
     email=st.text_input("Email")
 
-    st.image("https://api.dicebear.com/7.x/bottts/svg?seed=rocket",width=120)
+    
+
+    
 
     if st.button("Enter Dashboard"):
         st.session_state.user=name
