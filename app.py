@@ -123,84 +123,110 @@ missions_df["cost"] = pd.to_numeric(missions_df["cost"], errors="coerce")
 st.markdown("""
 <style>
 
+/* ===== SPACE BACKGROUND ===== */
+
 .stApp{
-background: radial-gradient(circle at top,#020617,#020024,#090979,#00d4ff);
+background:
+radial-gradient(circle at 20% 20%, #001d3d, transparent 40%),
+radial-gradient(circle at 80% 30%, #003566, transparent 40%),
+radial-gradient(circle at 50% 80%, #000814, transparent 50%),
+black;
 color:white;
 }
 
-/* GLASS CARDS */
+/* ===== STARFIELD ANIMATION ===== */
+
+.stApp:before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background-image:
+radial-gradient(white 1px, transparent 1px);
+background-size:3px 3px;
+opacity:0.2;
+animation:stars 80s linear infinite;
+z-index:-1;
+}
+
+@keyframes stars{
+from{transform:translateY(0)}
+to{transform:translateY(-2000px)}
+}
+
+/* ===== GLASS PANELS ===== */
 
 .glass{
-backdrop-filter: blur(20px);
+backdrop-filter: blur(18px);
 background: rgba(255,255,255,0.05);
 padding:25px;
-border-radius:20px;
-border:1px solid rgba(255,255,255,0.1);
-box-shadow:0 0 30px rgba(0,255,255,0.4);
+border-radius:18px;
+border:1px solid rgba(255,255,255,0.15);
+box-shadow:0 0 25px rgba(0,255,255,0.5);
 transition:0.4s;
 }
 
 .glass:hover{
-transform:scale(1.05);
-box-shadow:0 0 60px rgba(0,255,255,0.9);
+transform:translateY(-6px) scale(1.03);
+box-shadow:0 0 70px rgba(0,255,255,0.9);
 }
 
-/* GLOW TEXT */
+/* ===== TITLE GLOW ===== */
 
 .glow{
 font-size:3rem;
-font-weight:700;
-background: linear-gradient(90deg,#00e5ff,#00ff9c,#00e5ff);
+font-weight:800;
+background:linear-gradient(90deg,#00e5ff,#00ff9c,#ff00ff,#00e5ff);
+background-size:400%;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-animation:shine 4s linear infinite;
+animation:glowmove 8s linear infinite;
 }
 
-@keyframes shine{
+@keyframes glowmove{
 0%{background-position:0%}
-100%{background-position:200%}
+100%{background-position:400%}
 }
 
-/* BUTTON */
+/* ===== SIDEBAR ===== */
+
+[data-testid="stSidebar"]{
+background:rgba(0,0,20,0.7);
+backdrop-filter: blur(20px);
+border-right:1px solid rgba(0,255,255,0.2);
+}
+
+/* ===== BUTTONS ===== */
 
 .stButton>button{
 background:linear-gradient(90deg,#00e5ff,#00ff9c);
 border:none;
 border-radius:30px;
-padding:12px 30px;
+padding:12px 28px;
 font-size:16px;
+font-weight:600;
 box-shadow:0 0 20px #00e5ff;
 transition:0.3s;
 }
 
 .stButton>button:hover{
 transform:scale(1.1);
-box-shadow:0 0 40px #00ff9c;
+box-shadow:0 0 50px #00ff9c;
 }
 
-/* SIDEBAR */
-
-[data-testid="stSidebar"]{
-background:rgba(255,255,255,0.04);
-backdrop-filter: blur(20px);
-border-right:1px solid rgba(255,255,255,0.1);
-box-shadow:0 0 20px rgba(0,255,255,0.4);
-}
-
-
+/* ===== TABS ===== */
 
 .stTabs [data-baseweb="tab"]{
-font-size:18px;
-color:white;
+font-size:17px;
 padding:12px;
-border-radius:15px;
+border-radius:14px;
 transition:0.3s;
 }
 
 .stTabs [aria-selected="true"]{
 background:linear-gradient(90deg,#00e5ff,#00ff9c);
 color:black;
-box-shadow:0 0 20px #00e5ff;
+box-shadow:0 0 30px #00e5ff;
 }
 
 </style>
