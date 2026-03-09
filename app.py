@@ -35,6 +35,19 @@ else:
 df_data.columns = df_data.columns.str.strip()
 
 
+st.sidebar.markdown("## Mission Filters")
+
+vehicle_filter = st.sidebar.multiselect(
+"Launch Vehicle",
+missions_df["vehicle"].unique(),
+default=missions_df["vehicle"].unique()
+)
+
+missions_df = missions_df[
+missions_df["vehicle"].isin(vehicle_filter)
+]
+
+
 
 # Clean column names
 df_data.columns = (
