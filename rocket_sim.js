@@ -1,3 +1,8 @@
+const container = document.getElementById("canvas-container");
+
+const width = container.clientWidth;
+const height = container.clientHeight;
+
 // Scene
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x000000);
@@ -5,7 +10,7 @@ scene.background = new THREE.Color(0x000000);
 // Camera
 const camera = new THREE.PerspectiveCamera(
 75,
-window.innerWidth/window.innerHeight,
+width/height,
 0.1,
 1000
 );
@@ -14,9 +19,9 @@ camera.position.set(0,3,10);
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({antialias:true});
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(width,height);
 
-document.body.appendChild(renderer.domElement);
+container.appendChild(renderer.domElement);
 
 // Lighting
 const light = new THREE.DirectionalLight(0xffffff,1.5);
@@ -46,10 +51,10 @@ fire.position.y = -3;
 
 rocket.add(fire);
 
-// Smoke particles
+// Smoke
 const smokeParticles = [];
 
-for(let i=0;i<50;i++){
+for(let i=0;i<30;i++){
 
  const smokeGeometry = new THREE.SphereGeometry(0.2,8,8);
  const smokeMaterial = new THREE.MeshBasicMaterial({
@@ -72,7 +77,7 @@ for(let i=0;i<50;i++){
 
 }
 
-// Launch physics
+// Animation
 let velocity = 0;
 
 function animate(){
@@ -86,10 +91,8 @@ function animate(){
  smokeParticles.forEach(p=>{
 
    p.position.y -= 0.05;
-   p.material.opacity -= 0.01;
 
-   if(p.material.opacity < 0){
-       p.material.opacity = 0.6;
+   if(p.position.y < -6){
        p.position.y = -3;
    }
 
