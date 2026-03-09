@@ -965,11 +965,15 @@ elif st.session_state.page=="dashboard":
             st.error("💥 Rocket will crash (Thrust too low)")
     
         # Load 3D simulation
-        with open("rocket_sim.html", "r") as f:
+        import streamlit as st
+        import streamlit.components.v1 as components
+        
+        st.title("🚀 Rocket Simulator")
+        
+        with open("rocket_sim.html","r") as f:
             html_data = f.read()
-    
-        components.html(html_data, height=600)              
-
+        
+        components.html(html_data,height=600)
 
 
 
