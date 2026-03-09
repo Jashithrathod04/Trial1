@@ -35,17 +35,7 @@ else:
 df_data.columns = df_data.columns.str.strip()
 
 
-st.sidebar.markdown("## Mission Filters")
 
-vehicle_filter = st.sidebar.multiselect(
-"Launch Vehicle",
-missions_df["vehicle"].unique(),
-default=missions_df["vehicle"].unique()
-)
-
-missions_df = missions_df[
-missions_df["vehicle"].isin(vehicle_filter)
-]
 
 
 
@@ -147,15 +137,14 @@ black;
 color:white;
 }
 
-/* ===== STARFIELD ANIMATION ===== */
+/* ===== PARALLAX STARS ===== */
 
 .stApp:before{
 content:"";
 position:fixed;
 width:100%;
 height:100%;
-background-image:
-radial-gradient(white 1px, transparent 1px);
+background-image:radial-gradient(white 1px, transparent 1px);
 background-size:3px 3px;
 opacity:0.2;
 animation:stars 80s linear infinite;
@@ -170,21 +159,21 @@ to{transform:translateY(-2000px)}
 /* ===== GLASS PANELS ===== */
 
 .glass{
-backdrop-filter: blur(18px);
+backdrop-filter: blur(15px);
 background: rgba(255,255,255,0.05);
 padding:25px;
-border-radius:18px;
-border:1px solid rgba(255,255,255,0.15);
+border-radius:20px;
+border:1px solid rgba(255,255,255,0.2);
 box-shadow:0 0 25px rgba(0,255,255,0.5);
-transition:0.4s;
+transition:0.3s;
 }
 
 .glass:hover{
-transform:translateY(-6px) scale(1.03);
-box-shadow:0 0 70px rgba(0,255,255,0.9);
+transform:scale(1.03);
+box-shadow:0 0 60px cyan;
 }
 
-/* ===== TITLE GLOW ===== */
+/* ===== GLOW TITLE ===== */
 
 .glow{
 font-size:3rem;
@@ -201,50 +190,24 @@ animation:glowmove 8s linear infinite;
 100%{background-position:400%}
 }
 
-/* ===== SIDEBAR ===== */
-
-[data-testid="stSidebar"]{
-background:rgba(0,0,20,0.7);
-backdrop-filter: blur(20px);
-border-right:1px solid rgba(0,255,255,0.2);
-}
-
 /* ===== BUTTONS ===== */
 
 .stButton>button{
 background:linear-gradient(90deg,#00e5ff,#00ff9c);
 border:none;
 border-radius:30px;
-padding:12px 28px;
+padding:10px 24px;
 font-size:16px;
-font-weight:600;
 box-shadow:0 0 20px #00e5ff;
-transition:0.3s;
 }
 
 .stButton>button:hover{
 transform:scale(1.1);
-box-shadow:0 0 50px #00ff9c;
-}
-
-/* ===== TABS ===== */
-
-.stTabs [data-baseweb="tab"]{
-font-size:17px;
-padding:12px;
-border-radius:14px;
-transition:0.3s;
-}
-
-.stTabs [aria-selected="true"]{
-background:linear-gradient(90deg,#00e5ff,#00ff9c);
-color:black;
-box-shadow:0 0 30px #00e5ff;
+box-shadow:0 0 40px #00ff9c;
 }
 
 </style>
 """,unsafe_allow_html=True)
-
 
 # =========================================================
 # SESSION STATE
