@@ -561,7 +561,7 @@ elif st.session_state.page=="dashboard":
     # FEATURE TABS
     # ===============================
 
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
         "🏠 Home",
         "🚀 Rocket Simulation",
         "📊 Mission Analytics",
@@ -569,8 +569,8 @@ elif st.session_state.page=="dashboard":
         "🚀 Rocket Physics Simulation",
         "📈 Mission Analytics",
         "🔍 Comparative Insights",
-        "ℹ️ About Project",
-        "Stimulator"
+        "ℹ️ About Project"
+        
     ])
 
     # ==========================================
@@ -944,36 +944,7 @@ elif st.session_state.page=="dashboard":
 
 
 
-    with tab9:
-
-        st.header("Interactive Rocket Launch")
     
-        thrust = st.slider("Thrust (kN)", 0, 5000, 2000)
-        payload = st.slider("Payload Weight (kg)", 0, 5000, 1000)
-        fuel = st.slider("Fuel Mass (kg)", 0, 10000, 5000)
-        drag = st.slider("Drag Coefficient", 0.0, 1.0, 0.3)
-    
-        total_mass = payload + fuel + 2000
-    
-        g = 9.81
-        weight = total_mass * g
-        net_force = thrust * 1000 - weight
-    
-        if net_force > 0:
-            st.success("🚀 Launch Possible")
-        else:
-            st.error("💥 Rocket will crash (Thrust too low)")
-    
-        # Load 3D simulation
-        import streamlit as st
-        import streamlit.components.v1 as components
-        
-        st.title("🚀 Rocket Simulator")
-        
-        with open("rocket_sim.html","r") as f:
-            html_data = f.read()
-        
-        components.html(html_data,height=600)
 
 
 
