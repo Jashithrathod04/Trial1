@@ -857,7 +857,7 @@ elif st.session_state.page=="dashboard":
 
 
 
-   with tab6:
+    with tab6:
 
         st.markdown("<div class='glow'>Mission Analytics</div>", unsafe_allow_html=True)
     
