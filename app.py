@@ -161,6 +161,71 @@ animation:shine 4s linear infinite;
 100%{background-position:200%}
 }
 
+/* ===== PARALLAX STARS ===== */
+
+.stApp:before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background-image:radial-gradient(white 1px, transparent 1px);
+background-size:3px 3px;
+opacity:0.2;
+animation:stars 80s linear infinite;
+z-index:-1;
+}
+
+@keyframes stars{
+from{transform:translateY(0)}
+to{transform:translateY(-2000px)}
+}
+
+/* ===== GLASS PANELS ===== */
+
+.glass{
+backdrop-filter: blur(15px);
+background: rgba(255,255,255,0.05);
+padding:25px;
+border-radius:20px;
+border:1px solid rgba(255,255,255,0.2);
+box-shadow:0 0 25px rgba(0,255,255,0.5);
+transition:0.3s;
+}
+
+.glass:hover{
+transform:scale(1.03);
+box-shadow:0 0 60px cyan;
+}
+
+/* ===== GLOW TITLE ===== */
+
+.glow{
+font-size:3rem;
+font-weight:800;
+background:linear-gradient(90deg,#00e5ff,#00ff9c,#ff00ff,#00e5ff);
+background-size:400%;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+animation:glowmove 8s linear infinite;
+}
+
+@keyframes glowmove{
+0%{background-position:0%}
+100%{background-position:400%}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* BUTTON */
 
 .stButton>button{
