@@ -4,54 +4,6 @@ import numpy as np
 import plotly.express as px
 import time
 import streamlit.components.v1 as components
-import plotly.io as pio
-
-neon_template = dict(
-    layout=dict(
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-
-        font=dict(
-            family="Orbitron, sans-serif",
-            color="#00f7ff",
-            size=14
-        ),
-
-        title=dict(
-            font=dict(
-                size=22,
-                color="#00ffe7"
-            )
-        ),
-
-        xaxis=dict(
-            showgrid=True,
-            gridcolor="rgba(0,255,255,0.15)",
-            zeroline=False,
-            linecolor="#00e5ff"
-        ),
-
-        yaxis=dict(
-            showgrid=True,
-            gridcolor="rgba(0,255,255,0.15)",
-            zeroline=False,
-            linecolor="#00e5ff"
-        ),
-
-        legend=dict(
-            bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#00ffe7")
-        )
-    )
-)
-
-pio.templates["neon"] = neon_template
-pio.templates.default = "neon"
-
-
-
-
-
 
 st.set_page_config(page_title="RocketViz AI",layout="wide")
 
@@ -264,13 +216,7 @@ animation:glowmove 8s linear infinite;
 
 
 
-neon_colors = [
-    "#00f7ff",
-    "#00ff9c",
-    "#ff00ff",
-    "#ff7b00",
-    "#ffd000"
-]
+
 
 
 
@@ -943,7 +889,7 @@ elif st.session_state.page=="dashboard":
                 x="payload",
                 y="fuel",
                 color="vehicle",
-                color_discrete_sequence=neon_colors
+                title="Payload vs Fuel Consumption"
             )
     
             st.plotly_chart(fig, use_container_width=True)
@@ -1122,20 +1068,3 @@ elif st.session_state.page=="dashboard":
 
 
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
