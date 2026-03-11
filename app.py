@@ -36,9 +36,6 @@ df_data.columns = df_data.columns.str.strip()
 
 
 
-
-
-
 # Clean column names
 df_data.columns = (
     df_data.columns
@@ -126,79 +123,54 @@ missions_df["cost"] = pd.to_numeric(missions_df["cost"], errors="coerce")
 st.markdown("""
 <style>
 
-/* ===== SPACE BACKGROUND ===== */
-
 .stApp{
-background:
-radial-gradient(circle at 20% 20%, #001d3d, transparent 40%),
-radial-gradient(circle at 80% 30%, #003566, transparent 40%),
-radial-gradient(circle at 50% 80%, #000814, transparent 50%),
-black;
+background: radial-gradient(circle at top,#020617,#020024,#090979,#00d4ff);
 color:white;
 }
 
-/* ===== PARALLAX STARS ===== */
-
-.stApp:before{
-content:"";
-position:fixed;
-width:100%;
-height:100%;
-background-image:radial-gradient(white 1px, transparent 1px);
-background-size:3px 3px;
-opacity:0.2;
-animation:stars 80s linear infinite;
-z-index:-1;
-}
-
-@keyframes stars{
-from{transform:translateY(0)}
-to{transform:translateY(-2000px)}
-}
-
-/* ===== GLASS PANELS ===== */
+/* GLASS CARDS */
 
 .glass{
-backdrop-filter: blur(15px);
+backdrop-filter: blur(20px);
 background: rgba(255,255,255,0.05);
 padding:25px;
 border-radius:20px;
-border:1px solid rgba(255,255,255,0.2);
-box-shadow:0 0 25px rgba(0,255,255,0.5);
-transition:0.3s;
+border:1px solid rgba(255,255,255,0.1);
+box-shadow:0 0 30px rgba(0,255,255,0.4);
+transition:0.4s;
 }
 
 .glass:hover{
-transform:scale(1.03);
-box-shadow:0 0 60px cyan;
+transform:scale(1.05);
+box-shadow:0 0 60px rgba(0,255,255,0.9);
 }
 
-/* ===== GLOW TITLE ===== */
+/* GLOW TEXT */
 
 .glow{
 font-size:3rem;
-font-weight:800;
-background:linear-gradient(90deg,#00e5ff,#00ff9c,#ff00ff,#00e5ff);
-background-size:400%;
+font-weight:700;
+background: linear-gradient(90deg,#00e5ff,#00ff9c,#00e5ff);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-animation:glowmove 8s linear infinite;
+animation:shine 4s linear infinite;
 }
 
-@keyframes glowmove{
+@keyframes shine{
 0%{background-position:0%}
-100%{background-position:400%}
+100%{background-position:200%}
 }
 
-/* ===== BUTTONS ===== */
+/* BUTTON */
 
 .stButton>button{
 background:linear-gradient(90deg,#00e5ff,#00ff9c);
 border:none;
 border-radius:30px;
-padding:10px 24px;
+padding:12px 30px;
 font-size:16px;
 box-shadow:0 0 20px #00e5ff;
+transition:0.3s;
 }
 
 .stButton>button:hover{
@@ -206,8 +178,34 @@ transform:scale(1.1);
 box-shadow:0 0 40px #00ff9c;
 }
 
+/* SIDEBAR */
+
+[data-testid="stSidebar"]{
+background:rgba(255,255,255,0.04);
+backdrop-filter: blur(20px);
+border-right:1px solid rgba(255,255,255,0.1);
+box-shadow:0 0 20px rgba(0,255,255,0.4);
+}
+
+
+
+.stTabs [data-baseweb="tab"]{
+font-size:18px;
+color:white;
+padding:12px;
+border-radius:15px;
+transition:0.3s;
+}
+
+.stTabs [aria-selected="true"]{
+background:linear-gradient(90deg,#00e5ff,#00ff9c);
+color:black;
+box-shadow:0 0 20px #00e5ff;
+}
+
 </style>
 """,unsafe_allow_html=True)
+
 
 # =========================================================
 # SESSION STATE
