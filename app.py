@@ -857,103 +857,147 @@ elif st.session_state.page=="dashboard":
 
 
 
-    with tab6:
+   with tab6:
 
         st.markdown("<div class='glow'>Mission Analytics</div>", unsafe_allow_html=True)
     
-        fig1 = px.scatter(
-            missions_df,
-            x="payload",
-            y="fuel",
-            color="vehicle",
-            title="Payload vs Fuel Consumption"
+        # ===============================
+        # GRAPH SELECT DROPDOWN
+        # ===============================
+    
+        graph_option = st.selectbox(
+            "📊 Select Graph",
+            [
+                "Payload vs Fuel",
+                "Mission Cost by Launch Vehicle",
+                "Mission Duration vs Distance",
+                "Crew Size Distribution",
+                "Correlation Heatmap",
+                "Mission Success vs Payload",
+                "Mission Cost vs Mission Success"
+            ]
         )
-        st.plotly_chart(fig1, use_container_width=True)
     
-        fig2 = px.bar(
-            missions_df,
-            x="vehicle",
-            y="cost",
-            title="Mission Cost by Launch Vehicle"
-        )
-        st.plotly_chart(fig2, use_container_width=True)
+        # ===============================
+        # GRAPH 1
+        # ===============================
     
-        dist_df = missions_df.copy()
-
-        fig3 = px.scatter(
-            dist_df,
-            x="distance",
-            y="duration",
-            color="vehicle",
-            size="payload",
-            title="Mission Duration vs Distance from Earth",
-            labels={
-                "distance":"Distance from Earth (light years)",
-                "duration":"Mission Duration (years)"
-            }
-        )
-        
-        st.plotly_chart(fig3, use_container_width=True)
-        
+        if graph_option == "Payload vs Fuel":
     
-        fig4 = px.box(
-            missions_df,
-            y="crew",
-            title="Crew Size Distribution"
-        )
-        st.plotly_chart(fig4, use_container_width=True)
+            fig = px.scatter(
+                missions_df,
+                x="payload",
+                y="fuel",
+                color="vehicle",
+                title="Payload vs Fuel Consumption"
+            )
     
-        corr = missions_df[["payload","fuel","cost","distance","duration","science","crew"]].corr()
+            st.plotly_chart(fig, use_container_width=True)
     
-        fig5 = px.imshow(corr, text_auto=True, title="Correlation Heatmap")
+        # ===============================
+        # GRAPH 2
+        # ===============================
     
-        st.plotly_chart(fig5, use_container_width=True)
-
-        
-        st.subheader("Mission Success vs Payload")
-
-        fig = px.scatter(
-            missions_df,
-            x="payload",
-            y="fuel",
-            color="success",
-            size="cost",
-            title="Mission Success vs Payload and Fuel"
-        )
-        
-        st.plotly_chart(fig, use_container_width=True)
-
-
-        
-        st.subheader("Mission Cost vs Mission Success")
-
-        cost_success = missions_df.dropna(subset=["cost","success"])
-        
-        fig_cost_success = px.box(
-            cost_success,
-            x="success",
-            y="cost",
-            color="success",
-            title="Mission Cost for Successful vs Unsuccessful Missions",
-            labels={
-                "success":"Mission Outcome",
-                "cost":"Mission Cost (Billion USD)"
-            }
-        )
-        
-        st.plotly_chart(fig_cost_success, use_container_width=True)
-
-
-
-        
-       
-        
-
-
+        elif graph_option == "Mission Cost by Launch Vehicle":
     
-
+            fig = px.bar(
+                missions_df,
+                x="vehicle",
+                y="cost",
+                title="Mission Cost by Launch Vehicle"
+            )
     
-
+            st.plotly_chart(fig, use_container_width=True)
+    
+        # ===============================
+        # GRAPH 3
+        # ===============================
+    
+        elif graph_option == "Mission Duration vs Distance":
+    
+            fig = px.scatter(
+                missions_df,
+                x="distance",
+                y="duration",
+                color="vehicle",
+                size="payload",
+                title="Mission Duration vs Distance from Earth",
+                labels={
+                    "distance":"Distance from Earth (light years)",
+                    "duration":"Mission Duration (years)"
+                }
+            )
+    
+            st.plotly_chart(fig, use_container_width=True)
+    
+        # ===============================
+        # GRAPH 4
+        # ===============================
+    
+        elif graph_option == "Crew Size Distribution":
+    
+            fig = px.box(
+                missions_df,
+                y="crew",
+                title="Crew Size Distribution"
+            )
+    
+            st.plotly_chart(fig, use_container_width=True)
+    
+        # ===============================
+        # GRAPH 5
+        # ===============================
+    
+        elif graph_option == "Correlation Heatmap":
+    
+            corr = missions_df[["payload","fuel","cost","distance","duration","science","crew"]].corr()
+    
+            fig = px.imshow(
+                corr,
+                text_auto=True,
+                title="Correlation Heatmap"
+            )
+    
+            st.plotly_chart(fig, use_container_width=True)
+    
+        # ===============================
+        # GRAPH 6
+        # ===============================
+    
+        elif graph_option == "Mission Success vs Payload":
+    
+            fig = px.scatter(
+                missions_df,
+                x="payload",
+                y="fuel",
+                color="success",
+                size="cost",
+                title="Mission Success vs Payload and Fuel"
+            )
+    
+            st.plotly_chart(fig, use_container_width=True)
+    
+        # ===============================
+        # GRAPH 7
+        # ===============================
+    
+        elif graph_option == "Mission Cost vs Mission Success":
+    
+            cost_success = missions_df.dropna(subset=["cost","success"])
+    
+            fig = px.box(
+                cost_success,
+                x="success",
+                y="cost",
+                color="success",
+                title="Mission Cost for Successful vs Unsuccessful Missions",
+                labels={
+                    "success":"Mission Outcome",
+                    "cost":"Mission Cost (Billion USD)"
+                }
+            )
+    
+            st.plotly_chart(fig, use_container_width=True)
 
 
     
