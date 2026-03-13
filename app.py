@@ -1,1070 +1,462 @@
+# ============================================================
+# 🚀 Rocket Mission Visualizer
+# Generative AI Project
+# ============================================================
+
 import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+import plotly.graph_objects as go
 import time
-import streamlit.components.v1 as components
 
-st.set_page_config(page_title="RocketViz AI",layout="wide")
+# ============================================================
+# PAGE CONFIG
+# ============================================================
 
-
-
-
-
-# =========================================================
-# DATA SOURCE (DEFAULT CSV + USER UPLOAD)
-# =========================================================
-
-st.sidebar.title("📂 Data Source")
-
-uploaded_file = st.sidebar.file_uploader(
-    "Upload Mission Dataset (CSV)",
-    type=["csv"]
+st.set_page_config(
+    page_title="Rocket Mission Visualizer 🚀",
+    page_icon="🚀",
+    layout="wide"
 )
 
-# Default dataset path
-default_data = pd.read_csv("space_missions_dataset.csv")
+# ============================================================
+# SESSION STATE
+# ============================================================
 
-if uploaded_file is not None:
-    df_data = pd.read_csv(uploaded_file)
-    st.sidebar.success("Using Uploaded Dataset")
-else:
-    df_data = default_data
-    st.sidebar.info("Using Default Space Missions Dataset")
+if "page" not in st.session_state:
+    st.session_state.page = "splash"
 
-df_data.columns = df_data.columns.str.strip()
+if "user" not in st.session_state:
+    st.session_state.user = None
 
-
-
-# Clean column names
-df_data.columns = (
-    df_data.columns
-    .str.strip()        # remove spaces
-    .str.lower()        # make lowercase
-    .str.replace(" ", "_")
-    .str.replace("(", "")
-    .str.replace(")", "")
-)
-
-
-
-
-
-
-missions_df = df_data.rename(columns={
-    "distance_from_earth_light-years": "distance",
-    "mission_duration_years": "duration",
-    "mission_cost_billion_usd": "cost",
-    "payload_weight_tons": "payload",
-    "fuel_consumption_tons": "fuel",
-    "crew_size": "crew",
-    "launch_vehicle": "vehicle",
-    "scientific_yield_points": "science",
-    "mission_success_%": "success"
-})
-
-
-
-# Convert important columns to numeric
-numeric_cols = ["distance","duration","payload","fuel","cost"]
-
-for col in numeric_cols:
-    if col in missions_df.columns:
-        missions_df[col] = pd.to_numeric(missions_df[col], errors="coerce")
-# Remove rows where distance or duration is missing
-missions_df = missions_df.dropna(subset=["distance","duration"])
-
-# Ensure required columns exist
-required_cols = ["distance","duration","cost","payload","fuel","vehicle","crew","science"]
-
-for col in required_cols:
-    if col not in missions_df.columns:
-        missions_df[col] = np.nan
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# =========================================================
-# DATA CLEANING
-# =========================================================
-
-df_data["launch_date"] = pd.to_datetime(df_data["launch_date"])
-
-df_data = df_data.drop_duplicates()
-
-df_data = df_data.fillna(method="ffill")
-
-
-
-
-
-# Ensure numeric columns are actually numbers
-missions_df["distance"] = pd.to_numeric(missions_df["distance"], errors="coerce")
-missions_df["duration"] = pd.to_numeric(missions_df["duration"], errors="coerce")
-missions_df["payload"] = pd.to_numeric(missions_df["payload"], errors="coerce")
-missions_df["fuel"] = pd.to_numeric(missions_df["fuel"], errors="coerce")
-missions_df["cost"] = pd.to_numeric(missions_df["cost"], errors="coerce")
-# =========================================================
-# GLOBAL CSS (GLASSMORPHISM + GLOW)
-# =========================================================
+# ============================================================
+# RED BLACK UI THEME
+# ============================================================
 
 st.markdown("""
 <style>
 
+/* APP BACKGROUND */
+
 .stApp{
-background: radial-gradient(circle at top,#020617,#020024,#090979,#00d4ff);
+background-color:#070707;
 color:white;
 }
 
-/* GLASS CARDS */
+/* TITLE */
 
-.glass{
-backdrop-filter: blur(20px);
-background: rgba(255,255,255,0.05);
-padding:25px;
-border-radius:20px;
-border:1px solid rgba(255,255,255,0.1);
-box-shadow:0 0 30px rgba(0,255,255,0.4);
-transition:0.4s;
-}
-
-.glass:hover{
-transform:scale(1.05);
-box-shadow:0 0 60px rgba(0,255,255,0.9);
-}
-
-/* GLOW TEXT */
-
-.glow{
-font-size:3rem;
+.title{
+font-size:50px;
 font-weight:700;
-background: linear-gradient(90deg,#00e5ff,#00ff9c,#00e5ff);
+text-align:center;
+background:linear-gradient(90deg,#ff0000,#ff4d4d);
 -webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-animation:shine 4s linear infinite;
+color:transparent;
 }
 
-@keyframes shine{
-0%{background-position:0%}
-100%{background-position:200%}
-}
-
-/* ===== PARALLAX STARS ===== */
-
-.stApp:before{
-content:"";
-position:fixed;
-width:100%;
-height:100%;
-background-image:radial-gradient(white 1px, transparent 1px);
-background-size:3px 3px;
-opacity:0.2;
-animation:stars 80s linear infinite;
-z-index:-1;
-}
-
-@keyframes stars{
-from{transform:translateY(0)}
-to{transform:translateY(-2000px)}
-}
-
-/* ===== GLASS PANELS ===== */
+/* GLASS PANEL */
 
 .glass{
-backdrop-filter: blur(15px);
-background: rgba(255,255,255,0.05);
+background:linear-gradient(145deg,#141414,#0f0f0f);
 padding:25px;
-border-radius:20px;
-border:1px solid rgba(255,255,255,0.2);
-box-shadow:0 0 25px rgba(0,255,255,0.5);
-transition:0.3s;
+border-radius:16px;
+box-shadow:0px 0px 25px rgba(255,0,0,0.45);
 }
 
-.glass:hover{
-transform:scale(1.03);
-box-shadow:0 0 60px cyan;
+/* METRIC CARD */
+
+.metric-card{
+background:linear-gradient(145deg,#1a1a1a,#111111);
+padding:20px;
+border-radius:14px;
+text-align:center;
+box-shadow:0px 0px 20px rgba(255,0,0,0.4);
 }
 
-/* ===== GLOW TITLE ===== */
-
-.glow{
-font-size:3rem;
-font-weight:800;
-background:linear-gradient(90deg,#00e5ff,#00ff9c,#ff00ff,#00e5ff);
-background-size:400%;
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-animation:glowmove 8s linear infinite;
+.metric-value{
+font-size:30px;
+font-weight:700;
+color:#ff4d4d;
 }
 
-@keyframes glowmove{
-0%{background-position:0%}
-100%{background-position:400%}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* BUTTON */
+/* BUTTONS */
 
 .stButton>button{
-background:linear-gradient(90deg,#00e5ff,#00ff9c);
+background-color:#1f6feb;
+color:white;
+border-radius:8px;
+padding:10px 20px;
 border:none;
-border-radius:30px;
-padding:12px 30px;
-font-size:16px;
-box-shadow:0 0 20px #00e5ff;
-transition:0.3s;
+font-weight:600;
+box-shadow:0px 0px 12px rgba(255,0,0,0.6);
 }
 
 .stButton>button:hover{
-transform:scale(1.1);
-box-shadow:0 0 40px #00ff9c;
+background-color:#3b82f6;
+box-shadow:0px 0px 20px rgba(255,0,0,1);
 }
 
-/* SIDEBAR */
+/* EXPLANATION BOX */
 
-[data-testid="stSidebar"]{
-background:rgba(255,255,255,0.04);
-backdrop-filter: blur(20px);
-border-right:1px solid rgba(255,255,255,0.1);
-box-shadow:0 0 20px rgba(0,255,255,0.4);
-}
-
-
-
-.stTabs [data-baseweb="tab"]{
-font-size:18px;
-color:white;
-padding:12px;
-border-radius:15px;
-transition:0.3s;
-}
-
-.stTabs [aria-selected="true"]{
-background:linear-gradient(90deg,#00e5ff,#00ff9c);
-color:black;
-box-shadow:0 0 20px #00e5ff;
+.explain-box{
+background:#111;
+padding:20px;
+border-radius:12px;
+margin-bottom:15px;
+box-shadow:0px 0px 15px rgba(255,0,0,0.3);
 }
 
 </style>
-""",unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
-
-# =========================================================
-# SESSION STATE
-# =========================================================
-
-if "page" not in st.session_state:
-    st.session_state.page="splash"
-
-
-# =========================================================
-# =========================================================
+# ============================================================
 # SPLASH SCREEN
-# =========================================================
+# ============================================================
 
 if st.session_state.page == "splash":
 
-    splash_html = """
-    <html>
-    <style>
+    st.markdown("<h1 class='title'>Rocket Mission Visualizer 🚀</h1>", unsafe_allow_html=True)
 
-    body{
-    margin:0;
-    background:black;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    color:white;
-    font-family:sans-serif;
-    overflow:hidden;
-    }
+    progress = st.progress(0)
 
-    .title{
-    font-size:3.5rem;
-    font-weight:700;
-    background:linear-gradient(90deg,#00e5ff,#00ff9c);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    animation:glow 2s infinite alternate;
-    }
+    for i in range(100):
+        time.sleep(0.01)
+        progress.progress(i+1)
 
-    @keyframes glow{
-    from{ text-shadow:0 0 10px #00e5ff}
-    to{ text-shadow:0 0 40px #00ff9c}
-    }
+    st.session_state.page = "landing"
+    st.rerun()
 
-    .rocket{
-    font-size:5rem;
-    animation:fly 2s infinite;
-    }
+# ============================================================
+# LANDING PAGE
+# ============================================================
 
-    @keyframes fly{
-    0%{transform:translateY(0)}
-    50%{transform:translateY(-30px)}
-    100%{transform:translateY(0)}
-    }
+if st.session_state.page == "landing":
 
-    </style>
+    st.markdown("<h1 class='title'>Rocket Mission Visualizer 🚀</h1>", unsafe_allow_html=True)
 
-    <body>
-
-    <div style="text-align:center">
-
-    <div class="rocket">🚀</div>
-
-    <div class="title">RocketViz AI</div>
-
-    <p>Rocket Launch Simulation & Mission Analytics</p>
-
+    st.markdown("""
+    <div class="glass">
+    Explore real mission data and understand the physics of rocket launches.
+    This dashboard combines simulation with real mission analysis to study
+    payload, thrust, drag and rocket performance.
     </div>
+    """, unsafe_allow_html=True)
 
-    </body>
-    </html>
-    """
-
-    components.html(splash_html, height=800)
-
-    if "splash_shown" not in st.session_state:
-        time.sleep(3)
-        st.session_state.splash_shown = True
-        st.session_state.page = "landing"
+    if st.button("Get Started 🚀"):
+        st.session_state.page = "signup"
         st.rerun()
 
-
-# =========================================================
-# LANDING PAGE
-# =========================================================
-
-elif st.session_state.page=="landing":
-
-    st.markdown("<div class='glow'>RocketViz AI</div>",unsafe_allow_html=True)
-
-    st.write("")
-
-    st.markdown("""
-<div class="glass">
-
-### 🚀 Explore the Universe of Rocket Science
-
-Simulate rocket launches using real physics principles and explore space missions through interactive analytics.
-
-Features:
-
-• Rocket launch simulation  
-• Mission dataset analytics  
-• Interactive charts  
-• Payload vs fuel insights  
-• Mission success exploration  
-
-</div>
-""",unsafe_allow_html=True)
-
-    st.write("")
-
-    if st.button("🚀 Launch App"):
-        st.session_state.page="signup"
-
-
-
-# =========================================================
+# ============================================================
 # SIGNUP PAGE
-# =========================================================
+# ============================================================
 
-elif st.session_state.page=="signup":
+if st.session_state.page == "signup":
 
-    st.markdown("""
-    <style>
-    
-    .signup-box{
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(18px);
-    border-radius:20px;
-    padding:40px;
-    border:1px solid rgba(255,255,255,0.2);
-    box-shadow:0 0 30px rgba(0,255,255,0.6);
-    transition:0.4s;
-    margin-top:20px;
-    }
-    
-    .signup-box:hover{
-    transform: translateY(-10px) scale(1.02);
-    box-shadow:0 0 70px rgba(0,255,255,1);
-    }
-    
-    .signup-title{
-    font-size:36px;
-    font-weight:800;
-    text-align:center;
-    
-    background: linear-gradient(90deg,#00f7ff,#ff00ff,#00ff9d,#00f7ff);
-    background-size:400%;
-    
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    
-    animation: glowText 6s linear infinite;
-    
-    margin-bottom:25px;
-    }
-    
-    @keyframes glowText{
-    0%{background-position:0%}
-    50%{background-position:200%}
-    100%{background-position:0%}
-    }
-    
-    </style>
-    """, unsafe_allow_html=True)
-   
-    
-    st.markdown('<div class="signup-box">', unsafe_allow_html=True)
+    st.markdown("<h1 class='title'>Create Account</h1>", unsafe_allow_html=True)
 
-    st.markdown('<div class="signup-title">🚀 Create Mission Profile</div>', unsafe_allow_html=True)
+    username = st.text_input("Username")
+    email = st.text_input("Email")
+    password = st.text_input("Password", type="password")
 
-    st.image("https://api.dicebear.com/7.x/bottts/svg?seed=rocket",width=120)
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        username = st.text_input("👨‍🚀 Commander Name")
-        email = st.text_input("📧 Email Address")
-        password = st.text_input("🔑 Password", type="password")
-    
-    with col2:
-        confirm_password = st.text_input("🔒 Confirm Password", type="password")
-        mission_name = st.text_input("🛰 Mission Name")
-        launch_vehicle = st.selectbox(
-            "🚀 Launch Vehicle",
-            ["Falcon 9", "Atlas V", "Soyuz", "SLS", "Starship"]
-        )
-    
-    experience = st.slider("🧑‍🚀 Crew Experience Level",1,10)
-    
-    create = st.button("🚀 Create Mission")
-    
-    if create:
-        if password != confirm_password:
-            st.error("Passwords do not match")
+    if st.button("Enter Dashboard 🚀"):
+
+        if username and email and password:
+
+            st.session_state.user = username
+            st.session_state.page = "dashboard"
+            st.rerun()
+
         else:
-            st.success("Mission Profile Created Successfully")
-            st.session_state.page="dashboard"
-    
-    st.markdown('</div>', unsafe_allow_html=True)
+            st.error("Please fill all fields")
 
+# ============================================================
+# DATA LOADER
+# ============================================================
 
+@st.cache_data
+def load_dataset():
 
+    try:
+        df = pd.read_csv("space_missions_dataset.csv")
+    except:
+        df = pd.DataFrame()
 
-   
+    return df
 
+# ============================================================
+# ROCKET SIMULATION
+# ============================================================
 
+def rocket_simulation(thrust, mass, drag, burn_rate, steps=200):
 
+    g = 9.81
+    velocity = 0
+    altitude = 0
 
-# =========================================================
+    altitudes = []
+    velocities = []
+
+    for _ in range(steps):
+
+        acceleration = (thrust - drag - mass*g) / mass
+
+        velocity += acceleration
+        altitude += velocity
+
+        mass = max(mass - burn_rate, 1)
+
+        altitudes.append(altitude)
+        velocities.append(velocity)
+
+    return altitudes, velocities
+
+# ============================================================
 # DASHBOARD
-elif st.session_state.page=="dashboard":
+# ============================================================
 
-    st.markdown("""
-    <style>
-    
-    .dashboard-box{
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(20px);
-    border-radius:20px;
-    padding:40px;
-    text-align:center;
-    margin-bottom:30px;
-    
-    border:1px solid rgba(255,255,255,0.2);
-    
-    box-shadow:0 0 30px rgba(0,255,255,0.5);
-    
-    transition:0.4s;
-    }
-    
-    .dashboard-box:hover{
-    transform:translateY(-10px) scale(1.02);
-    box-shadow:0 0 80px rgba(0,255,255,1);
-    }
-    
-    .app-title{
-    font-size:50px;
-    font-weight:800;
-    
-    background: linear-gradient(90deg,#00f7ff,#ff00ff,#00ff9d,#00f7ff);
-    background-size:400%;
-    
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    
-    animation: glowText 6s linear infinite;
-    }
-    
-    .subtitle{
-    font-size:22px;
-    margin-top:10px;
-    color:white;
-    letter-spacing:2px;
-    }
-    
-    @keyframes glowText{
-    0%{background-position:0%}
-    50%{background-position:200%}
-    100%{background-position:0%}
-    }
-    
-    </style>
-    
-    <div class="dashboard-box">
-    
-    <div class="app-title">
-    🚀 Space Mission Control
-    </div>
-    
-    <div class="subtitle">
-    Mission Control Dashboard
-    </div>
-    
-    </div>
-    
-    """, unsafe_allow_html=True)
+if st.session_state.page == "dashboard":
 
-    # ===============================
-    # TOP DASHBOARD CARDS
-    # ===============================
+    st.markdown(f"<h1 class='title'>Welcome {st.session_state.user}</h1>", unsafe_allow_html=True)
 
-    col1,col2,col3,col4,col5 = st.columns(5)
+    df = load_dataset()
 
-    total_missions = len(missions_df)
-    avg_payload = int(missions_df["payload"].mean())
-    avg_fuel = int(missions_df["fuel"].mean())
-    success_rate = round(missions_df["success"].mean(),2)
-    avg_cost = round(missions_df["cost"].mean(),2)
-    
+    if df.empty:
+        st.error("Dataset not found")
+        st.stop()
+
+    df.columns = df.columns.str.strip()
+    df = df.drop_duplicates()
+    df = df.fillna(method="ffill")
+
+    # ============================================================
+    # SIDEBAR CONTROLS
+    # ============================================================
+
+    st.sidebar.title("Simulation Controls")
+
+    payload = st.sidebar.slider("Payload Weight (kg)",100,10000,2000)
+    thrust = st.sidebar.slider("Rocket Thrust (kN)",1000,10000,4000)
+    fuel = st.sidebar.slider("Fuel Amount (tons)",50,1000,300)
+    drag = st.sidebar.slider("Drag Coefficient",0.1,1.5,0.5)
+    burn = st.sidebar.slider("Fuel Burn Rate",1,50,10)
+    steps = st.sidebar.slider("Simulation Steps",50,500,200)
+
+    # ============================================================
+    # METRICS
+    # ============================================================
+
+    total_missions = len(df)
+
+    col1,col2,col3 = st.columns(3)
+
     with col1:
         st.markdown(f"""
-        <div class="glass">
-        <h3>🚀 Missions</h3>
-        <h2>{total_missions}</h2>
+        <div class="metric-card">
+        Total Missions
+        <div class="metric-value">{total_missions}</div>
         </div>
         """, unsafe_allow_html=True)
-    
+
     with col2:
         st.markdown(f"""
-        <div class="glass">
-        <h3>🛰 Payload Avg</h3>
-        <h2>{avg_payload} tons</h2>
+        <div class="metric-card">
+        Payload
+        <div class="metric-value">{payload} kg</div>
         </div>
         """, unsafe_allow_html=True)
-    
+
     with col3:
+        efficiency = thrust/fuel
         st.markdown(f"""
-        <div class="glass">
-        <h3>⛽ Fuel Avg</h3>
-        <h2>{avg_fuel} tons</h2>
+        <div class="metric-card">
+        Efficiency
+        <div class="metric-value">{efficiency:.2f}</div>
         </div>
         """, unsafe_allow_html=True)
 
+    # ============================================================
+    # TABS
+    # ============================================================
 
-
-    with col4:
-        st.markdown(f"""
-        <div class="glass">
-        <h3>🎯 Success Rate</h3>
-        <h2>{success_rate}%</h2>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col5:
-        st.markdown(f"""
-        <div class="glass">
-        <h3>💰 Avg Cost</h3>
-        <h2>{avg_cost} B USD</h2>
-        </div>
-        """, unsafe_allow_html=True)
-
-    st.write("")
-    st.write("")
-
-    # ===============================
-
-
-    
-
-
-
-
-
-
-
-
-
-    
-    # FEATURE TABS
-    # ===============================
-
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
-        "🏠 Home",
-        "🚀 Rocket Simulation",
-        "📊 Mission Analytics",
-        "📊 Mission Data Explorer",
-        "🚀 Rocket Physics Simulation",
-        "📈 Mission Analytics",
-        "🔍 Comparative Insights",
-        "ℹ️ About Project"
-        
+    tab1,tab2,tab3,tab4,tab5,tab6,tab7,tab8 = st.tabs([
+    "🚀 Simulation",
+    "📊 Scatter",
+    "📈 Line",
+    "📊 Bar",
+    "📦 Box",
+    "🔥 Heatmap",
+    "📚 Data Explanation",
+    "⚙ Settings"
     ])
 
-    # ==========================================
-    # TAB 1 : ROCKET SIMULATION
-    # ==========================================
+    # ============================================================
+    # SIMULATION
+    # ============================================================
+
+    with tab1:
+
+        mass = payload + fuel*100
+        thrust_force = thrust*1000
+        drag_force = drag*100
+
+        altitudes, velocities = rocket_simulation(
+        thrust_force,mass,drag_force,burn,steps)
+
+        fig = go.Figure()
+
+        fig.add_trace(go.Scatter(y=altitudes,name="Altitude"))
+
+        fig.update_layout(
+        template="plotly_dark",
+        title="Altitude vs Time"
+        )
+
+        st.plotly_chart(fig,use_container_width=True)
+
+    # ============================================================
+    # SCATTER
+    # ============================================================
 
     with tab2:
 
-        st.markdown("<div class='glow'>Rocket Launch Simulator</div>",unsafe_allow_html=True)
+        numeric = df.select_dtypes(include=np.number)
 
-        thrust=st.slider("Thrust",10000,200000,50000)
-        payload=st.slider("Payload Weight",100,10000,2000)
-        fuel=st.slider("Fuel Amount",500,20000,5000)
+        if len(numeric.columns)>=2:
 
-        g=9.81
-        mass=payload+fuel+5000
+            fig = px.scatter(
+            df,
+            x=numeric.columns[0],
+            y=numeric.columns[1]
+            )
 
-        velocity=0
-        altitude=0
+            fig.update_layout(template="plotly_dark")
 
-        data=[]
+            st.plotly_chart(fig,use_container_width=True)
 
-        for t in range(200):
-
-            drag=0.02*velocity**2
-
-            accel=(thrust-(mass*g)-drag)/mass
-
-            velocity+=accel
-            altitude+=velocity
-
-            fuel-=5
-            mass-=5
-
-            data.append([t,velocity,altitude])
-
-        df=pd.DataFrame(data,columns=["Time","Velocity","Altitude"])
-
-        fig=px.line(df,x="Time",y="Altitude",title="Rocket Altitude")
-
-        st.plotly_chart(fig,use_container_width=True)
-
-    # ==========================================
-    # TAB 2 : ANALYTICS
-    # ==========================================
+    # ============================================================
+    # LINE
+    # ============================================================
 
     with tab3:
 
-        st.markdown("<div class='glow'>Mission Analytics</div>",unsafe_allow_html=True)
+        numeric = df.select_dtypes(include=np.number)
 
-        n=200
+        fig = px.line(df,y=numeric.columns[0])
 
-        df=pd.DataFrame({
-
-        "Payload Weight":np.random.randint(500,8000,n),
-
-        "Fuel Consumption":np.random.randint(2000,10000,n),
-
-        "Mission Cost":np.random.randint(50,500,n),
-
-        "Mission Success":np.random.choice(["Success","Failure"],n)
-
-        })
-
-        fig=px.scatter(
-        df,
-        x="Payload Weight",
-        y="Fuel Consumption",
-        color="Mission Success",
-        size="Mission Cost"
-        )
+        fig.update_layout(template="plotly_dark")
 
         st.plotly_chart(fig,use_container_width=True)
 
-        fig2=px.histogram(df,x="Mission Cost")
-
-        st.plotly_chart(fig2,use_container_width=True)
-
-
-
-
-
-    with tab1: 
-
-        st.markdown("<div class='glow'>RocketLab AI Dashboard</div>",unsafe_allow_html=True)
-
-        st.write("""
-        Interactive rocket launch simulator and mission analytics platform.
-        
-        This application explores rocket physics and real mission data
-        to understand how thrust, fuel, payload, and cost influence
-        space missions.
-        """)
-        
-        st.image("https://images.unsplash.com/photo-1446776811953-b23d57bd21aa",use_column_width=True)
-        
-        st.info("Use the tabs above to explore mission data, simulate rocket launches, and discover insights.")
-        st.markdown("### 🚀 Rocket Physics Concepts")
-
-        col1,col2,col3,col4 = st.columns(4)
-        
-        with col1:
-            st.markdown("""
-            <div class="glass">
-            <h3>⚖ Newton's 2nd Law</h3>
-            <p>Force = Mass × Acceleration.  
-            Rocket acceleration depends on thrust minus gravity and drag divided by total mass.</p>
-            </div>
-            """, unsafe_allow_html=True)
-        
-        with col2:
-            st.markdown("""
-            <div class="glass">
-            <h3>🔥 Thrust</h3>
-            <p>Thrust is the force produced by rocket engines pushing gases downward,
-            propelling the rocket upward against gravity.</p>
-            </div>
-            """, unsafe_allow_html=True)
-        
-        with col3:
-            st.markdown("""
-            <div class="glass">
-            <h3>🌬 Drag</h3>
-            <p>Drag is air resistance acting opposite to motion.
-            Higher drag slows rockets and reduces acceleration.</p>
-            </div>
-            """, unsafe_allow_html=True)
-        
-        with col4:
-            st.markdown("""
-            <div class="glass">
-            <h3>🛰 Payload</h3>
-            <p>Payload is the cargo carried by the rocket such as satellites,
-            instruments, or astronauts.</p>
-            </div>
-            """, unsafe_allow_html=True)
-
-
-    
-
+    # ============================================================
+    # BAR
+    # ============================================================
 
     with tab4:
 
-        st.markdown("<div class='glow'>Mission Data Explorer</div>", unsafe_allow_html=True)
-    
-        vehicle = st.selectbox(
-            "Launch Vehicle",
-            missions_df["vehicle"].unique()
-        )
-    
-        cost_range = st.slider(
-            "Mission Cost Range",
-            float(missions_df["cost"].min()),
-            float(missions_df["cost"].max()),
-            (float(missions_df["cost"].min()), float(missions_df["cost"].max()))
-        )
-    
-        filtered = missions_df[
-            (missions_df["vehicle"] == vehicle) &
-            (missions_df["cost"] >= cost_range[0]) &
-            (missions_df["cost"] <= cost_range[1])
-        ]
-    
-        st.dataframe(filtered)
+        counts = df["Launch Vehicle"].value_counts()
 
+        fig = px.bar(
+        x=counts.index,
+        y=counts.values,
+        labels={"x":"Launch Vehicle","y":"Number of Missions"},
+        title="Missions by Launch Vehicle"
+        )
 
+        fig.update_layout(template="plotly_dark")
+
+        st.plotly_chart(fig,use_container_width=True)
+
+    # ============================================================
+    # BOX
+    # ============================================================
 
     with tab5:
 
+        numeric = df.select_dtypes(include=np.number)
 
-        
+        fig = px.box(df,y=numeric.columns[0])
 
-        st.markdown("<div class='glow'>Rocket Physics Simulation</div>",unsafe_allow_html=True)
+        fig.update_layout(template="plotly_dark")
 
-        payload=st.slider("Payload Weight",100,10000,2000,key="payload_slider")
+        st.plotly_chart(fig,use_container_width=True)
 
-        fuel=st.slider("Fuel Amount",500,20000,5000,key="fuel_slider")
-        
-        thrust=st.slider("Thrust",10000,200000,60000,key="thrust_slider")
-        
-        drag_coeff=st.slider("Drag Coefficient",0.01,0.2,0.05,key="drag_slider")
-        
-        g=9.81
-        mass=payload+fuel+5000
-        
-        velocity=0
-        altitude=0
-        fuel_left=fuel
-        
-        data=[]
-        
-        for t in range(200):
-        
-            drag=drag_coeff*(velocity**2)
-        
-            accel=(thrust-(mass*g)-drag)/mass
-        
-            velocity+=accel
-            altitude+=velocity
-        
-            fuel_left-=5
-            mass-=5
-        
-            data.append([t,velocity,altitude,fuel_left])
-        
-        df_sim=pd.DataFrame(data,columns=["Time","Velocity","Altitude","Fuel"])
-        
-        fig1=px.line(df_sim,x="Time",y="Altitude",title="Altitude vs Time")
-        st.plotly_chart(fig1,use_container_width=True)
-        
-        fig2=px.line(df_sim,x="Time",y="Velocity",title="Velocity vs Time")
-        st.plotly_chart(fig2,use_container_width=True)
-        
-        fig3=px.line(df_sim,x="Time",y="Fuel",title="Fuel Remaining")
-        st.plotly_chart(fig3,use_container_width=True)
-
-
-
-
-
+    # ============================================================
+    # HEATMAP
+    # ============================================================
 
     with tab6:
 
-        st.markdown("<div class='glow'>Mission Analytics</div>", unsafe_allow_html=True)
-    
-        # ===============================
-        # GRAPH SELECT DROPDOWN
-        # ===============================
-    
-        graph_option = st.selectbox(
-            "📊 Select Graph",
-            [
-                "Payload vs Fuel",
-                "Mission Cost by Launch Vehicle",
-                "Mission Duration vs Distance",
-                "Crew Size Distribution",
-                "Correlation Heatmap",
-                "Mission Success vs Payload",
-                "Mission Cost vs Mission Success"
-            ]
-        )
-    
-        # ===============================
-        # GRAPH 1
-        # ===============================
-    
-        if graph_option == "Payload vs Fuel":
-    
-            fig = px.scatter(
-                missions_df,
-                x="payload",
-                y="fuel",
-                color="vehicle",
-                title="Payload vs Fuel Consumption"
-            )
-    
-            st.plotly_chart(fig, use_container_width=True)
-    
-        # ===============================
-        # GRAPH 2
-        # ===============================
-    
-        elif graph_option == "Mission Cost by Launch Vehicle":
-    
-            fig = px.bar(
-                missions_df,
-                x="vehicle",
-                y="cost",
-                title="Mission Cost by Launch Vehicle"
-            )
-    
-            st.plotly_chart(fig, use_container_width=True)
-    
-        # ===============================
-        # GRAPH 3
-        # ===============================
-    
-        elif graph_option == "Mission Duration vs Distance":
-    
-            fig = px.scatter(
-                missions_df,
-                x="distance",
-                y="duration",
-                color="vehicle",
-                size="payload",
-                title="Mission Duration vs Distance from Earth",
-                labels={
-                    "distance":"Distance from Earth (light years)",
-                    "duration":"Mission Duration (years)"
-                }
-            )
-    
-            st.plotly_chart(fig, use_container_width=True)
-    
-        # ===============================
-        # GRAPH 4
-        # ===============================
-    
-        elif graph_option == "Crew Size Distribution":
-    
-            fig = px.box(
-                missions_df,
-                y="crew",
-                title="Crew Size Distribution"
-            )
-    
-            st.plotly_chart(fig, use_container_width=True)
-    
-        # ===============================
-        # GRAPH 5
-        # ===============================
-    
-        elif graph_option == "Correlation Heatmap":
-    
-            corr = missions_df[["payload","fuel","cost","distance","duration","science","crew"]].corr()
-    
-            fig = px.imshow(
-                corr,
-                text_auto=True,
-                title="Correlation Heatmap"
-            )
-    
-            st.plotly_chart(fig, use_container_width=True)
-    
-        # ===============================
-        # GRAPH 6
-        # ===============================
-    
-        elif graph_option == "Mission Success vs Payload":
-    
-            fig = px.scatter(
-                missions_df,
-                x="payload",
-                y="fuel",
-                color="success",
-                size="cost",
-                title="Mission Success vs Payload and Fuel"
-            )
-    
-            st.plotly_chart(fig, use_container_width=True)
-    
-        # ===============================
-        # GRAPH 7
-        # ===============================
-    
-        elif graph_option == "Mission Cost vs Mission Success":
-    
-            cost_success = missions_df.dropna(subset=["cost","success"])
-    
-            fig = px.box(
-                cost_success,
-                x="success",
-                y="cost",
-                color="success",
-                title="Mission Cost for Successful vs Unsuccessful Missions",
-                labels={
-                    "success":"Mission Outcome",
-                    "cost":"Mission Cost (Billion USD)"
-                }
-            )
-    
-            st.plotly_chart(fig, use_container_width=True)
+        numeric = df.select_dtypes(include=np.number)
 
+        corr = numeric.corr()
 
-    
+        fig = px.imshow(corr,text_auto=True)
 
-          
+        fig.update_layout(template="plotly_dark")
+
+        st.plotly_chart(fig,use_container_width=True)
+
+    # ============================================================
+    # DATA EXPLANATION
+    # ============================================================
+
     with tab7:
 
-        st.markdown("<div class='glow'>Comparative Insights</div>", unsafe_allow_html=True)
-    
-        avg_payload = missions_df["payload"].mean()
-    
-        comparison = pd.DataFrame({
-            "Type": ["Real Missions", "Simulation"],
-            "Payload": [avg_payload, payload]
-        })
-    
-        fig = px.bar(
-            comparison,
-            x="Type",
-            y="Payload",
-            title="Simulation vs Real Mission Payload"
-        )
-    
-        st.plotly_chart(fig, use_container_width=True)
+        st.markdown("<div class='explain-box'><b>Newton’s Second Law</b><br>"
+        "Force = Mass × Acceleration. Rockets accelerate upward when thrust "
+        "overcomes gravity and drag. As fuel burns, rocket mass decreases "
+        "which increases acceleration.</div>", unsafe_allow_html=True)
 
+        st.markdown("<div class='explain-box'><b>Thrust</b><br>"
+        "Thrust is the force produced by rocket engines when fuel gases are "
+        "expelled at high velocity. According to Newton's Third Law, pushing "
+        "gases downward produces an equal upward force that lifts the rocket."
+        "</div>", unsafe_allow_html=True)
+
+        st.markdown("<div class='explain-box'><b>Drag</b><br>"
+        "Drag is air resistance opposing rocket motion. Drag depends on "
+        "speed, air density and rocket shape. Engineers design rockets "
+        "to be aerodynamic to reduce drag.</div>", unsafe_allow_html=True)
+
+        st.markdown("<div class='explain-box'><b>Payload</b><br>"
+        "Payload is the cargo carried by the rocket such as satellites "
+        "or astronauts. Increasing payload increases rocket mass and "
+        "requires greater thrust and fuel.</div>", unsafe_allow_html=True)
+
+        st.markdown("<div class='explain-box'><b>Guiding Questions + Answers</b><br>"
+        "<b>How does adding payload affect altitude?</b><br>"
+        "More payload increases rocket mass which reduces acceleration "
+        "and lowers achievable altitude.<br><br>"
+        "<b>How does increasing thrust affect launch success?</b><br>"
+        "Higher thrust increases acceleration and helps rockets overcome "
+        "gravity and drag.<br><br>"
+        "<b>Does lower drag improve speed?</b><br>"
+        "Yes. Lower drag allows rockets to maintain higher velocities.<br><br>"
+        "<b>How long to reach orbit?</b><br>"
+        "Most rockets reach orbit within about 8-12 minutes after launch."
+        "</div>", unsafe_allow_html=True)
+
+    # ============================================================
+    # SETTINGS
+    # ============================================================
 
     with tab8:
 
+        if st.button("Sign Out"):
+            st.session_state.page="landing"
+            st.session_state.user=None
+            st.rerun()
 
+    # ============================================================
+    # FEEDBACK
+    # ============================================================
 
-        st.markdown("<div class='glow'>About This Project</div>",unsafe_allow_html=True)
+    st.divider()
 
-        st.write("""
-        
-        RocketViz AI is an interactive platform that explores
-        rocket launch physics and mission analytics.
-        
-        Technologies Used:
-        
-        • Python  
-        • Streamlit  
-        • Pandas  
-        • Plotly  
-        
-        This project demonstrates how mathematical modelling
-        and data science can be used to analyse space missions
-        and simulate rocket launches.
-        
-        Developed for CRS Artificial Intelligence course.
-        
-        """)
+    feedback = st.text_area("Share feedback")
 
+    rating = st.slider("Rate the app",1,5,4)
 
-
-
-    
-
-
-
-    
-
-
-
-
-
-
-
-
-
-        
+    if st.button("Submit Feedback"):
+        st.success("Thanks for your feedback!")
