@@ -110,6 +110,40 @@ box-shadow:0px 0px 15px rgba(255,0,0,0.3);
 </style>
 """, unsafe_allow_html=True)
 
+
+
+st.markdown("""
+<style>
+
+.insight-box {
+    border: 2px solid #00f7ff;
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 10px;
+    background: rgba(0,0,0,0.6);
+    box-shadow: 0 0 15px #00f7ff;
+    color: white;
+    font-size: 16px;
+}
+
+.insight-title {
+    color: #00f7ff;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
+def show_insight(text):
+    st.markdown(f"""
+    <div class="insight-box">
+        <div class="insight-title">🔎 Insight</div>
+        {text}
+    </div>
+    """, unsafe_allow_html=True)
+
 # ============================================================
 # SPLASH SCREEN
 # ============================================================
@@ -333,6 +367,13 @@ if st.session_state.page == "dashboard":
             fig.update_layout(template="plotly_dark")
 
             st.plotly_chart(fig,use_container_width=True)
+            
+
+            show_insight(
+            "Missions traveling farther distances tend to have longer durations. "
+            "This reflects the increased travel time required for deep space "
+            "or long-distance orbital missions."
+            )
 
     # ============================================================
     # LINE
