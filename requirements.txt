@@ -7,4 +7,4 @@ mlxtend
 scipy
 seaborn
 matplotlib
- 
+statsmodels
