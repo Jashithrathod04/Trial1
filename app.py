@@ -13,6 +13,14 @@ from scipy.stats import zscore
 import warnings
 warnings.filterwarnings("ignore")
 
+
+
+def hex_to_rgba(hex_color, alpha=0.1):
+    hex_color = hex_color.lstrip("#")
+    r = int(hex_color[0:2], 16)
+    g = int(hex_color[2:4], 16)
+    b = int(hex_color[4:6], 16)
+    return f"rgba({r},{g},{b},{alpha})"
 # ─────────────────────────────────────────────────────────────────────────────
 # PAGE CONFIG
 # ─────────────────────────────────────────────────────────────────────────────
@@ -984,7 +992,7 @@ if st.session_state.page == "dashboard":
                 r=row[features].values.tolist() + [row[features[0]]],
                 theta=features + [features[0]],
                 fill="toself", name=row["Cluster Label"],
-                line_color=colors[i], fillcolor=colors[i].replace("#","rgba(").replace("f5d4","245,212,0.1)").replace("2fff","47,255,0.1)").replace("006e","0,110,0.1)").replace("5607","251,86,7,0.1)")
+                line_color=colors[i], fillcolor=hex_to_rgba(colors[i], 0.1)
             ))
         fig_radar = go.Figure(data=fig_radar_data)
         fig_radar.update_layout(**PLOTLY_TEMPLATE, polar=dict(
