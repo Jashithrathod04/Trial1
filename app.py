@@ -690,8 +690,7 @@ if st.session_state.page == "dashboard":
         </div>
         """, unsafe_allow_html=True)
     
-        # SIGN OUT BUTTON
-        st.markdown('<div class="signout-btn">🚪 Sign Out</div>', unsafe_allow_html=True)
+        
     
         if st.button(" ", key="logout_btn"):
             # SIGN OUT BUTTON
