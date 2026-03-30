@@ -28,8 +28,107 @@ st.set_page_config(
     page_title="SmartCharge AI ⚡",
     page_icon="⚡",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
+
+
+st.markdown("""
+<style>
+
+/* SIDEBAR GLASSMORPHISM */
+section[data-testid="stSidebar"] {
+    background: rgba(20, 20, 30, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+/* SKEUOMORPHIC BUTTON STYLE */
+.glass-btn {
+    background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(0,0,0,0.2));
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    box-shadow: 
+        6px 6px 12px rgba(0,0,0,0.4),
+        -4px -4px 8px rgba(255,255,255,0.05);
+    transition: all 0.3s ease;
+}
+
+.glass-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        2px 2px 6px rgba(0,0,0,0.6),
+        -2px -2px 6px rgba(255,255,255,0.08);
+}
+
+/* Sidebar text */
+.sidebar-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #00f5d4;
+    margin-bottom: 10px;
+}
+
+
+/* ── SIDEBAR GLASS + SKEUO ── */
+section[data-testid="stSidebar"]{
+  background: rgba(10,15,30,0.65) !important;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  box-shadow: inset -4px 0 20px rgba(0,0,0,0.6);
+}
+
+/* Sidebar content spacing */
+section[data-testid="stSidebar"] > div{
+  padding: 20px;
+}
+
+/* Skeuomorphic card inside sidebar */
+.sidebar-card{
+  background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.3));
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow:
+    6px 6px 12px rgba(0,0,0,0.6),
+    -4px -4px 8px rgba(255,255,255,0.05);
+}
+
+/* Sidebar title */
+.sidebar-title{
+  font-family:'Orbitron',monospace;
+  font-size:1rem;
+  letter-spacing:2px;
+  color:#00f5d4;
+  margin-bottom:10px;
+}
+
+/* Sign out button */
+.signout-btn{
+  background: linear-gradient(145deg, #ff006e, #7b2fff);
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 0 15px rgba(255,0,110,0.6);
+  transition: all 0.3s ease;
+}
+.signout-btn:hover{
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255,0,110,0.9);
+}
+</style>
+""", unsafe_allow_html=True)
+
+
+
+
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # MASTER CSS — GLASSMORPHISM + ANIMATIONS + HOVER EFFECTS
@@ -566,6 +665,41 @@ if st.session_state.page == "verify":
 # MAIN DASHBOARD
 # ─────────────────────────────────────────────────────────────────────────────
 if st.session_state.page == "dashboard":
+    # ───────────────── SIDEBAR ─────────────────
+    with st.sidebar:
+    
+        st.markdown('<div class="sidebar-title">⚡ SMART PANEL</div>', unsafe_allow_html=True)
+    
+        # USER CARD
+        st.markdown("""
+        <div class="sidebar-card">
+            <b>👤 Analyst</b><br>
+            EV Intelligence User
+        </div>
+        """, unsafe_allow_html=True)
+    
+        # NAVIGATION
+        st.markdown("""
+        <div class="sidebar-card">
+            <b>📊 Navigation</b><br><br>
+            • Overview<br>
+            • Data Prep<br>
+            • Usage<br>
+            • Clustering<br>
+            • Insights
+        </div>
+        """, unsafe_allow_html=True)
+    
+        # SIGN OUT BUTTON
+        st.markdown('<div class="signout-btn">🚪 Sign Out</div>', unsafe_allow_html=True)
+    
+        if st.button(" ", key="logout_btn"):
+            st.session_state.page = "landing"   # or "signup" if you want
+            st.rerun()
+
+
+
+
 
     df = load_data()
 
