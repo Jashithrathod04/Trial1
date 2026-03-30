@@ -6,3 +6,5 @@ scikit-learn
 mlxtend
 scipy
 seaborn
+matplotlib
+ 
