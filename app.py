@@ -695,7 +695,7 @@ if st.session_state.page == "dashboard":
             fig_line = px.line(yearly, x="Installation Year", y="Usage Stats (avg users/day)",
                                markers=True, color_discrete_sequence=["#00f5d4"])
             fig_line.add_scatter(x=yearly["Installation Year"], y=yearly["Usage Stats (avg users/day)"],
-                                 fill="tozeroy", fillcolor="rgba(0,245,212,0.06)", line_color="transparent")
+                                 fill="tozeroy", fillcolor="rgba(0,245,212,0.06)", line_color="rgba(0,0,0,0)")
             fig_line = styled_fig(fig_line)
             fig_line.update_layout(title="Average Usage by Installation Year")
             st.plotly_chart(fig_line, use_container_width=True)
