@@ -687,7 +687,7 @@ if st.session_state.page == "profiles":
     st.markdown("<br><br>", unsafe_allow_html=True)
     profiles = [
         ("https://cdn-icons-png.flaticon.com/512/3135/3135715.png",  "JASHITH",     "Data Scientist","Enter"),
-        ("https://www.pinterest.com/pin/netflix--18858892183973844/",  "ANALYST",     "Infra Lead",    "Enter"),
+        ("https://cdn-icons-png.flaticon.com/512/4140/4140048.png",  "ANALYST",     "Infra Lead",    "Enter"),
         ("https://cdn-icons-png.flaticon.com/512/1828/1828817.png","ADD PROFILE","New User","Create"),
     ]
     cols = st.columns(3)
