@@ -8,3 +8,12 @@ scipy
 seaborn
 matplotlib
 statsmodels
+streamlit
+pandas
+numpy
+plotly
+scikit-learn
+mlxtend
+scipy
+seaborn
+matplotlib
