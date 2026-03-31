@@ -686,7 +686,7 @@ if st.session_state.page == "profiles":
     </div>""", unsafe_allow_html=True)
     st.markdown("<br><br>", unsafe_allow_html=True)
     profiles = [
-        ("https://cdn-icons-png.flaticon.com/512/1828/1828817.png",  "JASHITH",     "Data Scientist","Enter"),
+        ("https://wallpapers.com/picture/netflix-profile-pictures-1000-x-1000-88wkdmjrorckekha.png",  "JASHITH",     "Data Scientist","Enter"),
         ("https://i.imgur.com/9XnK9QK.png",  "ANALYST",     "Infra Lead",    "Enter"),
         ("https://cdn-icons-png.flaticon.com/512/1828/1828817.png","ADD PROFILE","New User","Create"),
     ]
